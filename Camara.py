@@ -7,7 +7,8 @@ from Zoom import Zoom
 class Camara:
 
     def __init__(self, posX, posY, isla,zoom):
-        self.mapa = isla.getMapaEstatico()
+        self.mEstatico = isla.getMapaEstatico()
+        self.mObjetos = isla.getMapaObjetos()
         self.isla = isla
         self.screen = pygame.display.set_mode((1000, 600))
         self.posX = posX
@@ -33,15 +34,15 @@ class Camara:
         self.posY += posY
 
     def chquearMaxX(self):
-        if self.posX >= self.zoom.getMaxX() - self.zoom.getLimiteX():
-            self.posX = self.zoom.getMaxX() - self.zoom.getLimiteX()
+        if self.posX >= self.zoom.getMaxX() - math.ceil(self.zoom.getLimiteXFloat()):
+            self.posX = self.zoom.getMaxX() - math.ceil(self.zoom.getLimiteXFloat())
 
         if self.posX <= self.zoom.getLimiteX() + 1:
             self.posX = self.zoom.getLimiteX() + 1
 
     def chquearMaxY(self):
-        if self.posY >= self.zoom.getMaxY() - self.zoom.getLimiteY():
-            self.posY = self.zoom.getMaxY() - self.zoom.getLimiteY()
+        if self.posY >= self.zoom.getMaxY() - math.ceil(self.zoom.getLimiteYFloat()):
+            self.posY = self.zoom.getMaxY() - math.ceil(self.zoom.getLimiteYFloat())
 
         if self.posY <= self.zoom.getLimiteY() + 1:
             self.posY = self.zoom.getLimiteY() + 1
@@ -54,12 +55,17 @@ class Camara:
         for y in range(self.posY - math.floor(self.zoom.getLimiteYFloat()), self.posY + math.ceil(self.zoom.getLimiteYFloat())):
             forX = 0
             for x in range(self.posX - math.floor(self.zoom.getLimiteXFloat()), self.posX + math.ceil(self.zoom.getLimiteXFloat())):
-                superficie = pygame.Surface((self.zoom.getRangoZoom(),self.zoom.getRangoZoom()))
-                superficie.fill(self.mapa[y][x],None,0)
+                superficie = pygame.transform.scale(self.mEstatico[y][x].getImage(), (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))  
                 self.screen.blit(superficie, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+                if not self.mObjetos[y][x] is None:
+                    objeto = pygame.transform.scale(self.mObjetos[y][x].getImage(), (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                    self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+                
                 forX += 1
 
             forY += 1
+
 
     def getZoom(self):
         return self.zoom
