@@ -1,7 +1,8 @@
 import pygame
 
 class Objetos:
-    AGUA = pygame.Color(0,0,230)
-    PASTO = pygame.Color(0,230,0)
+    AGUA = pygame.Color(37,109,123)
+    PASTO = pygame.Color(38,142,0)
+    ARENA = pygame.Color(236, 226, 198)
     
 

@@ -1,3 +1,4 @@
+import random
 import pygame
 from Objetos import Objetos
 
@@ -11,13 +12,19 @@ class Isla:
         self.ancho = ancho
         self.altura = altura
 
-
     def generarMapaEstatico(self):
         for y in range(self.altura):
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
                     fila.append(Objetos.AGUA)
+
+                elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
+                    if random.randrange(1, 10) < 9:
+                        fila.append(Objetos.ARENA)
+                    else:
+                        fila.append(Objetos.PASTO)
+
                 else:
                     fila.append(Objetos.PASTO)
 
@@ -31,7 +38,3 @@ class Isla:
 
     def getAltura(self):
         return self.altura
-
-
-
-

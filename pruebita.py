@@ -1,6 +1,7 @@
 import pygame
 from Isla import Isla
 from Camara import Camara
+from Zoom import Zoom
 
 pygame.init()
 
@@ -8,10 +9,9 @@ ancho = 60
 altura = 50
 isla = Isla(ancho, altura)
 isla.generarMapaEstatico()
-camara = Camara(ancho // 2, altura // 2, isla,1)
+camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM)
 
 fuente = pygame.font.Font(None, 60)
-
 
 running = True
 while running:
@@ -34,16 +34,12 @@ while running:
                 camara.moveY(1)
 
             if event.key == pygame.K_z:
-                camara.subirZoom()
+                camara.getZoom().subirZoom()
 
             if event.key == pygame.K_x:
-                camara.bajarZoom()
+                camara.getZoom().bajarZoom()
 
-
-
-
- 
-    texto = fuente.render(f"x : {camara.getPosX()}  y :  {camara.getPosY()} ", False, (250,100,100))
+    texto = fuente.render(f"x : {camara.getPosX()}  y :  {camara.getPosY()} ", False, (250, 100, 100))
     camara.actualizarPantalla()
-    camara.screen.blit(texto,(40,40))
+    camara.screen.blit(texto, (40, 40))
     pygame.display.update()
