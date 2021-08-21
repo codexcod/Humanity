@@ -14,14 +14,14 @@ class Isla:
 
     def generarMapaEstatico(self):
         for y in range(self.altura):
-            lista = []
+            fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
-                    lista.append(Objetos.AGUA)
+                    fila.append(Objetos.AGUA)
                 else:
-                    lista.append(Objetos.PASTO)
+                    fila.append(Objetos.PASTO)
 
-            self.mEstatico.append(lista)
+            self.mEstatico.append(fila)
 
     def getMapaEstatico(self):
         return self.mEstatico

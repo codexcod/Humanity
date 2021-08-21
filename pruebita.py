@@ -4,11 +4,14 @@ from Camara import Camara
 
 pygame.init()
 
-ancho = 40
-altura = 25
+ancho = 60
+altura = 50
 isla = Isla(ancho, altura)
 isla.generarMapaEstatico()
-camara = Camara(round(ancho / 2), round(altura / 2), isla)
+camara = Camara(ancho // 2, altura // 2, isla,1)
+
+fuente = pygame.font.Font(None, 60)
+
 
 running = True
 while running:
@@ -30,5 +33,17 @@ while running:
             if event.key == pygame.K_DOWN:
                 camara.moveY(1)
 
+            if event.key == pygame.K_z:
+                camara.subirZoom()
+
+            if event.key == pygame.K_x:
+                camara.bajarZoom()
+
+
+
+
+ 
+    texto = fuente.render(f"x : {camara.getPosX()}  y :  {camara.getPosY()} ", False, (250,100,100))
     camara.actualizarPantalla()
+    camara.screen.blit(texto,(40,40))
     pygame.display.update()
