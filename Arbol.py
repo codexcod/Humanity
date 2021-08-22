@@ -1,28 +1,35 @@
 import pygame
 from Objetos import Objetos
+from Objeto import Objeto
 
 
-class Arbol(pygame.sprite.Sprite):
+class Arbol(Objeto):
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = Objetos.ARBOL
+        Objeto.__init__(self)
+        self.setNombre("Arbol")
+        self.setImage(Objetos.ARBOL)
         self.troncos = 0
         self.talado = False
-
-
-    def getImage(self):
-        return self.image
-
 
     def setTroncos(self,troncos):
         self.troncos = troncos
         if self.troncos >= 15:
-            self.image = Objetos.ARBOL_GRANDE
+            self.setImage(Objetos.ARBOL_GRANDE)
 
         else:
-            self.image = Objetos.ARBOL
+            self.setImage(Objetos.ARBOL)
 
     def getTroncos(self):
         return self.troncos
-        
+
+    def onClick(self):
+        if not self.talado:
+            self.talarArbol()
+        return super().onClick()
+
+    def talarArbol(self):
+        self.talado = True
+        self.setImage(Objetos.ARBOL_TALADO)
+        self.setNombre("Arbol talado")
+

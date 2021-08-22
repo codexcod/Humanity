@@ -1,5 +1,7 @@
 import random
 import pygame
+
+from Objeto import Objeto
 from Objetos import Objetos
 from Arbol import Arbol
 from Piedra import Piedra
@@ -44,7 +46,7 @@ class Isla:
 
 
     def generarMapaObjetos(self):
-        arboles = NoiseGenerator(self.ancho,self.altura,None,Arbol())  
+        arboles = NoiseGenerator(self.ancho,self.altura,None,Arbol())
         mArboles = arboles.getNoise()
 
         for y in range(self.altura):
