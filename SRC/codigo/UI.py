@@ -16,7 +16,7 @@ class UI:
         fondo = pygame.surface.Surface((800, 500))
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
-        font = pygame.font.Font('poppinsmedium.ttf', 32)
+        font = pygame.font.Font('SRC/fonts/poppinsmedium.ttf', 32)
         text = font.render(objeto.getNombre(), True, (255, 255, 255), None)
         info.append(UIObject(text, 600, 250))
         image = pygame.transform.scale(objeto.getImage(), (200, 200))
