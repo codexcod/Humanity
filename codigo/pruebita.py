@@ -1,9 +1,9 @@
 import pygame
-from Isla import Isla
-from Camara import Camara
-from UI import UI
-from Zoom import Zoom
-from Mouse import Mouse
+from codigo.Isla.Isla import Isla
+from codigo.Camara.Camara import Camara
+from codigo.Camara.UI.UI import UI
+from codigo.Camara.Zoom import Zoom
+from codigo.Camara.Mouse import Mouse
 
 pygame.init()
 

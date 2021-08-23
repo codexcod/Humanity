@@ -21,3 +21,6 @@ class Objeto(pygame.sprite.Sprite):
 
     def onClick(self):
         return False
+
+    def getInfoStr(self):
+        return ""

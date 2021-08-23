@@ -1,12 +1,13 @@
 import pygame
-from Objetos import Objetos 
+
+from codigo.Isla.Helper import Helper
 
 
 class Agua(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = Objetos.AGUA
+        self.image = Helper.AGUA
         self.velocidad = 0
 
 

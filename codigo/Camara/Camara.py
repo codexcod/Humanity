@@ -1,7 +1,7 @@
-from Isla import Isla
 import pygame
 import math
-from Zoom import Zoom
+
+from codigo.Camara.Zoom import Zoom
 
 
 class Camara:
