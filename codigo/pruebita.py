@@ -1,9 +1,15 @@
+import sys
+#Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
+sys.path.append(r'C:\Users\Joaco\Desktop\Colegio\Objetos\Humanity')
+
 import pygame
 from codigo.Isla.Isla import Isla
 from codigo.Camara.Camara import Camara
 from codigo.Camara.UI.UI import UI
 from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
+
+
 
 pygame.init()
 
