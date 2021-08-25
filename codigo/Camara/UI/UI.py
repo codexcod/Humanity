@@ -18,13 +18,13 @@ class UI:
         fondo = pygame.surface.Surface((800, 500))
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
-        font = Helper.FUENTE(32)
+        font = Helper.FUENTE(25)
         texto = objeto.getInfoStr()
         lineas = texto.splitlines()
         forI = 0 
         for i in lineas:
             textObject = font.render(i, True, (255, 255, 255), None)
-            info.append(UIObject(textObject, 600, 250 + forI * 40))
+            info.append(UIObject(textObject, 550, 250 + forI * 40))
             forI += 1
         
         image = pygame.transform.scale(objeto.getImage(), (200, 200))
