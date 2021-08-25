@@ -1,6 +1,6 @@
 import sys
 #Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
-sys.path.append(r'C:\Users\Joaco\Desktop\Colegio\Objetos\Humanity')
+sys.path.append(r'C:\Users\Sistemas\Desktop\Humanity')
 
 import pygame
 from codigo.Isla.Isla import Isla
@@ -33,10 +33,14 @@ while running:
                 if not camara.getUI().hayUIActivos():
                     if not mouse.pedirInfoObjeto() is None:
                         camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
-                        mouse.pedirInfoObjeto().onClick()
 
                 else:
                     mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
+
+            if right:
+                if not mouse.pedirInfoObjeto() is None:
+                    mouse.pedirInfoObjeto().onClick()
+
 
             if event.button == 4:
                 camara.getZoom().bajarZoom()

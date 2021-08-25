@@ -1,3 +1,4 @@
+from math import inf
 import pygame
 
 
@@ -18,8 +19,14 @@ class UI:
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
         font = Helper.FUENTE(32)
-        text = font.render(objeto.getInfoStr(), True, (255, 255, 255), None)
-        info.append(UIObject(text, 600, 250))
+        texto = objeto.getInfoStr()
+        lineas = texto.splitlines()
+        forI = 0 
+        for i in lineas:
+            textObject = font.render(i, True, (255, 255, 255), None)
+            info.append(UIObject(textObject, 600, 250 + forI * 40))
+            forI += 1
+        
         image = pygame.transform.scale(objeto.getImage(), (200, 200))
         info.append(UIObject(image, 200, 200))
         close = pygame.transform.scale(Helper.CLOSE, (50, 50))

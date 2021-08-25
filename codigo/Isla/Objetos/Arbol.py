@@ -33,9 +33,7 @@ class Arbol(Objeto):
         self.setNombre("Arbol talado")
 
     def getInfoStr(self):
-        result = f"""{self.nombre}
-    Troncos : {self.troncos}
-    Talado : {self.talado}
-    """
+        result = f"""Objeto : {self.nombre}
+Troncos : {self.troncos}"""
         return result
 

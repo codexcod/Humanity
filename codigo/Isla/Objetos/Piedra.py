@@ -18,7 +18,7 @@ class Piedra(Objeto):
         return self.piedras
 
     def getInfoStr(self):
-        result = f"""{self.nombre}
+        result = f"""Objeto : {self.nombre}
 Piedras : {self.piedras}
 """
         return result
