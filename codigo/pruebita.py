@@ -1,6 +1,8 @@
 import sys
 #Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
-sys.path.append(r'C:\Users\Sistemas\Desktop\Humanity')
+path = sys.path[0] 
+sys.path.append(path[:len(path) - 7] )
+
 
 import pygame
 from codigo.Isla.Isla import Isla
@@ -9,6 +11,10 @@ from codigo.Camara.UI.UI import UI
 from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
 
+from codigo.Isla.Aldea import Aldea
+from codigo.Isla.Movibles.Persona import Persona
+from codigo.Isla.Objetos.Casa import Casa
+
 
 
 pygame.init()
@@ -16,6 +22,20 @@ pygame.init()
 ancho = 60
 altura = 50
 isla = Isla(ancho, altura)
+aldea = Aldea("Aldea de tuke")
+casa = Casa(aldea)
+aldea.agregarCasa(casa)
+juan = Persona("Juan",casa)
+tuke = Persona("Tuke",casa)
+gonza = Persona("Gonza",casa)
+casa.agregarPersona(juan)
+casa.agregarPersona(tuke)
+casa.agregarPersona(gonza)
+
+isla.agregarObjeto(ancho // 2,altura // 2,casa)
+isla.agregarObjeto(ancho // 2 + 2,altura // 2,tuke)
+isla.agregarObjeto(ancho // 2 - 2,altura // 2,juan)
+isla.agregarObjeto(ancho // 2,altura // 2 +2,gonza)
 
 camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM,UI())
 mouse = Mouse(camara)
