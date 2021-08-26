@@ -9,6 +9,7 @@ class Helper:
     ARBOL_GRANDE = pygame.image.load('../img/arbol_grande.png')
     ARBOL_TALADO = pygame.image.load('../img/arbol_talado.png')
     PIEDRA = pygame.image.load('../img/piedra.png')
+    PIEDRA_ORO = pygame.image.load('../img/piedraoro.png')
     CLOSE = pygame.image.load('../img/close.png')
 
     def FUENTE(size):

@@ -56,7 +56,11 @@ class Isla:
                 elif random.randrange(1, 50) == 1:
                     piedra = Piedra()
                     piedra.setPiedras(random.randrange(5, 20))
+                    if random.randrange(1,5) == 1:
+                        piedra.setOro(random.randrange(1,3))
+                            
                     fila.append(piedra)
+                   
 
                 else:
                     fila.append(mArboles[y][x])
