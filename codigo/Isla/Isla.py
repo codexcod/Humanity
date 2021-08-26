@@ -78,3 +78,13 @@ class Isla:
 
     def getAltura(self):
         return self.altura
+
+    def agregarObjeto(self,x,y,objeto):
+        """
+        if not self.mObjetos[y][x] is None:
+            
+            return True
+        
+        return False"""
+        self.mObjetos[y][x] = objeto
+
