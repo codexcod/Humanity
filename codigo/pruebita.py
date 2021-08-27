@@ -1,8 +1,8 @@
 import sys
-#Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
-path = sys.path[0] 
-sys.path.append(path[:len(path) - 7] )
 
+# Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
+path = sys.path[0]
+sys.path.append(path[:len(path) - 7])
 
 import pygame
 from codigo.Isla.Isla import Isla
@@ -15,29 +15,15 @@ from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
 
-
-
 pygame.init()
 
 ancho = 60
-altura = 50
+altura = 40
 isla = Isla(ancho, altura)
 aldea = Aldea("Aldea de tuke")
-casa = Casa(aldea)
-aldea.agregarCasa(casa)
-juan = Persona("Juan",casa)
-tuke = Persona("Tuke",casa)
-gonza = Persona("Gonza",casa)
-casa.agregarPersona(juan)
-casa.agregarPersona(tuke)
-casa.agregarPersona(gonza)
+isla.agregarAldea(aldea, ancho // 2, altura // 2)
 
-isla.agregarObjeto(ancho // 2,altura // 2,casa)
-isla.agregarObjeto(ancho // 2 + 2,altura // 2,tuke)
-isla.agregarObjeto(ancho // 2 - 2,altura // 2,juan)
-isla.agregarObjeto(ancho // 2,altura // 2 +2,gonza)
-
-camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM,UI())
+camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
 mouse = Mouse(camara)
 
 running = True
@@ -60,6 +46,7 @@ while running:
             if right:
                 if not mouse.pedirInfoObjeto() is None:
                     mouse.pedirInfoObjeto().onClick()
+                    aldea.agregarTroncos(10)
 
 
             if event.button == 4:
@@ -88,5 +75,6 @@ while running:
                 camara.getZoom().bajarZoom()
 
     camara.actualizarPantalla()
+    camara.getUI().generarAldeaUI(aldea)
     camara.dibujarUI()
     pygame.display.update()

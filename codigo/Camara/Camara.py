@@ -10,6 +10,7 @@ class Camara:
         self.ui = ui
         self.mEstatico = isla.getMapaEstatico()
         self.mObjetos = isla.getMapaObjetos()
+        self.mMovibles = isla.getMapaMovible()
         self.isla = isla
         self.screen = pygame.display.set_mode((1000, 600))
         self.posX = posX
@@ -66,11 +67,20 @@ class Camara:
                                                     (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                     self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 
+                if not self.mMovibles[y][x] is None:
+                    objeto = pygame.transform.scale(self.mMovibles[y][x].getImage(),
+                                                    (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                    self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+
                 forX += 1
 
             forY += 1
 
+
     def dibujarUI(self):
+        for ui in self.ui.getAldeaUI():
+            self.screen.blit(ui.getObjeto(), (ui.getPosX(), ui.getPosY()))
         for listaUI in self.ui.getUIList():
             for ui in listaUI:
                 self.screen.blit(ui.getObjeto(), (ui.getPosX(), ui.getPosY()))
@@ -83,6 +93,9 @@ class Camara:
 
     def getMapaObjetos(self):
         return self.mObjetos
+
+    def getMapaMovible(self):
+        return self.mMovibles
 
     def getUI(self):
         return self.ui

@@ -12,6 +12,7 @@ class UI:
     def __init__(self):
         self.ui = []
         self.objetosClickeables = []
+        self.aldeaUI = None
 
     def generarInfoObjeto(self, objeto):
         info = []
@@ -34,6 +35,23 @@ class UI:
         self.objetosClickeables.append(CloseUI(close, 840, 60, info, self.ui))
         self.ui.append(info)
 
+    def generarAldeaUI(self, aldea):
+        ui = []
+        madera = pygame.surface.Surface((100, 30))
+        madera.fill((128, 64, 0), None, 0)
+        ui.append(UIObject(madera,200,25))
+        font = Helper.FUENTE(10)
+        textoMadera = font.render(f"{aldea.getMadera()}", True, (255, 255, 255), None)
+        ui.append(UIObject(textoMadera, 245, 35))
+
+        piedra = pygame.surface.Surface((100, 30))
+        piedra.fill((155, 155, 155), None, 0)
+        ui.append(UIObject(piedra, 400, 25))
+        font = Helper.FUENTE(10)
+        textoPiedra = font.render(f"{aldea.getPiedra()}", True, (255, 255, 255), None)
+        ui.append(UIObject(textoPiedra, 445, 35))
+        self.aldeaUI = ui
+
     def getUIList(self):
         return self.ui
 
@@ -42,3 +60,6 @@ class UI:
 
     def hayUIActivos(self):
         return len(self.ui) >= 1
+
+    def getAldeaUI(self):
+        return self.aldeaUI
