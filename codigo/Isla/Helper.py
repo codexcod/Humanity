@@ -15,6 +15,7 @@ class Helper:
     CASA = pygame.image.load('../img/casa.png')
     PERSONA = pygame.image.load('../img/persona.png')
     FOGATA = pygame.image.load('../img/fogata.gif')
+    RECUADRO = pygame.image.load('../img/recuadro.png')
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)

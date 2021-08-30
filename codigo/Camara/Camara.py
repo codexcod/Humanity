@@ -2,6 +2,7 @@ import pygame
 import math
 
 from codigo.Camara.Zoom import Zoom
+from codigo.Isla.Helper import Helper
 
 
 class Camara:
@@ -16,6 +17,7 @@ class Camara:
         self.posX = posX
         self.posY = posY
         self.zoom = Zoom(zoom, isla.getAncho(), isla.getAltura())
+        self.mouse = None
 
     def getPosX(self):
         return self.posX
@@ -49,6 +51,9 @@ class Camara:
         if self.posY <= self.zoom.getLimiteY() + 1:
             self.posY = self.zoom.getLimiteY() + 1
 
+    def setMouse(self,mouse):
+        self.mouse = mouse
+
     def actualizarPantalla(self):
         self.screen.fill((255, 255, 255))
         self.chquearMaxX()
@@ -62,6 +67,11 @@ class Camara:
                 superficie = pygame.transform.scale(self.mEstatico[y][x].getImage(),
                                                     (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                 self.screen.blit(superficie, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+                if self.mouse.getObjectMousePosition()[0] == x  and self.mouse.getObjectMousePosition()[1] == y:
+                    recuadro = pygame.transform.scale(Helper.RECUADRO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                    self.screen.blit(recuadro, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
                 if not self.mObjetos[y][x] is None:
                     objeto = pygame.transform.scale(self.mObjetos[y][x].getImage(),
                                                     (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))

@@ -26,6 +26,7 @@ isla.agregarAldea(aldea, ancho // 2, altura // 2)
 camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
 mouse = Mouse(camara)
 
+
 running = True
 while running:
 

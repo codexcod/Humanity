@@ -6,6 +6,7 @@ class Mouse:
 
     def __init__(self, camara):
         self.camara = camara
+        self.camara.setMouse(self)
 
     def pedirInfoObjeto(self):
         posX = self.camara.getPosX() - math.floor(self.camara.getZoom().getLimiteXFloat())
@@ -30,3 +31,15 @@ class Mouse:
                 if y + 20 >= object.getPosY() >= y - 40:
                     object.onClick()
                     objetosClickeables.remove(object)
+
+    def getObjectMousePosition(self):
+        posX = self.camara.getPosX() - math.floor(self.camara.getZoom().getLimiteXFloat())
+        posY = self.camara.getPosY() - math.floor(self.camara.getZoom().getLimiteYFloat())
+
+        mousePosition = pygame.mouse.get_pos()
+        x = posX + math.floor(mousePosition[0] / self.camara.getZoom().getRangoZoom())
+        y = posY + math.floor(mousePosition[1] / self.camara.getZoom().getRangoZoom())
+
+    
+        
+        return x,y
