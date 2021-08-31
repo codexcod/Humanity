@@ -112,8 +112,9 @@ class Isla:
         self.mMovible[y][x] = objeto
 
     def moverMovible(self, x, y, difX, difY):
-        self.mMovible[y + difY][x + difX] = self.mMovible[y][x]
-        self.mMovible[y][x] = None
+        if not self.mMovible[y][x] is None:
+            self.mMovible[y + difY][x + difX] = self.mMovible[y][x]
+            self.mMovible[y][x] = None
 
     def agregarAldea(self, aldea, posX, posY):
         for y in range(posY - 5, posY + 5):

@@ -18,6 +18,7 @@ class Camara:
         self.posY = posY
         self.zoom = Zoom(zoom, isla.getAncho(), isla.getAltura())
         self.mouse = None
+        self.seleccionado = None
 
     def getPosX(self):
         return self.posX
@@ -72,6 +73,11 @@ class Camara:
                     recuadro = pygame.transform.scale(Helper.RECUADRO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                     self.screen.blit(recuadro, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 
+                if not self.seleccionado is None:
+                    if self.seleccionado[0] == x and self.seleccionado[1] == y:
+                        select = pygame.transform.scale(Helper.SELECCIONADO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                        self.screen.blit(select, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
                 if not self.mObjetos[y][x] is None:
                     objeto = pygame.transform.scale(self.mObjetos[y][x].getImage(),
                                                     (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
@@ -109,3 +115,6 @@ class Camara:
 
     def getUI(self):
         return self.ui
+
+    def setSeleccionado(self,seleccionado):
+        self.seleccionado = seleccionado

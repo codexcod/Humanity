@@ -43,11 +43,16 @@ while running:
 
                 else:
                     mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
+                
 
             if right:
+                isla.moverMovible( ancho // 2 - 3 ,altura // 2, -1 ,0)
                 if not mouse.pedirInfoObjeto() is None:
                     mouse.pedirInfoObjeto().onClick()
                     aldea.agregarTroncos(10)
+                
+                if not mouse.seleccionarMovible() is None:
+                    camara.setSeleccionado(mouse.seleccionarMovible())
 
 
             if event.button == 4:
