@@ -31,4 +31,7 @@ class Aldea:
     def agregarPersona(self,persona):
         self.personas.append(persona)
 
+    def getPersonas(self):
+        return self.personas
+
     

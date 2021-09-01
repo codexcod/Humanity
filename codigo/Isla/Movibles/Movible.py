@@ -1,5 +1,6 @@
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
+import math
 
 class Movible(Objeto):
 
@@ -18,6 +19,9 @@ class Movible(Objeto):
             self.mMovibles[self.y][self.x] = None
             self.x += x
             self.y += y
+            return True
+        
+        return False
 
     def getX(self):
         return self.x
@@ -27,23 +31,36 @@ class Movible(Objeto):
             
     def moveToPosition(self,posX,posY):
         self.moves.clear()
-        for y in range(self.y,self.y + posY):
-            for x in range(self.x,self.x + posX):
-                if self.x < self.x + posX:
-                    self.moves.append([1,0])
+        
+    
+        for y in range(abs(posY - self.y)):
+            
+            if posY - self.y > 0:
+                self.moves.append([0,1])
 
-                elif self.x > self.x + posX:
-                    self.moves.append([-1,0])
+            elif posY - self.y < 0:
+                self.moves.append([0,-1])
 
-        if self.y < self.y + posY:
-            self.moves.append([0,1])
+        for x in range(abs(posX - self.x)):
+            if posX - self.x > 0:
+                self.moves.append([1,0])
 
-        elif self.y > self.y + posY:
-            self.moves.append([0,-1])
+            elif posX - self.x < 0:
+                self.moves.append([-1,0])
+
 
     def makeMoves(self):
         if len(self.moves) > 0:
-            self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
+            if self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1]):
+                self.moves.pop(len(self.moves) - 1)
+
+            else:
+                if self.moves[len(self.moves) - 1][0] == 0:
+                    self.moves.append([1,0])
+
+                else:
+                    self.moves.append([0,1])
+            
 
 
 

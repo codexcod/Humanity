@@ -20,6 +20,9 @@ class Camara:
         self.mouse = None
         self.seleccionado = None
 
+    def getSeleccionado(self):
+        return self.seleccionado
+
     def getPosX(self):
         return self.posX
 

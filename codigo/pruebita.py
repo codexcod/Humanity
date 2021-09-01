@@ -18,7 +18,7 @@ from codigo.Isla.Objetos.Casa import Casa
 pygame.init()
 
 ancho = 400
-altura = 400
+altura = 410
 isla = Isla(ancho, altura)
 aldea = Aldea("Aldea de tuke")
 isla.agregarAldea(aldea, ancho // 2, altura // 2)
@@ -29,7 +29,7 @@ mouse = Mouse(camara)
 
 clock = pygame.time.Clock()
 screenUpdate = pygame.USEREVENT
-pygame.time.set_timer(screenUpdate,500)
+pygame.time.set_timer(screenUpdate,250)
 
 running = True
 while running:
@@ -55,7 +55,12 @@ while running:
                 
                 if not mouse.seleccionarMovible() is None:
                     camara.setSeleccionado(mouse.seleccionarMovible())
-                    mouse.seleccionarMovible().moveToPosition(ancho // 2 + 5,altura // 2 - 4)
+
+                else:
+                    if not camara.getSeleccionado() is None:
+                        camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+
+
 
 
             if event.button == 4:
@@ -88,7 +93,8 @@ while running:
                 camara.setPosX(ancho // 2)
 
         if event.type == screenUpdate:
-            aldea.personas[0].makeMoves()
+            for persona in aldea.getPersonas():
+                persona.makeMoves()
 
             
         
