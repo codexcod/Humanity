@@ -74,7 +74,7 @@ class Camara:
                     self.screen.blit(recuadro, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 
                 if not self.seleccionado is None:
-                    if self.seleccionado[0] == x and self.seleccionado[1] == y:
+                    if self.seleccionado.getX() == x and self.seleccionado.getY() == y:
                         select = pygame.transform.scale(Helper.SELECCIONADO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                         self.screen.blit(select, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 

@@ -3,8 +3,8 @@ from codigo.Isla.Helper import Helper
 
 class Persona(Movible):
 
-    def __init__(self,nombre,casa):
-        Movible.__init__(self)
+    def __init__(self,nombre,casa,x,y,isla):
+        Movible.__init__(self,x,y,isla)
         self.edad = 0
         self.casa = casa
         self.nombre = nombre

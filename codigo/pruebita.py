@@ -17,8 +17,8 @@ from codigo.Isla.Objetos.Casa import Casa
 
 pygame.init()
 
-ancho = 60
-altura = 40
+ancho = 400
+altura = 400
 isla = Isla(ancho, altura)
 aldea = Aldea("Aldea de tuke")
 isla.agregarAldea(aldea, ancho // 2, altura // 2)
@@ -27,9 +27,13 @@ camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
 mouse = Mouse(camara)
 
 
+clock = pygame.time.Clock()
+screenUpdate = pygame.USEREVENT
+pygame.time.set_timer(screenUpdate,500)
+
 running = True
 while running:
-
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -46,13 +50,12 @@ while running:
                 
 
             if right:
-                isla.moverMovible( ancho // 2 - 3 ,altura // 2, -1 ,0)
                 if not mouse.pedirInfoObjeto() is None:
                     mouse.pedirInfoObjeto().onClick()
-                    aldea.agregarTroncos(10)
                 
                 if not mouse.seleccionarMovible() is None:
                     camara.setSeleccionado(mouse.seleccionarMovible())
+                    mouse.seleccionarMovible().moveToPosition(ancho // 2 + 5,altura // 2 - 4)
 
 
             if event.button == 4:
@@ -63,16 +66,16 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                camara.moveX(1)
+                camara.moveX(2)
 
             if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                camara.moveX(-1)
+                camara.moveX(-2)
 
             if event.key == pygame.K_UP or event.key == pygame.K_w:
-                camara.moveY(-1)
+                camara.moveY(-2)
 
             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                camara.moveY(1)
+                camara.moveY(2)
 
             if event.key == pygame.K_z:
                 camara.getZoom().subirZoom()
@@ -80,7 +83,19 @@ while running:
             if event.key == pygame.K_x:
                 camara.getZoom().bajarZoom()
 
+            if event.key == pygame.K_SPACE: 
+                camara.setPosY(altura // 2)
+                camara.setPosX(ancho // 2)
+
+        if event.type == screenUpdate:
+            aldea.personas[0].makeMoves()
+
+            
+        
+
     camara.actualizarPantalla()
     camara.getUI().generarAldeaUI(aldea)
     camara.dibujarUI()
     pygame.display.update()
+
+    clock.tick(60)

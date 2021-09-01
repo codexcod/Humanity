@@ -21,7 +21,7 @@ class Mouse:
         x = self.getObjectMousePosition()[0]
         y = self.getObjectMousePosition()[1]
         if not self.camara.getMapaMovible()[y][x] is None:
-            return x,y
+            return self.camara.getMapaMovible()[y][x]
 
 
 
