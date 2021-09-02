@@ -3,9 +3,13 @@ import pygame
 
 class Objeto(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self,x,y,isla):
         pygame.sprite.Sprite.__init__(self)
         self.nombre = ""
+        self.caminable = False
+        self.x = x
+        self.y = y
+        self.isla = isla
 
     def getNombre(self):
         return self.nombre
@@ -24,3 +28,15 @@ class Objeto(pygame.sprite.Sprite):
 
     def getInfoStr(self):
         return ""
+
+    def setCaminable(self,caminable):
+        self.caminable = caminable
+
+    def getCaminable(self):
+        return self.caminable
+
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y

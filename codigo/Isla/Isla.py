@@ -22,6 +22,7 @@ class Isla:
         self.generarMapaObjetos()
         self.generarMapaEstatico()
         self.generarMapaMovible()
+        self.arbolesTalados = []
 
     def generarMapaEstatico(self):
         for y in range(self.altura):
@@ -45,22 +46,22 @@ class Isla:
             self.mEstatico.append(fila)
 
     def generarMapaObjetos(self):
-        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol())
+        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0,0,self))
         mArboles = arboles.getNoise()
 
         for y in range(self.altura):
             fila = []
             for x in range(self.ancho):
                 if not mArboles[y][x] is None:
-                    mArboles[y][x] = Arbol()
+                    mArboles[y][x] = Arbol(x,y,self)
                     mArboles[y][x].setTroncos(random.randrange(5, 20))
                     fila.append(mArboles[y][x])
 
                 elif random.randrange(1, 50) == 1:
-                    piedra = Piedra()
+                    piedra = Piedra(x,y,self)
                     piedra.setPiedras(random.randrange(5, 20))
-                    if random.randrange(1, 5) == 1:
-                        piedra.setOro(random.randrange(1, 3))
+                    if random.randrange(1, 30) == 1:
+                        piedra.setOro(random.randrange(1,3))
 
                     fila.append(piedra)
 
@@ -121,7 +122,7 @@ class Isla:
             for x in range(posX - 5, posX + 5):
                 self.mObjetos[y][x] = None
 
-        casa = Casa(aldea)
+        casa = Casa(aldea,posX,posY - 2,self)
         self.agregarObjeto(posX, posY - 2, casa)
         aldea.agregarCasa(casa)
         gonza = Persona("Gonza", casa, posX, posY - 4,self)
@@ -133,5 +134,8 @@ class Isla:
         tuke = Persona("Tuke", casa, posX + 3, posY,self)
         self.agregarMovible(tuke.getX(), tuke.getY(), tuke)
         casa.agregarPersona(tuke)
-        fogata = Fogata(aldea)
+        fogata = Fogata(aldea,posX,posY,self)
         self.agregarObjeto(posX, posY, fogata)
+
+    def getArbolesTalados(self):
+        return self.arbolesTalados

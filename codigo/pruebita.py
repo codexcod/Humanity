@@ -28,8 +28,11 @@ mouse = Mouse(camara)
 
 
 clock = pygame.time.Clock()
-screenUpdate = pygame.USEREVENT
+screenUpdate = 1
 pygame.time.set_timer(screenUpdate,250)
+
+arboles = 2
+pygame.time.set_timer(arboles,10000)
 
 running = True
 while running:
@@ -54,8 +57,11 @@ while running:
                     mouse.pedirInfoObjeto().onClick()
                 
                 if not mouse.seleccionarMovible() is None:
-                    camara.setSeleccionado(mouse.seleccionarMovible())
+                    if not camara.getSeleccionado() ==  mouse.seleccionarMovible():
+                        camara.setSeleccionado(mouse.seleccionarMovible())
 
+                    else:
+                        camara.setSeleccionado(None)
                 else:
                     if not camara.getSeleccionado() is None:
                         camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
@@ -95,6 +101,11 @@ while running:
         if event.type == screenUpdate:
             for persona in aldea.getPersonas():
                 persona.makeMoves()
+
+        if event.type == arboles:
+            for arbol in isla.getArbolesTalados():
+                arbol.avanzarTiempo()
+            
 
             
         

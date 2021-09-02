@@ -5,29 +5,30 @@ import math
 class Movible(Objeto):
 
     def __init__(self,x,y,isla):
-        Objeto.__init__(self)
-        self.isla = isla
-        self.mObjetos = isla.getMapaObjetos()
-        self.mMovibles = isla.getMapaMovible()
-        self.x = x
-        self.y = y
+        Objeto.__init__(self,x,y,isla)
+        self.mObjetos = self.isla.getMapaObjetos()
+        self.mMovibles = self.isla.getMapaMovible()
         self.moves = []
 
     def move(self,x,y):
         if self.mObjetos[self.y + y][self.x + x] is None and self.mMovibles[self.y + y][self.x + x] is None:
-            self.mMovibles[self.y + y][self.x + x] = self
-            self.mMovibles[self.y][self.x] = None
-            self.x += x
-            self.y += y
-            return True
+            
+                self.mMovibles[self.y + y][self.x + x] = self
+                self.mMovibles[self.y][self.x] = None
+                self.x += x
+                self.y += y
+                return True
+
+        elif not self.mObjetos[self.y + y][self.x + x] is None and self.mObjetos[self.y + y][self.x + x].getCaminable():
+                self.mMovibles[self.y + y][self.x + x] = self
+                self.mMovibles[self.y][self.x] = None
+                self.x += x
+                self.y += y
+                return True
         
         return False
 
-    def getX(self):
-        return self.x
-
-    def getY(self):
-        return self.y
+    
             
     def moveToPosition(self,posX,posY):
         self.moves.clear()
@@ -56,10 +57,31 @@ class Movible(Objeto):
 
             else:
                 if self.moves[len(self.moves) - 1][0] == 0:
-                    self.moves.append([1,0])
+                    direction = 0
+                    for move in self.moves:
+                        direction += move[0]
+
+                    if direction > 0:
+                        self.moves.append([1,0])
+                        self.moves.insert(0,[-1,0])
+
+                    else:
+                        self.moves.append([-1,0])
+                        self.moves.insert(0,[1,0])
 
                 else:
-                    self.moves.append([0,1])
+                    direction = 0
+                    for move in self.moves:
+                        direction += move[1]
+
+                    if direction > 0:
+                        self.moves.append([0,1])
+                        self.moves.insert(0,[0,-1])
+
+                    else:
+                        self.moves.append([0,-1])
+                        self.moves.insert(0,[0,1])
+                    
             
 
 

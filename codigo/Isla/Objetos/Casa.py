@@ -4,8 +4,8 @@ from codigo.Isla.Objetos.Objeto import Objeto
 
 class Casa(Objeto):
 
-    def __init__(self,aldea):
-        Objeto.__init__(self)
+    def __init__(self,aldea,x,y,isla):
+        Objeto.__init__(self,x,y,isla)
         self.aldea = aldea
         self.personas = []
         self.image = Helper.CASA

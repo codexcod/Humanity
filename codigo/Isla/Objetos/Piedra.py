@@ -4,8 +4,8 @@ from codigo.Isla.Objetos.Objeto import Objeto
 
 class Piedra(Objeto):
 
-    def __init__(self):
-        Objeto.__init__(self)
+    def __init__(self,x,y,isla):
+        Objeto.__init__(self,x,y,isla)
         self.setNombre("Piedra")
         self.image = Helper.PIEDRA
         self.piedras = 0
