@@ -17,6 +17,8 @@ class Helper:
     FOGATA = pygame.image.load('../img/fogata.gif')
     RECUADRO = pygame.image.load('../img/recuadro.png')
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
+    COLORINACTIVO = pygame.Color('lightskyblue3')
+    COLORACTIVO = pygame.Color('dodgerblue2')
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)

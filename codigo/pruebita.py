@@ -150,12 +150,12 @@ def menu():
                 box.InputEventos(event)
         #Hacer que los inputs se hagan mas grandes
         for box in input_boxes:
-            box.update()
+            box.update(ancho)
 
         #Dibujar todo
         screen.fill((30, 30, 30))
         for box in input_boxes:
-            box.Dibujarcaja(screen)
+            box.dibujarCaja(screen)
 
         boton.dibujarBoton("Empezar",screen)
         pygame.display.flip()

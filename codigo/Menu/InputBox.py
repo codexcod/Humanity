@@ -1,17 +1,17 @@
 from typing import Text
+from codigo.Isla.Helper import Helper
 import pygame
 
-COLORINACTIVO = pygame.Color('lightskyblue3')
-COLORACTIVO = pygame.Color('dodgerblue2')
+
 class InputBox:
 
     def __init__(self, x, y, w, h,header, show=''):
         self.rect = pygame.Rect(x, y, w, h)
         self.header = header
-        self.color = COLORINACTIVO
+        self.color = Helper.COLORINACTIVO
         self.show = show
         self.text = ""
-        self.fuente = pygame.font.Font(None, 32)
+        self.fuente = Helper.FUENTE(22)
         self.txt_surface = self.fuente.render(show, True, self.color)
         self.active = False
         
@@ -25,9 +25,9 @@ class InputBox:
 
             # Marcar con color si esta activada o no
             if self.active: 
-                self.color = COLORACTIVO 
+                self.color = Helper.COLORACTIVO 
             else: 
-                self.color = COLORINACTIVO
+                self.color = Helper.COLORINACTIVO
 
         #Borrar de a uno con backspace y borrar todo con enter
         if event.type == pygame.KEYDOWN:
@@ -46,16 +46,16 @@ class InputBox:
                 self.txt_surface = self.fuente.render(self.show, True, "Red")
 
 
-    def update(self):
+    def update(self,ancho):
         # Expandir el input box si el texto es muy grande.
         width = max(200, self.txt_surface.get_width()+5)
         self.rect.w = width
 
-    def Dibujarcaja(self, screen):
+    def dibujarCaja(self, screen):
         header = self.fuente.render(self.header, True, "black")
         screen.blit(header,(self.rect.x , self.rect.y - 30))
         # Dibujar el texto
-        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 3))
         # Dibujar el cuadro de texto
         pygame.draw.rect(screen, self.color, self.rect, 2)
     
