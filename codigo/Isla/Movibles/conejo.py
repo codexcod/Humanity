@@ -9,8 +9,7 @@ class Conejo(Movible):
         self.animacion = 0
         self.image = Helper.CONEJO(self.animacion)
         self.carne = 0
-        self.nombre = "conejo"
-        self.ticks = 0      
+        self.nombre = "conejo"   
         
     
     def setCarne(self,troncos):
