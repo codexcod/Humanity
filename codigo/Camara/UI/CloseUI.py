@@ -7,6 +7,7 @@ class CloseUI(UIObject):
         super().__init__(objeto, posX, posY)
         self.ui = ui
         self.listUI = listUI
+        self.removible = True
 
     def onClick(self):
         self.listUI.remove(self.ui)

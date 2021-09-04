@@ -19,6 +19,7 @@ class Camara:
         self.zoom = Zoom(zoom, isla.getAncho(), isla.getAltura())
         self.mouse = None
         self.seleccionado = None
+        self.ui.generarBoton()
 
     def getSeleccionado(self):
         return self.seleccionado

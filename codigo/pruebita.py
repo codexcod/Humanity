@@ -13,7 +13,6 @@ from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
 from codigo.Menu.InputBox import InputBox
 from codigo.Menu.buttom import Boton
-
 from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
@@ -29,12 +28,14 @@ def Juego():
     aldea = Aldea("Aldea de tuke")
     isla.agregarAldea(aldea, ancho // 2, altura // 2)
 
+    clock = pygame.time.Clock()
+
     #Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
     mouse = Mouse(camara)
 
     #Controlar tiempo en el juego
-    clock = pygame.time.Clock()
+    
     screenUpdate = 1
         #Tiempo para personas
     pygame.time.set_timer(screenUpdate,250)
@@ -55,6 +56,9 @@ def Juego():
                     if not camara.getUI().hayUIActivos():
                         if not mouse.pedirInfoObjeto() is None:
                             camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
+                        
+                        else:
+                            mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
 
                     else:
                         mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())

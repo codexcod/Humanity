@@ -19,6 +19,7 @@ class Helper:
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
     COLORINACTIVO = pygame.Color('lightskyblue3')
     COLORACTIVO = pygame.Color('dodgerblue2')
+    PAUSAR = pygame.image.load('../img/Pausar.png')
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)

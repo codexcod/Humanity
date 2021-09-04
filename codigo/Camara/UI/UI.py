@@ -1,7 +1,7 @@
 from math import inf
 import pygame
 
-
+from codigo.Camara.UI.BotonUI import BotonUI
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
@@ -13,6 +13,14 @@ class UI:
         self.ui = []
         self.objetosClickeables = []
         self.aldeaUI = None
+
+
+    def generarBoton(self):
+        uiBoton = []
+        boton = BotonUI(850,50)
+        uiBoton.append(boton)
+        self.objetosClickeables.append(boton)
+        self.ui.append(uiBoton)
 
     def generarInfoObjeto(self, objeto):
         info = []

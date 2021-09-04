@@ -30,11 +30,12 @@ class Mouse:
         mousePosition = pygame.mouse.get_pos()
         x = math.ceil(mousePosition[0])
         y = math.ceil(mousePosition[1])
-        for object in objetosClickeables:
-            if x + 20 >= object.getPosX() >= x - 40:
-                if y + 20 >= object.getPosY() >= y - 40:
-                    object.onClick()
-                    objetosClickeables.remove(object)
+        for objeto in objetosClickeables:
+            if x + 20 >= objeto.getPosX() >= x - 40:
+                if y + 20 >= objeto.getPosY() >= y - 40:
+                    objeto.onClick()
+                    if objeto.removible:
+                        objetosClickeables.remove(objeto)
 
 
     def getObjectMousePosition(self):
