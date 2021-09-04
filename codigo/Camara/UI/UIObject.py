@@ -4,6 +4,7 @@ class UIObject:
         self.objeto = objeto
         self.posX = posX
         self.posY = posY
+        
 
     def getPosX(self):
         return self.posX
