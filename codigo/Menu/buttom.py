@@ -11,12 +11,22 @@ class Boton:
         self.pos = (self.x,self.y)
         self.font = pygame.font.SysFont("Arial", font)
 
-    def dibujarBoton(self, text,screen):
-        self.text = self.font.render(text, 1, pygame.Color("gold"))
+    def dibujarBoton(self, text,screen,color,colorfondo,recuadro):
+        self.text = self.font.render(text, 1, pygame.Color(color))
         self.size = self.text.get_size()
-        self.rect = pygame.Rect(self.x, self.y, self.size[0], self.size[1])
-        pygame.draw.rect(screen,("brown"),self.rect)
-        screen.blit(self.text,(self.x,self.y))
+        rectX = (self.x - (self.size[0] + 6)) - (self.size[0]/10)
+        rectY = (self.y -(self.size[1]+3)) - (self.size[1]/10)
+        self.rect = pygame.Rect(rectX, rectY, self.size[0] + 6, self.size[1]+3) 
+
+        #Dibujar fondo de boton
+        pygame.draw.rect(screen,(colorfondo),self.rect)
+
+        #Dibujar recuadro     
+        if not recuadro == None:
+            pygame.draw.rect(screen,("black"),self.rect,2)
+
+        #Dibujar el texto
+        screen.blit(self.text,(rectX + 3,rectY))
 
     def click(self, event):
         x, y = pygame.mouse.get_pos()

@@ -22,11 +22,11 @@ pygame.init()
 
 
 
-def Juego():
+def Juego(nombreAldea):
     ancho = 400
     altura = 410
     isla = Isla(ancho, altura)
-    aldea = Aldea("Aldea de tuke")
+    aldea = Aldea(nombreAldea)
     isla.agregarAldea(aldea, ancho // 2, altura // 2)
 
     #Camara para controlar el zoom
@@ -132,12 +132,12 @@ def menu():
     clock = pygame.time.Clock()
 
     #Creacion de input boxes
-    input_box1 = InputBox(100, 100, 100, 32,"Aldea")
-    input_box2 = InputBox(100, 200, 100, 32,"Amigos")
+    input_box1 = InputBox(100, 100, 100, 32,"Nombre de aldea")
+    input_box2 = InputBox(100, 200, 100, 32,"Explorador requete lindo")
     input_box3 = InputBox(100, 300, 100, 32,"Campo vacio")
     input_boxes = [input_box1, input_box2, input_box3]
     #Crear objeto boton
-    boton = Boton((ancho-150, alto-40),font=30)
+    boton = Boton((ancho,alto) ,30)
 
     Menu = True
     while Menu:
@@ -147,29 +147,30 @@ def menu():
                 Menu = False
             #Funcionamiento de los inputs llamando a un evento interno
             for box in input_boxes:
-                box.InputEventos(event)
+                box.InputEventos(event,screen)
         #Hacer que los inputs se hagan mas grandes
         for box in input_boxes:
             box.update(ancho)
 
         #Dibujar todo
-        screen.fill((30, 30, 30))
+        screen.fill((178,34,34))
         for box in input_boxes:
             box.dibujarCaja(screen)
 
-        boton.dibujarBoton("Empezar",screen)
+        boton.dibujarBoton("Empezar",screen,"gold","brown",1)
         pygame.display.flip()
         clock.tick(60)
 
         #Conseguir datos de input boxes
-        # input1 = input_box1.getText()
+        
         # input2 = input_box1.getText()
         # input3 = input_box1.getText()
 
 
         #Boton empezar
         if boton.click(event):
-            Juego()
+            aldea = input_box1.getText()
+            Juego(aldea)
             Menu= False
 
 menu()

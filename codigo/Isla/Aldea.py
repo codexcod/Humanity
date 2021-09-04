@@ -3,7 +3,7 @@ import pygame
 class Aldea:
 
     def __init__(self,nombre):
-        self.nombre = nombre
+        self.nombre = (f"Aldea : {nombre}")
         self.troncos = 0
         self.piedras = 0
         self.oro = 0
