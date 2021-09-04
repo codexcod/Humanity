@@ -221,4 +221,4 @@ def menu():
                 
                 
 
-menu()
+Juego("kviv")
