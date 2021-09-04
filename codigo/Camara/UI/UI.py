@@ -15,25 +15,13 @@ class UI:
         self.aldeaUI = None
 
     def generarInfoObjeto(self, objeto):
-        info = []
-        fondo = pygame.surface.Surface((800, 500))
-        fondo.fill((128, 64, 0), None, 0)
-        info.append(UIObject(fondo, 100, 50))
-        font = Helper.FUENTE(25)
-        texto = objeto.getInfoStr()
-        lineas = texto.splitlines()
-        forI = 0 
-        for i in lineas:
-            textObject = font.render(i, True, (255, 255, 255), None)
-            info.append(UIObject(textObject, 550, 250 + forI * 40))
-            forI += 1
-        
-        image = pygame.transform.scale(objeto.getImage(), (200, 200))
-        info.append(UIObject(image, 200, 200))
+        info = (objeto.getUI())
         close = pygame.transform.scale(Helper.CLOSE, (50, 50))
         info.append(UIObject(close, 840, 60))
         self.objetosClickeables.append(CloseUI(close, 840, 60, info, self.ui))
         self.ui.append(info)
+
+
 
     def generarAldeaUI(self, aldea):
         ui = []
