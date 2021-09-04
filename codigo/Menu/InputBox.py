@@ -15,6 +15,8 @@ class InputBox:
         self.txt_surface = self.fuente.render(show, True, self.color)
         self.active = False
         self.width = 200
+    
+    
         
     def dibujarTexto(self,screen):
         header = self.fuente.render(self.header, True, "black")
@@ -49,6 +51,7 @@ class InputBox:
             if self.active:
                 if event.key == pygame.K_BACKSPACE:
                     self.show = self.show[:-1]
+                    self.txt_surface = self.fuente.render(self.show, True, "White")
                 
             #Escribir las caracteres
                 else:
@@ -61,16 +64,16 @@ class InputBox:
 
 
     def update(self,ancho):
-        # Expandir el input box si el texto es muy grande.
-        if self.txt_surface.get_width()-50 < ancho:
-            self.width = max(200,self.txt_surface.get_width()+5)
+        # Expandir el input box si el texto es muy grande.        
+        self.width = max(200,self.txt_surface.get_width()+5)
         
         self.rect.w = self.width
 
     def dibujarCaja(self, screen):
-
+        #Dibujar fondo
         screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 3))
         pygame.draw.rect(screen, "black", self.rect)
+
         # Dibujar el texto
         self.dibujarTexto(screen)
 

@@ -2,6 +2,7 @@ import pygame
 
 
 class Helper:
+    
 
     AGUA = pygame.image.load('../img/agua.jpg')
     PASTO = pygame.image.load('../img/pasto.jpg')
@@ -20,10 +21,20 @@ class Helper:
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
     COLORINACTIVO = pygame.Color('lightblue')
     COLORACTIVO = pygame.Color('dodgerblue2')
+<<<<<<< HEAD
     TRONCO = pygame.image.load('../img/tronco.png')
 
+=======
+    
+    
+>>>>>>> a1ff44f8086d06eca0785c3b77d43cb61adaef32
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
+
+    
+    def CONEJO(animacionConejo):
+        return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
+
     
 
 

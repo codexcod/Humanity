@@ -9,6 +9,7 @@ from codigo.Isla.Objetos.Arbol import Arbol
 from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.Piedra import Piedra
+from codigo.Isla.Movibles.conejo import Conejo
 
 
 class Isla:
@@ -139,6 +140,9 @@ class Isla:
         casa.agregarPersona(tuke)
         fogata = Fogata(aldea,posX,posY,self)
         self.agregarObjeto(posX, posY, fogata)
-
+        Darwin = Conejo(posX + 4, posY, self)
+        self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
+        aldea.agregarPersona(Darwin)
+        
     def getArbolesTalados(self):
         return self.arbolesTalados

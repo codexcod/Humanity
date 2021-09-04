@@ -141,6 +141,7 @@ class Persona(Movible):
             self.trabajar()
 
 
+<<<<<<< HEAD
 
     def definirTrabajo(self,objeto):
         if objeto.getNombre()[:4] == "Casa":
@@ -174,3 +175,8 @@ class Persona(Movible):
             
 
         
+=======
+                    else:
+                        self.moves.append([0,-1])
+                        self.moves.insert(0,[0,1])
+>>>>>>> a1ff44f8086d06eca0785c3b77d43cb61adaef32
