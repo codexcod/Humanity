@@ -33,6 +33,9 @@ Piedras : {self.piedras}
 """
         return result
 
+    def getTrabajo(self):
+        return self.piedras * 5
+
 
 
 

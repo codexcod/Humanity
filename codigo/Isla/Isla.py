@@ -127,15 +127,7 @@ class Isla:
         aldea.agregarCasa(casa)
         gonza = Persona("Gonza", casa, posX, posY - 4,self)
         self.agregarMovible(gonza.getX(), gonza.getY(), gonza)
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
-        gonza.agregarInventario(Arbol(x,y,self))
+        
 
 
         casa.agregarPersona(gonza)

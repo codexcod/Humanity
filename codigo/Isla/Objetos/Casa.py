@@ -9,7 +9,7 @@ class Casa(Objeto):
         self.aldea = aldea
         self.personas = []
         self.image = Helper.CASA
-        self.nombre = "Casa de nadie"
+        self.nombre = "Casa"
 
     def agregarPersona(self,persona):
         self.personas.append(persona)

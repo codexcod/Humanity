@@ -62,3 +62,9 @@ class Objeto(pygame.sprite.Sprite):
         info.append(UIObject(image, 200, 200))
         
         return info
+
+    def getTrabajo(self):
+        return 0
+
+    def getValor(self):
+        return None

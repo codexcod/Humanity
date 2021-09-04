@@ -14,11 +14,13 @@ class Helper:
     CLOSE = pygame.image.load('../img/close.png')
     CASA = pygame.image.load('../img/casa.png')
     PERSONA = pygame.image.load('../img/persona.png')
+    PERSONA_TRABAJANDO = pygame.image.load('../img/persona_trabajando.png')
     FOGATA = pygame.image.load('../img/fogata.gif')
     RECUADRO = pygame.image.load('../img/recuadro.png')
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
     COLORINACTIVO = pygame.Color('lightblue')
     COLORACTIVO = pygame.Color('dodgerblue2')
+    TRONCO = pygame.image.load('../img/tronco.png')
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)

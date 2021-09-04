@@ -24,8 +24,8 @@ pygame.init()
 
 
 def Juego(nombreAldea):
-    ancho = 400
-    altura = 410
+    ancho = 100
+    altura = 100
     isla = Isla(ancho, altura)
     aldea = Aldea(nombreAldea)
     isla.agregarAldea(aldea, ancho // 2, altura // 2)
@@ -54,7 +54,10 @@ def Juego(nombreAldea):
                 left, middle, right = pygame.mouse.get_pressed()
                 if left:
                     if not camara.getUI().hayUIActivos():
-                        if not mouse.pedirInfoObjeto() is None:
+                        if not mouse.seleccionarMovible() is None:
+                            camara.getUI().generarInfoObjeto(mouse.seleccionarMovible())
+
+                        elif not mouse.pedirInfoObjeto() is None:
                             camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
 
                     else:
@@ -221,4 +224,4 @@ def menu():
                 
                 
 
-menu()
+Juego("down")

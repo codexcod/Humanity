@@ -1,5 +1,6 @@
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
+from codigo.Isla.Objetos.Tronco import Tronco
 import random
 
 
@@ -72,4 +73,14 @@ class Arbol(Objeto):
         result = f"""Objeto : {self.nombre}
 Troncos : {self.troncos}"""
         return result
+
+    def getTrabajo(self):
+        return self.troncos * 5
+
+    def getValor(self):
+        valor = []
+        for i in range(self.troncos):
+            valor.append(Tronco())
+
+        return valor
 
