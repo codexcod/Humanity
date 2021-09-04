@@ -106,5 +106,3 @@ class Persona(Movible):
                     else:
                         self.moves.append([0,-1])
                         self.moves.insert(0,[0,1])
-                    
-        
