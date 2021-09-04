@@ -13,19 +13,22 @@ from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
 from codigo.Menu.InputBox import InputBox
 from codigo.Menu.buttom import Boton
+from codigo.Menu.popUp import PopUp
 from codigo.Isla.Helper import Helper
 
 from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
 
+
+
 pygame.init()
 
 
 
 def Juego(nombreAldea):
-    ancho = 100
-    altura = 100
+    ancho = 400
+    altura = 400
     isla = Isla(ancho, altura)
     aldea = Aldea(nombreAldea)
     isla.agregarAldea(aldea, ancho // 2, altura // 2)
@@ -143,45 +146,37 @@ def menu():
     pantallaNegra.fill((0,0,0))
     #Creacion de input boxes
     input_box1 = InputBox(100, 100, 100, 32,"Nombre de aldea")
-    input_box2 = InputBox(100, 200, 100, 32,"Explorador requete lindo")
-    input_box3 = InputBox(100, 300, 100, 32,"Campo vacio")
+    input_box2 = InputBox(100, 200, 100, 32,"Heroe")
+    input_box3 = InputBox(100, 300, 100, 32,"Explorador")
     input_boxes = [input_box1, input_box2, input_box3]
 
     #Crear objeto boton
-    botonEmpezar = Boton((ancho,alto) ,30)
-    botonAceptar = Boton((ancho/2 + 55, alto/2 + 60) ,24)
+    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"gold")
+    botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black")
     Menu = True
     error = False
-    
+    popUp = PopUp(ancho,alto)
 
     #dibujar
     def dibujarMenu(error):
-        screen.fill((178,34,34))
-        
-        if error == False:
-            for box in input_boxes:
-                box.dibujarCaja(screen)
-            botonEmpezar.dibujarBoton("Empezar",screen,"gold","brown","black",1)
-            pygame.display.update()
-            clock.tick(60)
-            
+        screen.fill((128,0,0))
+        for box in input_boxes:
+            box.dibujarCaja(screen)
+        botonEmpezar.dibujarBoton((255,69,0),"black",1)
         if error == True:
-            pygame.draw.circle(screen, "white", (ancho/2, alto/2), 100)
-            pygame.draw.circle(screen, "red", (ancho/2, alto/2), 100,10)
-            pygame.draw.circle(screen, "grey", (ancho/2 + 45, alto/2 + 42), 15)
-            pygame.draw.circle(screen, "grey", (ancho/2 - 45, alto/2 + 42), 15)
+            popArriba = "Debe completar todos los campos "
+            popAbajo = "Pulsa el boton aceptar para continuar"
             
-            Aviso1 = Helper.FUENTE(13).render("Debe completar ", True, "black")
-            Aviso2 = Helper.FUENTE(13).render("todos los campos", True, "black")
-            screen.blit(Aviso1,(ancho/2 - 50, alto/2 - 40))
-            screen.blit(Aviso2,(ancho/2 - 50, alto/2 - 20))
-            botonAceptar.dibujarBoton("Aceptar",screen,"black","grey","red",0)
-            pygame.display.update()
-            if botonAceptar.click(event):
-                error = False
+            
+            popUp.dibujarCuadro(popArriba,popAbajo,screen)
+            botonAceptar.dibujarBoton("grey","black",1)
+            
+            
+
                 
     #Cerrar
     while Menu:
+        
         for event in pygame.event.get():
             #Salir
             if event.type == pygame.QUIT:
@@ -196,32 +191,44 @@ def menu():
             box.update(ancho)
 
         #Dibujar todo
-        # def degradado():
-        #     for alpha in range(0, 300):
-        #         pantallaNegra.set_alpha(alpha)
-        #         dibujarMenu()
-        #         screen.blit(pantallaNegra, (0,0))
-        #         pygame.display.update()
-        #         pygame.time.delay(5)
+        def degradado():
+            for alpha in range(0, 300):
+                pantallaNegra.set_alpha(alpha)
+                dibujarMenu(error)
+                screen.blit(pantallaNegra, (0,0))
+                pygame.display.update()
+                pygame.time.delay(5)
 
         
-        
-        
+
+        pygame.display.update()
+        clock.tick(60)           
         dibujarMenu(error)
-        if botonEmpezar.click(event):
+        
+        if botonAceptar.click(event):
+            error = False
             
+        
+        if botonEmpezar.click(event):  
             aldea = input_box1.getText()
-            input2 = input_box2.getText()
-            input3 = input_box3.getText()
+            heroe = input_box2.getText()
+            explorador = input_box3.getText()
+
+        
+
         #   Guardado para cuando lo optimicemos
-        #   degradado()
-            if aldea is None or input2 is None or input3 is None: 
-                aldea = input_box1.getText()
-                Juego(aldea)
-                Menu= False
-            else:
-                error = True
                 
+        
+            if aldea == "" or heroe == "" or explorador == "": 
+                    error = True
+                   
+            else:
+                if error == False:
+                    degradado()
+                    aldea = input_box1.getText()
+                    Juego(aldea)
+                    Menu = False
+            
                 
 
-Juego("down")
+menu()

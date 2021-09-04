@@ -11,7 +11,7 @@ class Movible(Objeto):
         self.moves = []
         self.directionX = 0
         self.directionY = 0
-        self.ticks = 0
+        
  
 
     def move(self,x,y):
