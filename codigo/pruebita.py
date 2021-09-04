@@ -62,7 +62,7 @@ def Juego():
 
                 if right:
                     if not mouse.pedirInfoObjeto() is None:
-                        mouse.pedirInfoObjeto().onClick()
+                        """mouse.pedirInfoObjeto().onClick()"""
                         
                     if not mouse.seleccionarMovible() is None:
                         if not camara.getSeleccionado() ==  mouse.seleccionarMovible():
@@ -72,7 +72,11 @@ def Juego():
                             camara.setSeleccionado(None)
                     else:
                         if not camara.getSeleccionado() is None:
-                            camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+                            if  mouse.pedirInfoObjeto() is None:
+                                camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+                            
+                            else:
+                                camara.getSeleccionado().accionarObjeto(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
 
 
 
