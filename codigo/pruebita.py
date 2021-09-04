@@ -1,5 +1,5 @@
-
 import sys
+from typing import Text
 
 # Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
 path = sys.path[0]
@@ -21,42 +21,7 @@ from codigo.Isla.Objetos.Casa import Casa
 
 pygame.init()
 
-ancho = 400
-altura = 410
-isla = Isla(ancho, altura)
-aldea = Aldea("Aldea de tuke")
-isla.agregarAldea(aldea, ancho // 2, altura // 2)
 
-#Camara para controlar el zoom
-camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
-mouse = Mouse(camara)
-
-#Controlar tiempo en el juego
-clock = pygame.time.Clock()
-screenUpdate = 1
-    #Tiempo para personas
-pygame.time.set_timer(screenUpdate,250)
-    #Tiempo para arboles
-arboles = 2
-pygame.time.set_timer(arboles,10000)
-
-running = True
-while running:
-            
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            left, middle, right = pygame.mouse.get_pressed()
-            if left:
-                if not camara.getUI().hayUIActivos():
-                    if not mouse.pedirInfoObjeto() is None:
-                        camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
-
-                else:
-                    mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
-                        
 
 def Juego(nombreAldea):
     ancho = 400
@@ -65,17 +30,36 @@ def Juego(nombreAldea):
     aldea = Aldea(nombreAldea)
     isla.agregarAldea(aldea, ancho // 2, altura // 2)
 
+    #Camara para controlar el zoom
+    camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
+    mouse = Mouse(camara)
+
+    #Controlar tiempo en el juego
+    clock = pygame.time.Clock()
+    screenUpdate = 1
+        #Tiempo para personas
+    pygame.time.set_timer(screenUpdate,250)
+        #Tiempo para arboles
+    arboles = 2
+    pygame.time.set_timer(arboles,10000)
+
+    running = True
+    while running:
+            
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                left, middle, right = pygame.mouse.get_pressed()
+                if left:
+                    if not camara.getUI().hayUIActivos():
+                        if not mouse.pedirInfoObjeto() is None:
+                            camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
+
                     else:
-                        camara.setSeleccionado(None)
-                else:
-                    if not camara.getSeleccionado() is None:
-                        camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
-
-
-
-
-            if event.button == 4:
-                camara.getZoom().bajarZoom()
+                        mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
+                        
 
                 if right:
                     if not mouse.pedirInfoObjeto() is None:
@@ -95,43 +79,46 @@ def Juego(nombreAldea):
                             else:
                                 camara.getSeleccionado().accionarObjeto(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
 
-            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                camara.moveX(-2)
-
-            if event.key == pygame.K_UP or event.key == pygame.K_w:
-                camara.moveY(-2)
-
-            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                camara.moveY(2)
-
-            if event.key == pygame.K_z:
-                camara.getZoom().subirZoom()
-
-            if event.key == pygame.K_x:
-                camara.getZoom().bajarZoom()
-
-            if event.key == pygame.K_SPACE: 
-                camara.setPosY(altura // 2)
-                camara.setPosX(ancho // 2)
-
-        if event.type == screenUpdate:
-            for persona in aldea.getPersonas():
-                persona.makeMoves()
-
-        if event.type == arboles:
-            for arbol in isla.getArbolesTalados():
-                arbol.avanzarTiempo()
 
 
 
+                if event.button == 4:
+                    camara.getZoom().bajarZoom()
 
+                if event.button == 5:
+                    camara.getZoom().subirZoom()
 
-    camara.actualizarPantalla()
-    camara.getUI().generarAldeaUI(aldea)
-    camara.dibujarUI()
-    pygame.display.update()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    camara.moveX(2)
 
-    clock.tick(60)
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    camara.moveX(-2)
+
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
+                    camara.moveY(-2)
+
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    camara.moveY(2)
+
+                if event.key == pygame.K_z:
+                    camara.getZoom().subirZoom()
+
+                if event.key == pygame.K_x:
+                    camara.getZoom().bajarZoom()
+
+                if event.key == pygame.K_SPACE: 
+                    camara.setPosY(altura // 2)
+                    camara.setPosX(ancho // 2)
+
+            if event.type == screenUpdate:
+                for persona in aldea.getPersonas():
+                    persona.makeMoves()
+
+            if event.type == arboles:
+                for arbol in isla.getArbolesTalados():
+                    arbol.avanzarTiempo()
+            
 
             
         
@@ -192,7 +179,6 @@ def menu():
                 
     #Cerrar
     while Menu:
-        print(error)
         for event in pygame.event.get():
             #Salir
             if event.type == pygame.QUIT:
