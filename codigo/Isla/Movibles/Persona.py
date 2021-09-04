@@ -31,7 +31,8 @@ class Persona(Movible):
         return result
 
     def agregarInventario(self,objeto):
-        self.inventario.append(objeto)
+        if len(self.inventario) < 80:
+            self.inventario.append(objeto)
 
     def getInventario(self):
         return self.inventario
@@ -56,11 +57,10 @@ class Persona(Movible):
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
-            fondoObjeto = pygame.surface.Surface((40, 40))
-            fondoObjeto.fill((82, 30, 0), None, 0)
+            fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
             info.append(UIObject(fondoObjeto,550 + 40 * forPosX,120+ 40 * forPosY ))
-            imagenObjeto = pygame.transform.scale(objeto.getImage(), (40, 40))
-            info.append(UIObject(imagenObjeto,550 + 40 * forPosX,120 + 40 * forPosY))
+            imagenObjeto = pygame.transform.scale(objeto.getImage(), (30, 30))
+            info.append(UIObject(imagenObjeto,550 + 40 * forPosX +  5 ,120 + 40 * forPosY + 5))
             if forPosX == 7:
                 forPosX = 0
                 forPosY += 1

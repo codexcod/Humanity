@@ -22,6 +22,7 @@ class Helper:
     COLORINACTIVO = pygame.Color('lightblue')
     COLORACTIVO = pygame.Color('dodgerblue2')
     TRONCO = pygame.image.load('../img/tronco.png')
+    INVENTARIO = pygame.image.load('../img/inventario.png')
 
     
     

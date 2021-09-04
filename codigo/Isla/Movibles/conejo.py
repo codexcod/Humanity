@@ -9,7 +9,7 @@ class Conejo(Movible):
         self.animacion = 0
         self.image = Helper.CONEJO(self.animacion)
         self.carne = 0
-        self.nombre = "conejo" 
+        self.nombre = "Conejo" 
         self.ticks = 0  
         
     
@@ -72,6 +72,6 @@ class Conejo(Movible):
 
 
     def getInfoStr(self):
-        result = f"""Objeto : {self.nombre}
+        result = f"""Nombre : {self.nombre}
 Carne : {self.carne}"""
         return result

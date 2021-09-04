@@ -142,6 +142,7 @@ class Isla:
         self.agregarObjeto(posX, posY, fogata)
         Darwin = Conejo(posX + 4, posY, self)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
+        Darwin.setNombre("Darwin")
         aldea.agregarPersona(Darwin)
         
     def getArbolesTalados(self):
