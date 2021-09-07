@@ -120,7 +120,7 @@ class Isla:
             self.mMovible[y + difY][x + difX] = self.mMovible[y][x]
             self.mMovible[y][x] = None
 
-    def agregarAldea(self, aldea, posX, posY,heroe,explorador):
+    def agregarAldea(self, aldea, posX, posY,heroe,explorador,mascota):
         for y in range(posY - 5, posY + 5):
             for x in range(posX - 5, posX + 5):
                 self.mObjetos[y][x] = None
@@ -147,11 +147,13 @@ class Isla:
 
         Darwin = Conejo(posX + 4, posY, self,100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
-        Darwin.setNombre("Darwin")
+        Darwin.setNombre(mascota)
         self.animales.append(Darwin)
+
         conejito = Conejo(posX + 2, posY, self,10)
         self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
         self.animales.append(conejito)
+
         vaca = Vaca(posX + 2, posY + 1, self,30)
         self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
         self.animales.append(vaca)

@@ -30,12 +30,12 @@ mixer.init()
 
 
 
-def Juego(nombreAldea,heroe,explorador):
+def Juego(nombreAldea,heroe,explorador,mascota):
     ancho = 400
     altura = 400
     isla = Isla(ancho, altura)
     aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2,heroe,explorador)
+    isla.agregarAldea(aldea, ancho // 2, altura // 2,heroe,explorador,mascota)
 
     #Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
@@ -253,14 +253,14 @@ def menu():
             aldea = input_box1.getText()
             heroe = input_box2.getText()
             explorador = input_box3.getText()
-            
+            mascota = input_box4.getText()
             botonEmpezar.setRecuadro(Helper.COLORACTIVO)
         
 
         
                 
         
-            if aldea == "" or heroe == "" or explorador == "": 
+            if aldea == "" or heroe == "" or explorador == "" or mascota == "": 
                     error = True
                     botonEmpezar.setRecuadro("black")
             else:
@@ -268,7 +268,7 @@ def menu():
                     Helper.fadeMusic(3000)
                     degradado()
                     aldea = input_box1.getText()
-                    Juego(aldea,heroe,explorador)
+                    Juego(aldea,heroe,explorador,mascota)
                     Menu = False
 
 
