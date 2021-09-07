@@ -1,10 +1,9 @@
 from codigo.Isla.Helper import Helper
-import pygame
 
-class Tronco(pygame.sprite.Sprite):
+
+class Tronco():
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
         self.image = Helper.TRONCO
         self.nombre = "Tronco"
     

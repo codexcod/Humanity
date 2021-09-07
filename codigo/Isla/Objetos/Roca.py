@@ -1,10 +1,8 @@
-import pygame
 from codigo.Isla.Helper import Helper
 
-class Roca(pygame.sprite.Sprite):
+class Roca:
 
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
         self.image = Helper.ROCA_OBJETO
         self.nombre = "Roca"
     

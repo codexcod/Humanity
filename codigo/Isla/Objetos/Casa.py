@@ -1,4 +1,4 @@
-import pygame
+
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
 

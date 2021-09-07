@@ -211,7 +211,13 @@ def menu():
         
     #Cerrar
     while Menu:
-        
+        if reproducirMusica == True:
+            Helper.pauseMusic()            
+            botonMusica.setRecuadro(Helper.COLORINACTIVO)
+        elif reproducirMusica == False:
+            Helper.unpauseMusic()
+            botonMusica.setRecuadro(Helper.COLORACTIVO)
+
         for event in pygame.event.get():
             #Salir
             if event.type == pygame.QUIT:
@@ -236,14 +242,12 @@ def menu():
             error = False
             
         if botonMusica.click(event):
-            if reproducirMusica == True:
-                Helper.pauseMusic()
+            if reproducirMusica == True:              
                 reproducirMusica = False
-                botonMusica.setRecuadro(Helper.COLORINACTIVO)
+
             elif reproducirMusica == False:
-                Helper.unpauseMusic()
                 reproducirMusica = True
-                botonMusica.setRecuadro(Helper.COLORACTIVO)
+                
             time.sleep(0.2)
 
 
@@ -267,7 +271,6 @@ def menu():
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    aldea = input_box1.getText()
                     Juego(aldea,heroe,explorador,mascota)
                     Menu = False
 
