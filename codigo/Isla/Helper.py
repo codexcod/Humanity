@@ -1,5 +1,6 @@
 import pygame
-
+from pygame import mixer
+mixer.init()
 
 class Helper:
     
@@ -23,15 +24,33 @@ class Helper:
     COLORACTIVO = pygame.Color('dodgerblue2')
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
+    MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
+    FONDO = pygame.image.load('../img/fondo/fondo.png') 
 
-    
-    
+    def playMusic(music,volume):
+        if music == 'menu':
+            pygame.mixer.music.set_volume(volume)
+            mixer.music.load('../sounds/menumusic.wav')
+            mixer.music.play()
+        elif music == 'juego':
+            pass
+        else:
+            pass
+
+    def stopMusic():
+        pygame.mixer.music.stop()
+
+    def fadeMusic(time):
+        pygame.mixer.music.fadeout(time)
+
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
 
-    
     def CONEJO(animacionConejo):
         return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
+
+    def FONDOANIMACION(animacionFondo):
+        return pygame.image.load(f'../img/fondo/fondo{animacionFondo}.png')
 
     
 

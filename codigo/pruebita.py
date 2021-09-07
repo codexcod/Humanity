@@ -6,12 +6,14 @@ path = sys.path[0]
 sys.path.append(path[:len(path) - 7])
 
 import pygame
+from pygame import mixer
 from codigo.Isla.Isla import Isla
 from codigo.Camara.Camara import Camara
 from codigo.Camara.UI.UI import UI
 from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
 from codigo.Menu.InputBox import InputBox
+from codigo.Menu.fondo import Fondo
 from codigo.Menu.buttom import Boton
 from codigo.Menu.popUp import PopUp
 from codigo.Isla.Helper import Helper
@@ -23,6 +25,7 @@ from codigo.Isla.Objetos.Casa import Casa
 
 
 pygame.init()
+mixer.init()
 
 
 
@@ -141,9 +144,11 @@ def menu():
     alto = 480
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
+
     #Pantalla para el degradado
     pantallaNegra = pygame.Surface((ancho, alto))
     pantallaNegra.fill((0,0,0))
+
     #Creacion de input boxes
     input_box1 = InputBox(100, 100, 100, 32,"Nombre de aldea")
     input_box2 = InputBox(100, 200, 100, 32,"Heroe")
@@ -153,16 +158,21 @@ def menu():
     #Crear objeto boton
     botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"gold")
     botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black")
+    elegirIsla = Boton((ancho-(ancho/4),alto - alto/2),24,"Islas",screen,"grey")
     Menu = True
     error = False
     popUp = PopUp(ancho,alto)
-
+    music = 'menu'
+    fondo = Fondo(ancho,alto)
+    
     #dibujar
     def dibujarMenu(error):
-        screen.fill((128,0,0))
+        screen.blit(fondo.getfirstImage(), (0,0))
+        screen.blit(fondo.getSecondImage(), (0,0))
         for box in input_boxes:
             box.dibujarCaja(screen)
         botonEmpezar.dibujarBoton((255,69,0),"black",1)
+        #elegirIsla.dibujarBoton(("red"),"black",1)
         if error == True:
             popArriba = "Debe completar todos los campos "
             popAbajo = "Pulsa el boton aceptar para continuar"
@@ -170,10 +180,26 @@ def menu():
             
             popUp.dibujarCuadro(popArriba,popAbajo,screen)
             botonAceptar.dibujarBoton("grey","black",1)
-            
-            
+        
+        
 
-                
+    # fade out visual
+    def degradado():
+            for alpha in range(0, 300):
+                pantallaNegra.set_alpha(alpha)
+                dibujarMenu(error)
+                screen.blit(pantallaNegra, (0,0))
+                pygame.display.update()
+                pygame.time.delay(5)
+
+    #Poner musica
+    Helper.playMusic(music,0.5)   
+         
+    #Tiempo para fondo
+    timerFondo = 4
+    pygame.time.set_timer(timerFondo,1000)
+
+        
     #Cerrar
     while Menu:
         
@@ -185,24 +211,16 @@ def menu():
             for box in input_boxes:
                 box.InputEventos(event,screen)
             
-            
+            if event.type == timerFondo:
+                fondo.cambiarAnimacion() 
         #Hacer que los inputs se hagan mas grandes
         for box in input_boxes:
             box.update(ancho)
 
         #Dibujar todo
-        def degradado():
-            for alpha in range(0, 300):
-                pantallaNegra.set_alpha(alpha)
-                dibujarMenu(error)
-                screen.blit(pantallaNegra, (0,0))
-                pygame.display.update()
-                pygame.time.delay(5)
-
         
-
         pygame.display.update()
-        clock.tick(60)           
+        clock.tick(60)     
         dibujarMenu(error)
         
         if botonAceptar.click(event):
@@ -216,7 +234,7 @@ def menu():
 
         
 
-        #   Guardado para cuando lo optimicemos
+        
                 
         
             if aldea == "" or heroe == "" or explorador == "": 
@@ -224,6 +242,7 @@ def menu():
                    
             else:
                 if error == False:
+                    Helper.fadeMusic(3000)
                     degradado()
                     aldea = input_box1.getText()
                     Juego(aldea)
