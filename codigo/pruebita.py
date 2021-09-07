@@ -6,6 +6,7 @@ path = sys.path[0]
 sys.path.append(path[:len(path) - 7])
 
 import pygame
+import time
 from pygame import mixer
 from codigo.Isla.Isla import Isla
 from codigo.Camara.Camara import Camara
@@ -29,12 +30,12 @@ mixer.init()
 
 
 
-def Juego(nombreAldea):
+def Juego(nombreAldea,heroe,explorador):
     ancho = 400
     altura = 400
     isla = Isla(ancho, altura)
     aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2)
+    isla.agregarAldea(aldea, ancho // 2, altura // 2,heroe,explorador)
 
     #Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
@@ -159,33 +160,35 @@ def menu():
     input_box1 = InputBox(100, 100, 100, 32,"Nombre de aldea")
     input_box2 = InputBox(100, 200, 100, 32,"Heroe")
     input_box3 = InputBox(100, 300, 100, 32,"Explorador")
-    input_boxes = [input_box1, input_box2, input_box3]
+    input_box4 = InputBox(100, 400, 100, 32,"Mascota")
+    input_boxes = [input_box1, input_box2, input_box3,input_box4]
 
     #Crear objeto boton
-    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"gold")
-    botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black")
-    elegirIsla = Boton((ancho-(ancho/4),alto - alto/2),24,"Islas",screen,"grey")
+    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
+    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
+    botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black","black","grey")
+    botonMusica = Boton((ancho,40 ),24,"Musica",screen,"white",(Helper.COLORACTIVO),"black")
     Menu = True
     error = False
     popUp = PopUp(ancho,alto)
     music = 'menu'
     fondo = Fondo(ancho,alto)
-    
+    reproducirMusica = True
     #dibujar
     def dibujarMenu(error):
         screen.blit(fondo.getfirstImage(), (0,0))
         screen.blit(fondo.getSecondImage(), (0,0))
         for box in input_boxes:
             box.dibujarCaja(screen)
-        botonEmpezar.dibujarBoton((255,69,0),"black",1)
-        #elegirIsla.dibujarBoton(("red"),"black",1)
+        botonEmpezar.dibujarBoton(3)
+        botonMusica.dibujarBoton(3)
         if error == True:
             popArriba = "Debe completar todos los campos "
             popAbajo = "Pulsa el boton aceptar para continuar"
             
             
             popUp.dibujarCuadro(popArriba,popAbajo,screen)
-            botonAceptar.dibujarBoton("grey","black",1)
+            botonAceptar.dibujarBoton(2)
         
         
 
@@ -200,7 +203,7 @@ def menu():
 
     #Poner musica
     Helper.playMusic(music,0.5)   
-         
+
     #Tiempo para fondo
     timerFondo = 4
     pygame.time.set_timer(timerFondo,1000)
@@ -232,12 +235,26 @@ def menu():
         if botonAceptar.click(event):
             error = False
             
-        
+        if botonMusica.click(event):
+            if reproducirMusica == True:
+                Helper.pauseMusic()
+                reproducirMusica = False
+                botonMusica.setRecuadro(Helper.COLORINACTIVO)
+            elif reproducirMusica == False:
+                Helper.unpauseMusic()
+                reproducirMusica = True
+                botonMusica.setRecuadro(Helper.COLORACTIVO)
+            time.sleep(0.2)
+
+
+
+
         if botonEmpezar.click(event):  
             aldea = input_box1.getText()
             heroe = input_box2.getText()
             explorador = input_box3.getText()
-
+            
+            botonEmpezar.setRecuadro(Helper.COLORACTIVO)
         
 
         
@@ -245,15 +262,14 @@ def menu():
         
             if aldea == "" or heroe == "" or explorador == "": 
                     error = True
-                   
+                    botonEmpezar.setRecuadro("black")
             else:
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
                     aldea = input_box1.getText()
-                    Juego(aldea)
+                    Juego(aldea,heroe,explorador)
                     Menu = False
-            
-                
+
 
 menu()

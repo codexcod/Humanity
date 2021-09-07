@@ -120,28 +120,31 @@ class Isla:
             self.mMovible[y + difY][x + difX] = self.mMovible[y][x]
             self.mMovible[y][x] = None
 
-    def agregarAldea(self, aldea, posX, posY):
+    def agregarAldea(self, aldea, posX, posY,heroe,explorador):
         for y in range(posY - 5, posY + 5):
             for x in range(posX - 5, posX + 5):
                 self.mObjetos[y][x] = None
 
+
+        # crear el heroe, el explorador y a gonza
         casa = Casa(aldea,posX,posY - 2,self)
         self.agregarObjeto(posX, posY - 2, casa)
         aldea.agregarCasa(casa)
         gonza = Persona("Gonza", casa, posX, posY - 4,self)
-        self.agregarMovible(gonza.getX(), gonza.getY(), gonza)
-        
-
-
+        self.agregarMovible(gonza.getX(), gonza.getY(), gonza)  
         casa.agregarPersona(gonza)
-        juan = Persona("Juan", casa, posX - 3, posY,self)
-        self.agregarMovible(juan.getX(), juan.getY(), juan)
-        casa.agregarPersona(juan)
-        tuke = Persona("Tuke", casa, posX + 3, posY,self)
-        self.agregarMovible(tuke.getX(), tuke.getY(), tuke)
-        casa.agregarPersona(tuke)
+        #HEROE
+        heroe = Persona(heroe, casa, posX - 3, posY,self)
+        self.agregarMovible(heroe.getX(), heroe.getY(), heroe)
+        casa.agregarPersona(heroe)
+        #EXPLORADOR
+        explorador = Persona(explorador, casa, posX + 3, posY,self)
+        self.agregarMovible(explorador.getX(), explorador.getY(), explorador)
+        casa.agregarPersona(explorador)
+
         fogata = Fogata(aldea,posX,posY,self)
         self.agregarObjeto(posX, posY, fogata)
+
         Darwin = Conejo(posX + 4, posY, self,100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre("Darwin")

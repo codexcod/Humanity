@@ -19,7 +19,7 @@ class InputBox:
     
         
     def dibujarTexto(self,screen):
-        header = self.fuente.render(self.header, True, "black")
+        header = self.fuente.render(self.header, True, (0,0,0))
         if self.active:
                 headerSelect = self.fuente.render(self.header, True, Helper.COLORACTIVO)
                 screen.blit(headerSelect,(self.rect.x , self.rect.y - 31))

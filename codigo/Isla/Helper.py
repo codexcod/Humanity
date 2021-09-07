@@ -21,7 +21,7 @@ class Helper:
     RECUADRO = pygame.image.load('../img/recuadro.png')
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
     COLORINACTIVO = pygame.Color('lightblue')
-    COLORACTIVO = pygame.Color('dodgerblue2')
+    COLORACTIVO = pygame.Color((18,220,110))
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
@@ -31,14 +31,17 @@ class Helper:
         if music == 'menu':
             pygame.mixer.music.set_volume(volume)
             mixer.music.load('../sounds/menumusic.wav')
-            mixer.music.play()
+            mixer.music.play(-1)
         elif music == 'juego':
             pass
         else:
             pass
 
-    def stopMusic():
-        pygame.mixer.music.stop()
+    def pauseMusic():
+        pygame.mixer.music.pause()
+
+    def unpauseMusic():
+        pygame.mixer.music.unpause()
 
     def fadeMusic(time):
         pygame.mixer.music.fadeout(time)
