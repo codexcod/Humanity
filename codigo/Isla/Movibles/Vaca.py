@@ -2,14 +2,14 @@ from codigo.Isla.Movibles.Animal import Animal
 from codigo.Isla.Helper import Helper
 import random 
 
-class Conejo(Animal):
+class Vaca(Animal):
 
     def __init__(self, x, y, isla, vida):
         Animal.__init__(self, x, y, isla,vida)
         self.animacion = 0
-        self.image = Helper.CONEJO(self.animacion)
+        self.image = Helper.VACA(self.animacion)
         self.carne = 0
-        self.nombre = "Conejo" 
+        self.nombre = "Vaca" 
         self.ticks = 0  
         
     
@@ -21,11 +21,10 @@ class Conejo(Animal):
 
     def makeMoves(self):
         self.ticks += 1
-        self.animacion += 1
-        if self.animacion == 14:
+        if self.animacion == 3:
             self.animacion = 0
-        self.setImage(Helper.CONEJO(self.animacion))
-        if self.ticks == 10:
+        self.setImage(Helper.VACA(self.animacion))
+        if self.ticks == 20:
             self.ticks = 0
         
             for i in range(4):
@@ -38,6 +37,7 @@ class Conejo(Animal):
         if len(self.moves) > 0:
             self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
             self.moves.pop(len(self.moves) - 1)
+            self.animacion += 1
                 
 
     def getInfoStr(self):

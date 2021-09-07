@@ -49,6 +49,8 @@ def Juego(nombreAldea):
     arboles = 2
     pygame.time.set_timer(arboles,10000)
 
+
+
     running = True
     while running:
             
@@ -76,7 +78,8 @@ def Juego(nombreAldea):
                         
                     if not mouse.seleccionarMovible() is None:
                         if not camara.getSeleccionado() ==  mouse.seleccionarMovible():
-                            camara.setSeleccionado(mouse.seleccionarMovible())
+                            if mouse.seleccionarMovible() in aldea.getPersonas():
+                                camara.setSeleccionado(mouse.seleccionarMovible())
 
                         else:
                             camara.setSeleccionado(None)
@@ -123,6 +126,9 @@ def Juego(nombreAldea):
             if event.type == screenUpdate:
                 for persona in aldea.getPersonas():
                     persona.makeMoves()
+
+                for animal in isla.getAnimales():
+                    animal.makeMoves()
 
             if event.type == arboles:
                 for arbol in isla.getArbolesTalados():

@@ -42,6 +42,7 @@ class Helper:
 
     def fadeMusic(time):
         pygame.mixer.music.fadeout(time)
+    ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
@@ -51,6 +52,12 @@ class Helper:
 
     def FONDOANIMACION(animacionFondo):
         return pygame.image.load(f'../img/fondo/fondo{animacionFondo}.png')
+  
+    def CONEJO(animacionConejo):
+        return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
+
+    def VACA(animcacionVaca):
+        return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
 
     
 

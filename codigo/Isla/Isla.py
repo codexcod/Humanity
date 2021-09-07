@@ -10,6 +10,7 @@ from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Movibles.conejo import Conejo
+from codigo.Isla.Movibles.Vaca import Vaca
 
 
 class Isla:
@@ -24,6 +25,7 @@ class Isla:
         self.generarMapaEstatico()
         self.generarMapaMovible()
         self.arbolesTalados = []
+        self.animales = []
 
     def generarMapaEstatico(self):
         for y in range(self.altura):
@@ -140,10 +142,20 @@ class Isla:
         casa.agregarPersona(tuke)
         fogata = Fogata(aldea,posX,posY,self)
         self.agregarObjeto(posX, posY, fogata)
-        Darwin = Conejo(posX + 4, posY, self)
+        Darwin = Conejo(posX + 4, posY, self,100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre("Darwin")
-        aldea.agregarPersona(Darwin)
-        
+        self.animales.append(Darwin)
+        conejito = Conejo(posX + 2, posY, self,10)
+        self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
+        self.animales.append(conejito)
+        vaca = Vaca(posX + 2, posY + 1, self,30)
+        self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
+        self.animales.append(vaca)
+
+
     def getArbolesTalados(self):
         return self.arbolesTalados
+
+    def getAnimales(self):
+        return self.animales
