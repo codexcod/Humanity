@@ -1,5 +1,6 @@
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
+from codigo.Isla.Objetos.Roca import Roca
 
 
 class Piedra(Objeto):
@@ -36,7 +37,19 @@ Piedras : {self.piedras}
     def getTrabajo(self):
         return self.piedras * 5
 
+    def getValor(self):
+        valor = []
+        for i in range(self.piedras):
+            valor.append(Roca())
 
+        return valor
+
+    def picarPiedra(self):
+        self.isla.getMapaObjetos()[self.y][self.x] = None
+
+
+    def onClick(self):
+        self.picarPiedra()
 
 
 

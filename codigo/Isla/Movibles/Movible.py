@@ -88,6 +88,9 @@ class Movible(Objeto):
                     else:
                         self.moves.append([0,-1])
                         self.moves.insert(0,[0,1])
+
+    def tieneAlLado(self,x,y):
+        return (self.getX() == x - 1  and self.getY() == y) or (self.getX() == x + 1 and self.getY() == y) or (self.getX() == x  and self.getY() == y - 1) or (self.getX() == x and self.getY() == y + 1) 
                     
             
 

@@ -108,12 +108,12 @@ class Persona(Movible):
             if len(self.moves) > 0:
                 if self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1]):
                     self.moves.pop(len(self.moves) - 1)
-                    if len(self.moves) == 1:
-                        if self.accionar[0]:
+
+                    if self.accionar[0]:
+                        if (self.tieneAlLado(self.accionar[1],self.accionar[2])):
                             self.definirTrabajo(self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]])
+                    
                             
-
-
                 else:
                     
                     if self.moves[len(self.moves) - 1][0] == 0:
@@ -144,9 +144,10 @@ class Persona(Movible):
 
     def definirTrabajo(self,objeto):
         if objeto.getNombre()[:4] == "Casa":
-            self.trabajando = True
-            self.tiempoTrabajando = len(self.inventario)
-            self.setImage(Helper.PERSONA_TRABAJANDO)
+            if self.tieneAlgoEnElInventario():
+                self.trabajando = True
+                self.tiempoTrabajando = len(self.inventario)
+                self.setImage(Helper.PERSONA_TRABAJANDO)
 
         elif not objeto.getTrabajo() == 0:
             self.trabajando = True
@@ -157,20 +158,24 @@ class Persona(Movible):
     def trabajar(self):
         if self.trabajando:
             self.tiempoTrabajando -= 1
-            if self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getNombre()[:4] == "Casa":
-                self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
-                self.inventario.pop(len(self.inventario) - 1)
+            if not self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]] is None:
+                if self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getNombre()[:4] == "Casa":
+                    self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
+                    self.inventario.pop(len(self.inventario) - 1)
 
             if self.tiempoTrabajando == 0:
                 self.trabajando = False
                 self.setImage(Helper.PERSONA)
-                if not self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getValor() is None:
-                    for objeto in self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getValor():
-                        self.agregarInventario(objeto) 
-                self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].onClick()
+                if not self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]] is None:
+                    if not self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getValor() is None:
+                        for objeto in self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].getValor():
+                            self.agregarInventario(objeto) 
+                    self.isla.getMapaObjetos()[self.accionar[2]][self.accionar[1]].onClick()
                 self.accionar[0] = False
+                self.moves.clear()
 
-
+    def tieneAlgoEnElInventario(self):
+        return len(self.inventario) > 0
             
 
         

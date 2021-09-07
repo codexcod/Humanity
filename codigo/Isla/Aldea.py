@@ -40,5 +40,8 @@ class Aldea:
     def añadirObjeto(self,objeto):
         if objeto.getNombre() == "Tronco":
             self.troncos += 1
+        
+        if objeto.getNombre() == "Roca":
+            self.piedras += 1
 
     

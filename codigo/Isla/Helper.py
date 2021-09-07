@@ -23,15 +23,18 @@ class Helper:
     COLORACTIVO = pygame.Color('dodgerblue2')
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
+    ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
 
     
     
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
-
-    
+  
     def CONEJO(animacionConejo):
         return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
+
+    def VACA(animcacionVaca):
+        return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
 
     
 
