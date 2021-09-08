@@ -281,22 +281,25 @@ def Islasini():
     alto = 480
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
-
+    brown = (126,35,16)
     #Crear objeto boton
     #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
-
-    Menu = True
-
-
     
-
+    Menu = True
 
 
     #Tiempo para fondo
     timerFondo = 4
     pygame.time.set_timer(timerFondo,1000)
+    #Dibujar fondo
+        
 
+    recuadroIsla = pygame.Rect((10, 10), (ancho- 20, 150))
+    recuadroIsla1 = pygame.Rect((10, 165), (ancho- 20, 150))
+    recuadroIsla2 = pygame.Rect((10, 320), (ancho- 20, 150))
+    
+   
+    
     while Menu:
         
         for event in pygame.event.get():
@@ -309,8 +312,11 @@ def Islasini():
         pygame.display.update()
         clock.tick(60)     
         screen.fill((255,255,255))
+        pygame.draw.rect(screen, brown, recuadroIsla)
+        pygame.draw.rect(screen, brown, recuadroIsla1)
+        pygame.draw.rect(screen, brown, recuadroIsla2)
 
                 
         
             
-menu()
+Islasini()
