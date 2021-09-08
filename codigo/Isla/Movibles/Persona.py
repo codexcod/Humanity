@@ -175,10 +175,13 @@ class Persona(Movible):
                     self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
 
                 elif not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
-                    if not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor() is None:
-                        for objeto in self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor():
+                    valor = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor()
+                    if not valor is None:
+                        for objeto in valor:
                             self.agregarInventario(objeto) 
-                    self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
+                    
+                    else:
+                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
 
                 self.accionar[0] = False
                 self.moves.clear()

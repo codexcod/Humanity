@@ -8,6 +8,7 @@ class Animal(Movible):
         Movible.__init__(self, x, y, isla)
         self.ticks = 0  
         self.vida = vida
+        self.muerto = False
         
 
     def moveToPosition(self,posX,posY):
@@ -40,19 +41,20 @@ class Animal(Movible):
         if self.ticks == 10:
             self.ticks = 0
         
-            for i in range(4):
-                if random.choice([0,1]) == 0:
-                    self.moves.append([0,random.choice([-1,1])])
-
-                else:
-                    self.moves.append([random.choice([-1,1]),0])
+            self.agregarMovimientos(4)
 
         if len(self.moves) > 0:
             self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
             self.moves.pop(len(self.moves) - 1)
                 
 
-        
+    def agregarMovimientos(self,movimientos):
+        for i in range(movimientos):
+                if random.choice([0,1]) == 0:
+                    self.moves.append([0,random.choice([-1,1])])
+
+                else:
+                    self.moves.append([random.choice([-1,1]),0])
             
 
 

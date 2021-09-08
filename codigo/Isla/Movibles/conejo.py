@@ -21,24 +21,20 @@ class Conejo(Animal):
         return self.carne
 
     def makeMoves(self):
-        self.ticks += 1
-        self.animacion += 1
-        if self.animacion == 14:
-            self.animacion = 0
-        self.setImage(Helper.CONEJO(self.animacion))
-        if self.ticks == 10:
-            self.ticks = 0
-        
-            for i in range(4):
-                if random.choice([0,1]) == 0:
-                    self.moves.append([0,random.choice([-1,1])])
+        if not self.muerto:
+            self.ticks += 1
+            self.animacion += 1
+            if self.animacion == 14:
+                self.animacion = 0
+            self.setImage(Helper.CONEJO(self.animacion))
+            if self.ticks == 10:
+                self.ticks = 0
+            
+                self.agregarMovimientos(4)
 
-                else:
-                    self.moves.append([random.choice([-1,1]),0])
-
-        if len(self.moves) > 0:
-            self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
-            self.moves.pop(len(self.moves) - 1)
+            if len(self.moves) > 0:
+                self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
+                self.moves.pop(len(self.moves) - 1)
                 
 
     def getInfoStr(self):
@@ -48,21 +44,33 @@ Vida : {self.vida}"""
         return result
 
     def getTrabajo(self):
-        return 1
+        if not self.muerto:
+            return 1
+        
+        return self.carne * 5
 
     def onClick(self):
         self.sacarVida(1)
+        self.agregarMovimientos(6)
 
     def sacarVida(self,vida):
         self.vida -= vida
         if self.vida <= 0:
-            self.isla.getAnimales().remove(self)
-            self.isla.getMapaMovible()[self.y][self.x] = None
+            self.matar()
+            
 
     def getValor(self):
-        if self.vida == 1:
+        if self.muerto == True:
             valor = []
             for i in range(self.carne):
                 valor.append(Carne())
 
+            self.isla.getAnimales().remove(self)
+            self.isla.getMapaMovible()[self.y][self.x] = None
             return valor
+
+    def matar(self):
+        self.muerto = True
+        self.setImage(Helper.CONEJO(14))
+        self.setNombre("Conejo Muerto")
+        

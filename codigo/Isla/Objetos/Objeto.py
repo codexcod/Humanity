@@ -1,6 +1,7 @@
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
+import pygame
 
 
 class Objeto:
