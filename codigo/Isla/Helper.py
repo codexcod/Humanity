@@ -25,7 +25,8 @@ class Helper:
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
-    FONDO = pygame.image.load('../img/fondo/fondo.png') 
+    FONDO = pygame.image.load('../img/fondo/fondo.png')
+    CUADRO = pygame.image.load('../img/barro.jpg')
 
     def playMusic(music,volume):
         if music == 'menu':
