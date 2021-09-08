@@ -36,16 +36,16 @@ def Juego(nombreAldea,heroe,explorador,mascota):
     aldea = Aldea(nombreAldea)
     isla.agregarAldea(aldea, ancho // 2, altura // 2,heroe,explorador,mascota)
 
-    #Camara para controlar el zoom
+    # Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
     mouse = Mouse(camara)
-
-    #Controlar tiempo en el juego
+    
+    # Controlar tiempo en el juego
     clock = pygame.time.Clock()
     screenUpdate = 1
-        #Tiempo para personas
+        # Tiempo para personas
     pygame.time.set_timer(screenUpdate,250)
-        #Tiempo para arboles
+        # Tiempo para arboles
     arboles = 2
     pygame.time.set_timer(arboles,10000)
 
@@ -57,7 +57,7 @@ def Juego(nombreAldea,heroe,explorador,mascota):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            # En el caso que 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 left, middle, right = pygame.mouse.get_pressed()
                 if left:
@@ -173,7 +173,9 @@ def menu():
     #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
     botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
     botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black","black","grey")
-    botonMusica = Boton((ancho,40 ),24,"Musica",screen,"white",(Helper.COLORACTIVO),"black")
+    botonMusicaOn = Boton((ancho,40 ),24,"On",screen,"black",(Helper.COLORACTIVO),"green")
+    botonMusicaOff = Boton((ancho - 30,40 ),24,"Off",screen,"black",(Helper.COLORACTIVO),(12,109,0))
+
     Menu = True
     error = False
     popUp = PopUp(ancho,alto)
@@ -187,7 +189,10 @@ def menu():
         for box in input_boxes:
             box.dibujarCaja(screen)
         botonEmpezar.dibujarBoton(3)
-        botonMusica.dibujarBoton(3)
+        botonMusicaOn.dibujarBoton(3)
+        botonMusicaOff.dibujarBoton(3)
+
+
         if error == True:
             popArriba = "Debe completar todos los campos "
             popAbajo = "Pulsa el boton aceptar para continuar"
@@ -219,21 +224,23 @@ def menu():
     while Menu:
         
         for event in pygame.event.get():
+
             #Salir
             if event.type == pygame.QUIT:
                 Menu = False
+
             #Funcionamiento de los inputs llamando a un evento interno
             for box in input_boxes:
                 box.InputEventos(event,screen)
             
             if event.type == timerFondo:
                 fondo.cambiarAnimacion() 
+
         #Hacer que los inputs se hagan mas grandes
         for box in input_boxes:
             box.update(ancho)
 
         #Dibujar todo
-        
         pygame.display.update()
         clock.tick(60)     
         dibujarMenu(error)
@@ -241,29 +248,28 @@ def menu():
         if botonAceptar.click(event):
             error = False
             
-        if botonMusica.click(event):
-            if reproducirMusica == True:
-                Helper.pauseMusic()
-                reproducirMusica = False
-                botonMusica.setRecuadro(Helper.COLORINACTIVO)
-            elif reproducirMusica == False:
+        if botonMusicaOn.click(event):
+            if Helper.pauseMusic():
+                botonMusicaOn.setcolorFondo("green")
+                botonMusicaOff.setcolorFondo((12,109,0))
                 Helper.unpauseMusic()
-                reproducirMusica = True
-                botonMusica.setRecuadro(Helper.COLORACTIVO)
-            time.sleep(0.2)
+        if botonMusicaOff.click(event):
+            if Helper.pauseMusic():
+                botonMusicaOff.setcolorFondo("green")
+                botonMusicaOn.setcolorFondo((12,109,0))
+                Helper.pauseMusic()
+                
 
 
 
 
+        #al clickear boton empezar
         if botonEmpezar.click(event):  
             aldea = input_box1.getText()
             heroe = input_box2.getText()
             explorador = input_box3.getText()
             mascota = input_box4.getText()
             botonEmpezar.setRecuadro(Helper.COLORACTIVO)
-        
-
-        
                 
         
             if aldea == "" or heroe == "" or explorador == "" or mascota == "": 
@@ -273,9 +279,44 @@ def menu():
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    aldea = input_box1.getText()
                     Juego(aldea,heroe,explorador,mascota)
                     Menu = False
 
+def Islasini():
+    ancho = 640
+    alto = 480
+    screen = pygame.display.set_mode((ancho, alto))
+    clock = pygame.time.Clock()
 
+    #Crear objeto boton
+    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
+    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
+
+    Menu = True
+
+
+    
+
+
+
+    #Tiempo para fondo
+    timerFondo = 4
+    pygame.time.set_timer(timerFondo,1000)
+
+    while Menu:
+        
+        for event in pygame.event.get():
+            #Salir
+            if event.type == pygame.QUIT:
+                Menu = False
+
+
+        #Dibujar todo
+        pygame.display.update()
+        clock.tick(60)     
+        screen.fill((255,255,255))
+
+                
+        
+            
 menu()

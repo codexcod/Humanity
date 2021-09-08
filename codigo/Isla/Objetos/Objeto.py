@@ -1,13 +1,11 @@
-import pygame
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
 
 
-class Objeto(pygame.sprite.Sprite):
+class Objeto:
 
     def __init__(self,x,y,isla):
-        pygame.sprite.Sprite.__init__(self)
         self.nombre = ""
         self.caminable = False
         self.x = x

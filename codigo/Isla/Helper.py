@@ -37,12 +37,16 @@ class Helper:
             pass
         else:
             pass
-
+    menumusic= True
     def pauseMusic():
         pygame.mixer.music.pause()
+        menumusic= True
+        return menumusic
 
     def unpauseMusic():
+        menumusic= False
         pygame.mixer.music.unpause()
+        
 
     def fadeMusic(time):
         pygame.mixer.music.fadeout(time)

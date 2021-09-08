@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> c79db11e500ad18010fec66fd5927f05599005c7
 from codigo.Isla.Helper import Helper
 
 class Roca:
