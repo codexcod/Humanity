@@ -26,6 +26,7 @@ class Helper:
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
     FONDO = pygame.image.load('../img/fondo/fondo.png') 
+    CARNE = pygame.image.load('../img/carne.png') 
 
     def playMusic(music,volume):
         if music == 'menu':

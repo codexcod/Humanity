@@ -20,8 +20,8 @@ class Mouse:
     def seleccionarMovible(self):
         x = self.getObjectMousePosition()[0]
         y = self.getObjectMousePosition()[1]
-        if not self.camara.getMapaMovible()[y][x] is None:
-            return self.camara.getMapaMovible()[y][x]
+        
+        return self.camara.getMapaMovible()[y][x]
 
 
 

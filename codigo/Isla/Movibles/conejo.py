@@ -1,5 +1,6 @@
 from codigo.Isla.Movibles.Animal import Animal
 from codigo.Isla.Helper import Helper
+from codigo.Isla.Objetos.Carne import Carne
 import random 
 
 class Conejo(Animal):
@@ -8,7 +9,7 @@ class Conejo(Animal):
         Animal.__init__(self, x, y, isla,vida)
         self.animacion = 0
         self.image = Helper.CONEJO(self.animacion)
-        self.carne = 0
+        self.carne = 10
         self.nombre = "Conejo" 
         self.ticks = 0  
         
@@ -45,3 +46,23 @@ class Conejo(Animal):
 Carne : {self.carne}
 Vida : {self.vida}"""
         return result
+
+    def getTrabajo(self):
+        return 1
+
+    def onClick(self):
+        self.sacarVida(1)
+
+    def sacarVida(self,vida):
+        self.vida -= vida
+        if self.vida <= 0:
+            self.isla.getAnimales().remove(self)
+            self.isla.getMapaMovible()[self.y][self.x] = None
+
+    def getValor(self):
+        if self.vida == 1:
+            valor = []
+            for i in range(self.carne):
+                valor.append(Carne())
+
+            return valor

@@ -1,11 +1,11 @@
 
 from codigo.Isla.Helper import Helper
 
-class Roca:
+class Carne:
 
     def __init__(self):
-        self.image = Helper.ROCA_OBJETO
-        self.nombre = "Roca"
+        self.image = Helper.CARNE
+        self.nombre = "Carne"
     
     def getNombre(self):
         return self.nombre

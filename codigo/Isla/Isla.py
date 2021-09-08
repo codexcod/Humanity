@@ -9,7 +9,7 @@ from codigo.Isla.Objetos.Arbol import Arbol
 from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.Piedra import Piedra
-from codigo.Isla.Movibles.conejo import Conejo
+from codigo.Isla.Movibles.Conejo import Conejo
 from codigo.Isla.Movibles.Vaca import Vaca
 
 
@@ -150,7 +150,7 @@ class Isla:
         Darwin.setNombre(mascota)
         self.animales.append(Darwin)
 
-        conejito = Conejo(posX + 2, posY, self,10)
+        conejito = Conejo(posX + 2, posY, self,5)
         self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
         self.animales.append(conejito)
 

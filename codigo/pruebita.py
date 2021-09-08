@@ -18,7 +18,6 @@ from codigo.Menu.fondo import Fondo
 from codigo.Menu.buttom import Boton
 from codigo.Menu.popUp import PopUp
 from codigo.Isla.Helper import Helper
-
 from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
@@ -74,8 +73,6 @@ def Juego(nombreAldea,heroe,explorador,mascota):
                         
 
                 if right:
-                    if not mouse.pedirInfoObjeto() is None:
-                        """mouse.pedirInfoObjeto().onClick()"""
                         
                     if not mouse.seleccionarMovible() is None:
                         if not camara.getSeleccionado() ==  mouse.seleccionarMovible():
@@ -84,13 +81,22 @@ def Juego(nombreAldea,heroe,explorador,mascota):
 
                         else:
                             camara.setSeleccionado(None)
-                    else:
-                        if not camara.getSeleccionado() is None:
-                            if  mouse.pedirInfoObjeto() is None:
-                                camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+                    
+                    if not camara.getSeleccionado() is None:
+                        if  mouse.pedirInfoObjeto() is None:
+                            camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
                             
+
+                        else:
+                            if mouse.seleccionarMovible() is None:
+                                
+                                camara.getSeleccionado().accionarObjeto(mouse.pedirInfoObjeto())
+                                
                             else:
-                                camara.getSeleccionado().accionarObjeto(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+                                if not mouse.seleccionarMovible() in aldea.getPersonas():
+                                    camara.getSeleccionado().accionarObjeto(mouse.seleccionarMovible())
+                                    
+                                
 
 
 
