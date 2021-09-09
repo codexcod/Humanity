@@ -20,12 +20,13 @@ class Isla:
         self.mMovible = []
         self.mObjetos = []
         self.ancho = ancho
+        self.animales = []
         self.altura = altura
         self.generarMapaObjetos()
         self.generarMapaEstatico()
         self.generarMapaMovible()
         self.arbolesTalados = []
-        self.animales = []
+        
 
     def generarMapaEstatico(self):
         for y in range(self.altura):
@@ -80,7 +81,14 @@ class Isla:
             for x in range(self.ancho):
                 fila.append(None)
 
+
             self.mMovible.append(fila)
+
+        for y in range(self.altura):            
+            for x in range(self.ancho):
+                if self.getMapaObjetos()[y][x] is None:
+                    if random.randrange(1, 3000) == 1:
+                        self.crearGrupoDeAnimales(5,x,y,"conejo")
 
     def getMapaEstatico(self):
         return self.mEstatico
@@ -125,7 +133,7 @@ class Isla:
             for x in range(posX - 5, posX + 5):
                 self.mObjetos[y][x] = None
 
-
+        
         # crear el heroe, el explorador y a gonza
         casa = Casa(aldea,posX,posY - 2,self)
         self.agregarObjeto(posX, posY - 2, casa)
@@ -149,18 +157,45 @@ class Isla:
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre(mascota)
         self.animales.append(Darwin)
-
-        conejito = Conejo(posX + 2, posY, self,5)
-        self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
-        self.animales.append(conejito)
-
-        vaca = Vaca(posX + 2, posY + 1, self,30)
-        self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
-        self.animales.append(vaca)
-
+        
 
     def getArbolesTalados(self):
         return self.arbolesTalados
 
     def getAnimales(self):
         return self.animales
+
+    def crearGrupoDeAnimales(self,numero,x,y,animal):
+        if animal == "conejo":
+            for i in range(numero):
+                aleatorioX = random.randrange(-3,3)
+                aleatorioY = random.randrange(-3,3)
+                while x + aleatorioX >= self.ancho or x + aleatorioX  <= 0:
+                    aleatorioX = random.randrange(-3,3)
+
+                while y + aleatorioY >= self.altura or y + aleatorioY <= 0:
+                    aleatorioY = random.randrange(-3,3)
+
+                if self.getMapaMovible()[y + aleatorioY][x +aleatorioX] is None and self.getMapaObjetos()[y + aleatorioY][x +aleatorioX] is None:
+                    conejo = Conejo(x +aleatorioX,y + aleatorioY,self,10)
+                    self.agregarMovible(conejo.getX(), conejo.getY(),conejo)
+                    self.animales.append(conejo)
+                    
+                    
+                     
+
+        elif animal == "vaca":
+            for i in range(numero):
+                aleatorioX = random.randrange(-6,6)
+                aleatorioY = random.randrange(-6,6)
+                while x + aleatorioX >= self.ancho or x + aleatorioX  <= 0:
+                    aleatorioX = random.randrange(-6,6)
+
+                while y + aleatorioY >= self.altura or y + aleatorioY <= 0:
+                    aleatorioY = random.randrange(-6,6)
+
+                if self.getMapaMovible()[y + aleatorioY][x +aleatorioX] is None and self.getMapaObjetos()[y + aleatorioY][x +aleatorioX] is None:
+                    vaca = Vaca(x +aleatorioX,y + aleatorioY,self,15)
+                    self.agregarMovible(vaca.getX(), vaca.getY(),vaca)
+                    self.animales.append(vaca)
+

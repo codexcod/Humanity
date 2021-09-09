@@ -114,7 +114,12 @@ class Persona(Movible):
                             self.definirTrabajo(self.accionar[1])
 
                         elif len(self.moves) == 1:
-                            self.moveToPosition(self.accionar[1].getX(),self.accionar[1].getY())
+                            if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
+                                self.accionarObjeto(self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()])
+
+                            else:
+                                self.accionarObjeto(self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()])
+                                
                             
                 else:
                     

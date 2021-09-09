@@ -68,9 +68,15 @@ class Animal(Movible):
     def setVida(self,vida):
         self.vida = vida
 
-    def restarVida(self,resta):
-        self.vida -= resta
+    def restarVida(self,vida):
+        self.vida -= vida
+        if self.vida <= 0:
+            self.matar()
     
     def sumarVida(self,suma):
         self.vida += suma
+
+    def matar(self):
+        self.muerto = True
+        self.setNombre(f"{sel.nombre} Muerto")
         
