@@ -28,7 +28,7 @@ class InputBox:
                 screen.blit(headerSelect,(self.rect.x + 1, self.rect.y - 32))
         else:
             pass
-        screen.blit(header,(self.rect.x , self.rect.y - 30))
+        screen.blit(header, (self.rect.x , self.rect.y - 30))
     
     def InputEventos(self, event, screen):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -65,7 +65,7 @@ class InputBox:
 
     def update(self,ancho):
         # Expandir el input box si el texto es muy grande.        
-        self.width = max(200,self.txt_surface.get_width()+5)
+        self.width = max(200, self.txt_surface.get_width()+5)
         
         self.rect.w = self.width
 

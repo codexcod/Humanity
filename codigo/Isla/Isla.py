@@ -28,6 +28,7 @@ class Isla:
         self.animales = []
 
     def generarMapaEstatico(self):
+        # Genera el mapa de fondo como la tierra
         for y in range(self.altura):
             fila = []
             for x in range(self.ancho):
@@ -49,6 +50,7 @@ class Isla:
             self.mEstatico.append(fila)
 
     def generarMapaObjetos(self):
+        # Genera el mapa en el cual entran los arboles y piedras
         arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0,0,self))
         mArboles = arboles.getNoise()
 
@@ -56,7 +58,7 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if not mArboles[y][x] is None:
-                    mArboles[y][x] = Arbol(x,y,self)
+                    mArboles[y][x] = Arbol(x, y, self)
                     mArboles[y][x].setTroncos(random.randrange(5, 20))
                     fila.append(mArboles[y][x])
 
@@ -64,7 +66,7 @@ class Isla:
                     piedra = Piedra(x,y,self)
                     piedra.setPiedras(random.randrange(5, 20))
                     if random.randrange(1, 30) == 1:
-                        piedra.setOro(random.randrange(1,3))
+                        piedra.setOro(random.randrange(1, 3))
 
                     fila.append(piedra)
 
@@ -75,6 +77,7 @@ class Isla:
             self.mObjetos.append(fila)
 
     def generarMapaMovible(self):
+        # Genera el mapa por el cual se mueven las personas y los animales
         for y in range(self.altura):
             fila = []
             for x in range(self.ancho):
@@ -127,34 +130,34 @@ class Isla:
 
 
         # crear el heroe, el explorador y a gonza
-        casa = Casa(aldea,posX,posY - 2,self)
+        casa = Casa(aldea, posX, posY - 2, self)
         self.agregarObjeto(posX, posY - 2, casa)
         aldea.agregarCasa(casa)
-        gonza = Persona("Gonza", casa, posX, posY - 4,self)
+        gonza = Persona("Gonza", casa, posX, posY - 4, self)
         self.agregarMovible(gonza.getX(), gonza.getY(), gonza)  
         casa.agregarPersona(gonza)
         #HEROE
-        heroe = Persona(heroe, casa, posX - 3, posY,self)
+        heroe = Persona(heroe, casa, posX - 3, posY, self)
         self.agregarMovible(heroe.getX(), heroe.getY(), heroe)
         casa.agregarPersona(heroe)
         #EXPLORADOR
-        explorador = Persona(explorador, casa, posX + 3, posY,self)
+        explorador = Persona(explorador, casa, posX + 3, posY, self)
         self.agregarMovible(explorador.getX(), explorador.getY(), explorador)
         casa.agregarPersona(explorador)
-
-        fogata = Fogata(aldea,posX,posY,self)
+        # Crea fogata
+        fogata = Fogata(aldea, posX, posY, self)
         self.agregarObjeto(posX, posY, fogata)
-
-        Darwin = Conejo(posX + 4, posY, self,100000)
+        # Crea a darwin
+        Darwin = Conejo(posX + 4, posY, self, 100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre(mascota)
         self.animales.append(Darwin)
-
-        conejito = Conejo(posX + 2, posY, self,5)
+        # A los conejitos
+        conejito = Conejo(posX + 2, posY, self, 5)
         self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
         self.animales.append(conejito)
-
-        vaca = Vaca(posX + 2, posY + 1, self,30)
+        # A las vacas
+        vaca = Vaca(posX + 2, posY + 1, self, 30)
         self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
         self.animales.append(vaca)
 

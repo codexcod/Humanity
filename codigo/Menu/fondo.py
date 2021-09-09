@@ -14,6 +14,7 @@ class Fondo:
         return self.firstImage
 
     def cambiarAnimacion(self):
+        # Cambia la animacion del fondo de pantalla
         self.animacion += 1
         if self.animacion == 17:
             self.animacion = 1

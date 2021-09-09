@@ -29,12 +29,12 @@ mixer.init()
 
 
 
-def Juego(nombreAldea,heroe,explorador,mascota):
+def Juego(nombreAldea, heroe, explorador, mascota):
     ancho = 400
     altura = 400
-    isla = Isla(ancho, altura)
-    aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2,heroe,explorador,mascota)
+    isla = Isla (ancho, altura)
+    aldea = Aldea (nombreAldea)
+    isla.agregarAldea (aldea, ancho // 2, altura // 2,heroe,explorador,mascota)
 
     # Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
@@ -44,25 +44,30 @@ def Juego(nombreAldea,heroe,explorador,mascota):
     clock = pygame.time.Clock()
     screenUpdate = 1
         # Tiempo para personas
-    pygame.time.set_timer(screenUpdate,250)
+    pygame.time.set_timer(screenUpdate, 250)
         # Tiempo para arboles
     arboles = 2
-    pygame.time.set_timer(arboles,10000)
+    pygame.time.set_timer(arboles, 10000)
 
 
 
     running = True
     while running:
-            
+        # Checkea todos los eventos
         for event in pygame.event.get():
+            #Cerrar juego
             if event.type == pygame.QUIT:
                 running = False
-            # En el caso que 
+            
+            # Checkea si algun boton del mouse es presionado
             if event.type == pygame.MOUSEBUTTONDOWN:
                 left, middle, right = pygame.mouse.get_pressed()
                 if left:
+                    
+                    # En el caso que sea el izquierdo se fija si hay UI´s
                     if not camara.getUI().hayUIActivos():
                         if not mouse.seleccionarMovible() is None:
+
                             camara.getUI().generarInfoObjeto(mouse.seleccionarMovible())
 
                         elif not mouse.pedirInfoObjeto() is None:
@@ -71,28 +76,31 @@ def Juego(nombreAldea,heroe,explorador,mascota):
                     else:
                         mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
                         
-
+                # En el caso que sea derecha checkea si esta seleccionado
                 if right:
-                        
+                        # Si esta seleccionado y no es una persona, y trata de seleccionar una persona, la selecciona.
                     if not mouse.seleccionarMovible() is None:
                         if not camara.getSeleccionado() ==  mouse.seleccionarMovible():
                             if mouse.seleccionarMovible() in aldea.getPersonas():
                                 camara.setSeleccionado(mouse.seleccionarMovible())
 
                         else:
+                            # Si tiene algo seleccionado y es una persona, la deselecciona
                             camara.setSeleccionado(None)
                     
                     if not camara.getSeleccionado() is None:
                         if  mouse.pedirInfoObjeto() is None:
-                            camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],mouse.getObjectMousePosition()[1])
+                            # Si lo seleccionado es una persona, y selecciona al piso, lo mueve al lugar
+                            camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0], mouse.getObjectMousePosition()[1])
                             
 
                         else:
                             if mouse.seleccionarMovible() is None:
-                                
+                                # Si selecciona un objeto se fija si no es movible, hacerle algo al objeto
                                 camara.getSeleccionado().accionarObjeto(mouse.pedirInfoObjeto())
                                 
                             else:
+                                # Si selecciona a un movible, desde una persona, se fija de poder hacerle algo al movile
                                 if not mouse.seleccionarMovible() in aldea.getPersonas():
                                     camara.getSeleccionado().accionarObjeto(mouse.seleccionarMovible())
                                     
@@ -102,9 +110,11 @@ def Juego(nombreAldea,heroe,explorador,mascota):
 
 
                 if event.button == 4:
+                    # Baja el zoom
                     camara.getZoom().bajarZoom()
 
                 if event.button == 5:
+                    # Aumenta el zoom
                     camara.getZoom().subirZoom()
 
             if event.type == pygame.KEYDOWN:
@@ -127,10 +137,12 @@ def Juego(nombreAldea,heroe,explorador,mascota):
                     camara.getZoom().bajarZoom()
 
                 if event.key == pygame.K_SPACE: 
+                    # Mueve la camara para volver a la aldea
                     camara.setPosY(altura // 2)
                     camara.setPosX(ancho // 2)
 
             if event.type == screenUpdate:
+                # Cuando se actualiza la pantalla, se movera todas las personas y animales
                 for persona in aldea.getPersonas():
                     persona.makeMoves()
 
@@ -138,6 +150,7 @@ def Juego(nombreAldea,heroe,explorador,mascota):
                     animal.makeMoves()
 
             if event.type == arboles:
+                # Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer
                 for arbol in isla.getArbolesTalados():
                     arbol.avanzarTiempo()
             
@@ -151,6 +164,7 @@ def Juego(nombreAldea,heroe,explorador,mascota):
         pygame.display.update()
 
         clock.tick(60)
+        # El reloj por el cual todos los eventos se actualizan
 
 def menu():
     ancho = 640
@@ -158,34 +172,34 @@ def menu():
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
 
-    #Pantalla para el degradado
+    # Pantalla para el degradado
     pantallaNegra = pygame.Surface((ancho, alto))
-    pantallaNegra.fill((0,0,0))
+    pantallaNegra.fill((0, 0, 0))
 
-    #Creacion de input boxes
+    # Creacion de input boxes
     input_box1 = InputBox(100, 100, 100, 32,"Nombre de aldea")
     input_box2 = InputBox(100, 200, 100, 32,"Heroe")
     input_box3 = InputBox(100, 300, 100, 32,"Explorador")
     input_box4 = InputBox(100, 400, 100, 32,"Mascota")
     input_boxes = [input_box1, input_box2, input_box3,input_box4]
 
-    #Crear objeto boton
-    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
-    botonAceptar = Boton((ancho/2 + 45 , alto/2 + 45) ,24,"Aceptar",screen,"black","black","grey")
-    botonMusicaOn = Boton((ancho,40 ),24,"On",screen,"black",(Helper.COLORACTIVO),"green")
-    botonMusicaOff = Boton((ancho - 30,40 ),24,"Off",screen,"black",(Helper.COLORACTIVO),(12,109,0))
+    # Crear objeto boton
+    # ((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
+    botonEmpezar = Boton((ancho, alto) , 30, "Empezar", screen, "black", "black",(62, 62, 62))
+    botonAceptar = Boton((ancho/ 2 + 45 , alto/ 2 + 45) , 24, "Aceptar", screen, "black", "black", "grey")
+    botonMusicaOn = Boton((ancho,40 ), 24, "On", screen, "black", (Helper.COLORACTIVO), "green")
+    botonMusicaOff = Boton((ancho - 30, 40 ), 24, "Off", screen, "black", (Helper.COLORACTIVO),(12, 109, 0))
 
     Menu = True
     error = False
-    popUp = PopUp(ancho,alto)
+    popUp = PopUp(ancho, alto)
     music = 'menu'
-    fondo = Fondo(ancho,alto)
+    fondo = Fondo(ancho, alto)
     reproducirMusica = True
-    #dibujar
+    # Dibujar
     def dibujarMenu(error):
-        screen.blit(fondo.getfirstImage(), (0,0))
-        screen.blit(fondo.getSecondImage(), (0,0))
+        screen.blit(fondo.getfirstImage(), (0, 0))
+        screen.blit(fondo.getSecondImage(), (0, 0))
         for box in input_boxes:
             box.dibujarCaja(screen)
         botonEmpezar.dibujarBoton(3)
@@ -203,60 +217,60 @@ def menu():
         
         
 
-    # fade out visual
+    # Fade out visual
     def degradado():
             for alpha in range(0, 300):
                 pantallaNegra.set_alpha(alpha)
                 dibujarMenu(error)
-                screen.blit(pantallaNegra, (0,0))
+                screen.blit(pantallaNegra, (0, 0))
                 pygame.display.update()
                 pygame.time.delay(5)
 
-    #Poner musica
-    Helper.playMusic(music,0.5)   
+    # Poner musica
+    Helper.playMusic(music, 0.5)   
 
-    #Tiempo para fondo
+    # Tiempo para fondo
     timerFondo = 4
-    pygame.time.set_timer(timerFondo,1000)
+    pygame.time.set_timer(timerFondo, 1000)
 
         
-    #Cerrar
+    # Cerrar
     while Menu:
         
         for event in pygame.event.get():
 
-            #Salir
+            # Salir
             if event.type == pygame.QUIT:
                 Menu = False
 
-            #Funcionamiento de los inputs llamando a un evento interno
+            # Funcionamiento de los inputs llamando a un evento interno
             for box in input_boxes:
-                box.InputEventos(event,screen)
+                box.InputEventos(event, screen)
             
             if event.type == timerFondo:
                 fondo.cambiarAnimacion() 
 
-        #Hacer que los inputs se hagan mas grandes
+        # Hacer que los inputs se hagan mas grandes
         for box in input_boxes:
             box.update(ancho)
 
-        #Dibujar todo
+        # Dibujar todo
         pygame.display.update()
         clock.tick(60)     
         dibujarMenu(error)
         
         if botonAceptar.click(event):
             error = False
-            
+            # Musica
         if botonMusicaOn.click(event):
             if Helper.pauseMusic():
                 botonMusicaOn.setcolorFondo("green")
-                botonMusicaOff.setcolorFondo((12,109,0))
+                botonMusicaOff.setcolorFondo((12, 109, 0))
                 Helper.unpauseMusic()
         if botonMusicaOff.click(event):
             if Helper.pauseMusic():
                 botonMusicaOff.setcolorFondo("green")
-                botonMusicaOn.setcolorFondo((12,109,0))
+                botonMusicaOn.setcolorFondo((12, 109, 0))
                 Helper.pauseMusic()
                 
 
@@ -279,7 +293,7 @@ def menu():
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    Juego(aldea,heroe,explorador,mascota)
+                    Juego(aldea, heroe, explorador, mascota)
                     Menu = False
 
 def Islasini():
@@ -290,7 +304,7 @@ def Islasini():
 
     #Crear objeto boton
     #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    botonEmpezar = Boton((ancho,alto) ,30,"Empezar",screen,"black","black",(62,62,62))
+    botonEmpezar = Boton((ancho, alto) , 30, "Empezar", screen, "black", "black", (62, 62, 62))
 
     Menu = True
 
@@ -301,7 +315,7 @@ def Islasini():
 
     #Tiempo para fondo
     timerFondo = 4
-    pygame.time.set_timer(timerFondo,1000)
+    pygame.time.set_timer(timerFondo, 1000)
 
     while Menu:
         
@@ -314,7 +328,7 @@ def Islasini():
         #Dibujar todo
         pygame.display.update()
         clock.tick(60)     
-        screen.fill((255,255,255))
+        screen.fill((255, 255, 255))
 
                 
         
