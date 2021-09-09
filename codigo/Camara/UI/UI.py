@@ -40,11 +40,11 @@ class UI:
         ui.append(UIObject(textoPiedra, 445, 35))
 
         carne = pygame.surface.Surface((100, 30))
-        carne.fill((155, 155, 155), None, 0)
-        ui.append(UIObject(carne, 400, 25))
+        carne.fill((249, 144, 111), None, 0)
+        ui.append(UIObject(carne, 600, 25))
         font = Helper.FUENTE(10)
         textoCarne = font.render(f"{aldea.getCarne()}", True, (255, 255, 255), None)
-        ui.append(UIObject(textoCarne, 445, 35))
+        ui.append(UIObject(textoCarne, 645, 35))
         self.aldeaUI = ui
 
     def getUIList(self):
