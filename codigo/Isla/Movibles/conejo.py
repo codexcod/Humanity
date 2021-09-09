@@ -14,7 +14,7 @@ class Conejo(Animal):
         self.ticks = 0  
         
     
-    def setCarne(self,troncos):
+    def setCarne(self, carne):
         self.carne = carne
     
     def getCarne(self):
@@ -50,15 +50,10 @@ Vida : {self.vida}"""
         return self.carne * 5
 
     def onClick(self):
-        self.sacarVida(1)
+        self.restarVida(1)
         self.agregarMovimientos(6)
 
-    def sacarVida(self,vida):
-        self.vida -= vida
-        if self.vida <= 0:
-            self.matar()
-            
-
+    
     def getValor(self):
         if self.muerto == True:
             valor = []

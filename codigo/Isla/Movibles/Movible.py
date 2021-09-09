@@ -15,20 +15,21 @@ class Movible(Objeto):
  
 
     def move(self,x,y):
-        if self.mObjetos[self.y + y][self.x + x] is None and self.mMovibles[self.y + y][self.x + x] is None:
-            
-                self.mMovibles[self.y + y][self.x + x] = self
-                self.mMovibles[self.y][self.x] = None
-                self.x += x
-                self.y += y
-                return True
+        if not (self.x + x + 1 >= self.isla.getAncho() or self.x + x  - 1 <= 0) and not (self.y + y  + 1 >= self.isla.getAltura() or self.y + y - 1 <= 0):
+            if self.mObjetos[self.y + y][self.x + x] is None and self.mMovibles[self.y + y][self.x + x] is None:
+                
+                    self.mMovibles[self.y + y][self.x + x] = self
+                    self.mMovibles[self.y][self.x] = None
+                    self.x += x
+                    self.y += y
+                    return True
 
-        elif not self.mObjetos[self.y + y][self.x + x] is None and self.mObjetos[self.y + y][self.x + x].getCaminable():
-                self.mMovibles[self.y + y][self.x + x] = self
-                self.mMovibles[self.y][self.x] = None
-                self.x += x
-                self.y += y
-                return True
+            elif not self.mObjetos[self.y + y][self.x + x] is None and self.mObjetos[self.y + y][self.x + x].getCaminable():
+                    self.mMovibles[self.y + y][self.x + x] = self
+                    self.mMovibles[self.y][self.x] = None
+                    self.x += x
+                    self.y += y
+                    return True
         
         return False
 
