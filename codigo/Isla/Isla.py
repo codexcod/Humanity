@@ -160,19 +160,7 @@ class Isla:
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre(mascota)
         self.animales.append(Darwin)
-<<<<<<< HEAD
-        # A los conejitos
-        conejito = Conejo(posX + 2, posY, self, 5)
-        self.agregarMovible(conejito.getX(), conejito.getY(), conejito)
-        self.animales.append(conejito)
-        # A las vacas
-        vaca = Vaca(posX + 2, posY + 1, self, 30)
-        self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
-        self.animales.append(vaca)
-
-=======
         
->>>>>>> 98967fd48878d080850cda234f42c292d7590001
 
     def getArbolesTalados(self):
         return self.arbolesTalados
