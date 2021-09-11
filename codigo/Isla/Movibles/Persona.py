@@ -16,7 +16,22 @@ class Persona(Movible):
         self.inventario = []
         self.accionar = [False,0,0]
         self.trabajando = False
-        self.tiempoTrabajando = 0 
+        self.tiempoTrabajando = 0
+
+    def toJson(self):
+        jsonText = {
+            'objeto' : 'Persona',
+            'name' : self.nombre,
+            'edad' : self.edad,
+            'x' : self.x,
+            'y' : self.y,
+            'inventario' : []
+        }
+
+        for objeto in self.inventario:
+            jsonText['inventario'].append(objeto.toJson())
+
+        return jsonText
         
 
     def getCasa(self):

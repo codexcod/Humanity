@@ -11,7 +11,16 @@ class Conejo(Animal):
         self.image = Helper.CONEJO(self.animacion)
         self.carne = 10
         self.nombre = "Conejo" 
-        self.ticks = 0  
+        self.ticks = 0
+
+    def toJson(self):
+        return {
+            'objeto' : 'Conejo',
+            'name' : self.nombre,
+            'vida' : self.vida,
+            'x' : self.x,
+            'y' : self.y
+        }
         
     
     def setCarne(self, carne):

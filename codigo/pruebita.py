@@ -49,6 +49,9 @@ def Juego(nombreAldea, heroe, explorador, mascota):
     arboles = 2
     pygame.time.set_timer(arboles, 10000)
 
+    guardado = 3
+    pygame.time.set_timer(guardado, 20000)
+
 
 
     running = True
@@ -150,6 +153,9 @@ def Juego(nombreAldea, heroe, explorador, mascota):
                 # Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer
                 for arbol in isla.getArbolesTalados():
                     arbol.avanzarTiempo()
+
+            if event.type == guardado:
+                isla.toJson()
             
 
             

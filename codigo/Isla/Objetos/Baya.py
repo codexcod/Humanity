@@ -5,7 +5,14 @@ class Baya:
     def __init__(self):
         self.image = Helper.BAYA_OBJETO
         self.nombre = "Baya"
-    
+
+
+    def toJson(self):
+        return {
+            'objeto' : 'Baya',
+            'name' : self.nombre,
+        }
+
     def getNombre(self):
         return self.nombre
 

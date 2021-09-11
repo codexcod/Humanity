@@ -5,7 +5,13 @@ class Roca:
     def __init__(self):
         self.image = Helper.ROCA_OBJETO
         self.nombre = "Roca"
-    
+
+    def toJson(self):
+        return {
+            'objeto' : 'Roca',
+            'name' : self.nombre,
+        }
+
     def getNombre(self):
         return self.nombre
 

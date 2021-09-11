@@ -18,6 +18,7 @@ class Arbol(Objeto):
 
     def toJson(self):
         return {
+            'objeto' : 'Arbol',
             'name' : self.nombre,
             'troncos' : self.troncos,
             'talado' : self.talado,

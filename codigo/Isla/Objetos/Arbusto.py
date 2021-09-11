@@ -13,6 +13,17 @@ class Arbusto(Objeto):
         self.talado = False
         self.tiempoCrecimiento = 0
 
+    def toJson(self):
+        return {
+            'objeto' : 'Arbusto',
+            'name' : self.nombre,
+            'bayas' : self.bayas,
+            'talado' : self.talado,
+            'tiempoCrecimiento' : self.tiempoCrecimiento,
+            'x' : self.x,
+            'y' : self.y
+        }
+
  
     def setBayas(self, bayas):
         self.bayas = bayas

@@ -6,6 +6,12 @@ class Carne:
     def __init__(self):
         self.image = Helper.CARNE
         self.nombre = "Carne"
+
+    def toJson(self):
+        return {
+            'objeto' : 'Carne',
+            'name' : self.nombre,
+        }
     
     def getNombre(self):
         return self.nombre

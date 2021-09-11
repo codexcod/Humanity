@@ -11,10 +11,19 @@ class Vaca(Animal):
         self.image = Helper.VACA(self.animacion)
         self.carne = 20
         self.nombre = "Vaca" 
-        self.ticks = 0  
+        self.ticks = 0
+
+    def toJson(self):
+        return {
+            'objeto' : 'Vaca',
+            'name' : self.nombre,
+            'vida' : self.vida,
+            'x' : self.x,
+            'y' : self.y
+        }
         
     
-    def setCarne(self,troncos):
+    def setCarne(self,carne):
         self.carne = carne
     
     def getCarne(self):

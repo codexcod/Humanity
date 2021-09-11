@@ -10,9 +10,19 @@ class Piedra(Objeto):
         self.setNombre("Piedra")
         self.image = Helper.PIEDRA
         self.piedras = 0
-        self.Oro = 0
+        self.oro = 0
 
- 
+
+    def toJson(self):
+        return {
+            'objeto' : 'Piedra',
+            'name' : self.nombre,
+            'piedras' : self.piedras,
+            'oro' : self.oro,
+            'x' : self.x,
+            'y' : self.y
+        }
+
     def setPiedras(self,piedras):
         self.piedras = piedras
 

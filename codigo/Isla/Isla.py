@@ -32,7 +32,7 @@ class Isla:
         self.generarMapaMovible()
         self.arbolesTalados = []
         self.arbustosSinBaya = []
-        self.toJson()
+
         
             
         
@@ -46,7 +46,7 @@ class Isla:
                     jsonText['mObjetos'].append(self.mObjetos[y][x].toJson())
 
                 else:
-                    jsonText['mObjetos'].append({'object' : 'None'})
+                    jsonText['mObjetos'].append({'objeto' : 'None'})
 
         jsonText['mMovible'] = []
         for y in range(self.altura):
@@ -55,7 +55,7 @@ class Isla:
                     jsonText['mMovible'].append(self.mMovible[y][x].toJson())
 
                 else:
-                    jsonText['mMovible'].append({'object' : 'None'})
+                    jsonText['mMovible'].append({'objeto' : 'None'})
 
         with open('Info/mObjetos.json', 'w') as file:
             json.dump(jsonText, file, indent=4)
@@ -205,6 +205,8 @@ class Isla:
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre(mascota)
         self.animales.append(Darwin)
+
+
         
 
     def getArbolesTalados(self):
