@@ -106,9 +106,6 @@ def Juego(nombreAldea, heroe, explorador, mascota):
                                     
                                 
 
-
-
-
                 if event.button == 4:
                     # Baja el zoom
                     camara.getZoom().bajarZoom()

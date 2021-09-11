@@ -106,10 +106,7 @@ class Persona(Movible):
     def makeMoves(self):
         if not self.trabajando:
             if len(self.moves) > 0:
-                if self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1]):
-                    self.moves.pop(len(self.moves) - 1)
-
-                    if self.accionar[0]:
+                if self.accionar[0]:
                         if self.tieneAlLado(self.accionar[1].getX(),self.accionar[1].getY()):
                             self.definirTrabajo(self.accionar[1])
 
@@ -120,6 +117,8 @@ class Persona(Movible):
                             else:
                                 self.accionarObjeto(self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()])
                                 
+                if self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1]):
+                    self.moves.pop(len(self.moves) - 1)
                             
                 else:
                     

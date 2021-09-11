@@ -11,9 +11,13 @@ from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Movibles.conejo import Conejo
 from codigo.Isla.Movibles.Vaca import Vaca
+import json
 
 
 class Isla:
+
+    def obj_dict(obj):
+        return obj.__dict__
 
     def __init__(self, ancho, altura):
         self.mEstatico = []
@@ -26,7 +30,35 @@ class Isla:
         self.generarMapaEstatico()
         self.generarMapaMovible()
         self.arbolesTalados = []
+        self.toJson()
         
+            
+        
+        
+    def toJson(self):
+        jsonText = {}
+        jsonText['mObjetos'] = []
+        for y in range(self.altura):
+            for x in range(self.ancho):
+                if not self.mObjetos[y][x] is None:
+                    jsonText['mObjetos'].append(self.mObjetos[y][x].toJson())
+
+                else:
+                    jsonText['mObjetos'].append({'object' : 'None'})
+
+        jsonText['mMovible'] = []
+        for y in range(self.altura):
+            for x in range(self.ancho):
+                if not self.mMovible[y][x] is None:
+                    jsonText['mMovible'].append(self.mMovible[y][x].toJson())
+
+                else:
+                    jsonText['mMovible'].append({'object' : 'None'})
+
+        with open('Info/mObjetos.json', 'w') as file:
+            json.dump(jsonText, file, indent=4)
+
+
 
     def generarMapaEstatico(self):
         # Genera el mapa de fondo como la tierra
@@ -90,8 +122,13 @@ class Isla:
         for y in range(self.altura):            
             for x in range(self.ancho):
                 if self.getMapaObjetos()[y][x] is None:
-                    if random.randrange(1, 3000) == 1:
-                        self.crearGrupoDeAnimales(5,x,y,"conejo")
+                    if random.randrange(1, 1500) == 1:
+                        if random.choice([0,1]) == 0:
+                            self.crearGrupoDeAnimales(5,x,y,"conejo")
+
+                        else:
+                            self.crearGrupoDeAnimales(5,x,y,"vaca")
+
 
     def getMapaEstatico(self):
         return self.mEstatico
