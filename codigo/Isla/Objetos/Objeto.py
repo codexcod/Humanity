@@ -67,3 +67,10 @@ class Objeto:
 
     def getValor(self):
         return None
+
+    def toJson(self):
+        return {
+            'name' : self.nombre,
+            'x' : self.x,
+            'y' : self.y
+        }

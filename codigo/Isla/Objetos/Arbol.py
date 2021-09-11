@@ -2,6 +2,7 @@ from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
 from codigo.Isla.Objetos.Tronco import Tronco
 import random
+import json
 
 
 class Arbol(Objeto):
@@ -14,6 +15,16 @@ class Arbol(Objeto):
         self.talado = False
         self.tiempoCrecimiento = 0
         
+
+    def toJson(self):
+        return {
+            'name' : self.nombre,
+            'troncos' : self.troncos,
+            'talado' : self.talado,
+            'tiempoCrecimiento' : self.tiempoCrecimiento,
+            'x' : self.x,
+            'y' : self.y
+        }
 
 
     def setTroncos(self,troncos):
