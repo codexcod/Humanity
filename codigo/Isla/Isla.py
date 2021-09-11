@@ -6,6 +6,7 @@ from codigo.Isla.Estaticos.Pasto import Pasto
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.NoiseGenerator import NoiseGenerator
 from codigo.Isla.Objetos.Arbol import Arbol
+from codigo.Isla.Objetos.Arbusto import Arbusto
 from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.Piedra import Piedra
@@ -26,6 +27,7 @@ class Isla:
         self.generarMapaEstatico()
         self.generarMapaMovible()
         self.arbolesTalados = []
+        self.arbustosSinBaya = []
         
 
     def generarMapaEstatico(self):
@@ -68,8 +70,14 @@ class Isla:
                     piedra.setPiedras(random.randrange(5, 20))
                     if random.randrange(1, 30) == 1:
                         piedra.setOro(random.randrange(1, 3))
-
+                        
                     fila.append(piedra)
+
+                elif random.randrange(1, 50) == 1:
+                    arbusto = Arbusto(x,y,self)
+                    arbusto.setBayas(random.randrange(5, 20))
+
+                    fila.append(arbusto)
 
 
                 else:
@@ -164,6 +172,9 @@ class Isla:
 
     def getArbolesTalados(self):
         return self.arbolesTalados
+
+    def getArbustosSinBayas(self):
+        return self.arbustosSinBaya
 
     def getAnimales(self):
         return self.animales

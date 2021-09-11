@@ -26,8 +26,11 @@ class Helper:
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
     FONDO = pygame.image.load('../img/fondo/fondo.png') 
-    CARNE = pygame.image.load('../img/carne.png') 
-
+    CARNE = pygame.image.load('../img/carne.png')
+    ARBUSTO = pygame.image.load('../img/arbusto.png') 
+    ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
+    BAYA_OBJETO = pygame.image.load('../img/baya.png') 
+    
     def playMusic(music,volume):
         if music == 'menu':
             pygame.mixer.music.set_volume(volume)
@@ -50,7 +53,7 @@ class Helper:
 
     def fadeMusic(time):
         pygame.mixer.music.fadeout(time)
-    ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
+    
 
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
