@@ -28,6 +28,9 @@ class Arbol(Objeto):
         }
 
 
+    def setTiempoCrecimiento(self,tiempoCrecimiento):
+        self.tiempoCrecimiento = tiempoCrecimiento
+
     def setTroncos(self,troncos):
         self.troncos = troncos
         if self.troncos >= 15:
@@ -36,8 +39,14 @@ class Arbol(Objeto):
         else:
             self.setImage(Helper.ARBOL)
 
+    def getTalado(self):
+        return self.talado
+
     def getTroncos(self):
         return self.troncos
+
+    def setTalado(self,talado):
+        self.talado = talado
 
     def onClick(self):
         

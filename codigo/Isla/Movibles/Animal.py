@@ -78,5 +78,11 @@ class Animal(Movible):
 
     def matar(self):
         self.muerto = True
-        self.setNombre(f"{sel.nombre} Muerto")
+        self.setNombre(f"{self.nombre} Muerto")
+
+    def getMuerto(self):
+        return self.muerto
+
+    def setMuerto(self,muerto):
+        self.muerto = muerto
         

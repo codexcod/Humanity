@@ -18,6 +18,7 @@ class Vaca(Animal):
             'objeto' : 'Vaca',
             'name' : self.nombre,
             'vida' : self.vida,
+            'muerto' : self.muerto,
             'x' : self.x,
             'y' : self.y
         }

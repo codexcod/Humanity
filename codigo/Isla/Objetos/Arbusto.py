@@ -24,6 +24,22 @@ class Arbusto(Objeto):
             'y' : self.y
         }
 
+    def setTiempoCrecimiento(self,tiempoCrecimiento):
+        self.tiempoCrecimiento = tiempoCrecimiento
+
+    def setTroncos(self,troncos):
+        self.troncos = troncos
+        if self.troncos >= 15:
+            self.setImage(Helper.ARBOL_GRANDE)
+
+        else:
+            self.setImage(Helper.ARBOL)
+
+    def setTalado(self,talado):
+        self.talado = talado
+
+    def getTalado(self):
+        return self.talado
  
     def setBayas(self, bayas):
         self.bayas = bayas

@@ -29,10 +29,11 @@ mixer.init()
 
 
 
-def Juego(nombreAldea, heroe, explorador, mascota):
+def Juego(nombreAldea, heroe, explorador, mascota,partida):
     ancho = 400
     altura = 400
-    isla = Isla (ancho, altura)
+    isla = Isla ()
+    isla.generarIsla(ancho, altura)
     aldea = Aldea (nombreAldea)
     isla.agregarAldea (aldea, ancho // 2, altura // 2,heroe,explorador,mascota)
 
@@ -155,7 +156,7 @@ def Juego(nombreAldea, heroe, explorador, mascota):
                     arbol.avanzarTiempo()
 
             if event.type == guardado:
-                isla.toJson()
+                isla.toJson(partida)
             
 
             
@@ -168,6 +169,143 @@ def Juego(nombreAldea, heroe, explorador, mascota):
 
         clock.tick(60)
         # El reloj por el cual todos los eventos se actualizan
+
+
+def cargarJuego(partida):
+
+    isla = Isla()
+    isla.cargarMapa(partida)
+    ancho = isla.getAncho()
+    altura = isla.getAltura()
+    aldea = isla.getAldea()
+
+
+    # Camara para controlar el zoom
+    camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
+    mouse = Mouse(camara)
+
+    # Controlar tiempo en el juego
+    clock = pygame.time.Clock()
+    screenUpdate = 1
+    # Tiempo para personas
+    pygame.time.set_timer(screenUpdate, 250)
+    # Tiempo para arboles
+    arboles = 2
+    pygame.time.set_timer(arboles, 10000)
+
+    guardado = 3
+    pygame.time.set_timer(guardado, 20000)
+
+    running = True
+    while running:
+        # Checkea todos los eventos
+        for event in pygame.event.get():
+            # Cerrar juego
+            if event.type == pygame.QUIT:
+                running = False
+
+            # Checkea si algun boton del mouse es presionado
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                left, middle, right = pygame.mouse.get_pressed()
+                if left:
+
+                    # En el caso que sea el izquierdo se fija si hay UI´s
+                    if not camara.getUI().hayUIActivos():
+                        if not mouse.seleccionarMovible() is None:
+
+                            camara.getUI().generarInfoObjeto(mouse.seleccionarMovible())
+
+                        elif not mouse.pedirInfoObjeto() is None:
+                            camara.getUI().generarInfoObjeto(mouse.pedirInfoObjeto())
+
+                    else:
+                        mouse.clickearPorPoscicion(camara.getUI().getObjetosClickeables())
+
+                # En el caso que sea derecha checkea si esta seleccionado
+                if right:
+                    # Si esta seleccionado y no es una persona, y trata de seleccionar una persona, la selecciona.
+                    if not mouse.seleccionarMovible() is None:
+                        if not camara.getSeleccionado() == mouse.seleccionarMovible():
+                            if mouse.seleccionarMovible() in aldea.getPersonas():
+                                camara.setSeleccionado(mouse.seleccionarMovible())
+
+                        else:
+                            # Si tiene algo seleccionado y es una persona, la deselecciona
+                            camara.setSeleccionado(None)
+
+                    if not camara.getSeleccionado() is None:
+                        if mouse.pedirInfoObjeto() is None:
+                            # Si lo seleccionado es una persona, y selecciona al piso, lo mueve al lugar
+                            camara.getSeleccionado().moveToPosition(mouse.getObjectMousePosition()[0],
+                                                                    mouse.getObjectMousePosition()[1])
+
+
+                        else:
+                            if mouse.seleccionarMovible() is None:
+                                # Si selecciona un objeto se fija si no es movible, hacerle algo al objeto
+                                camara.getSeleccionado().accionarObjeto(mouse.pedirInfoObjeto())
+
+                            else:
+                                # Si selecciona a un movible, desde una persona, se fija de poder hacerle algo al movile
+                                if not mouse.seleccionarMovible() in aldea.getPersonas():
+                                    camara.getSeleccionado().accionarObjeto(mouse.seleccionarMovible())
+
+                if event.button == 4:
+                    # Baja el zoom
+                    camara.getZoom().bajarZoom()
+
+                if event.button == 5:
+                    # Aumenta el zoom
+                    camara.getZoom().subirZoom()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    camara.moveX(2)
+
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    camara.moveX(-2)
+
+                if event.key == pygame.K_UP or event.key == pygame.K_w:
+                    camara.moveY(-2)
+
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    camara.moveY(2)
+
+                if event.key == pygame.K_z:
+                    camara.getZoom().subirZoom()
+
+                if event.key == pygame.K_x:
+                    camara.getZoom().bajarZoom()
+
+                if event.key == pygame.K_SPACE:
+                    # Mueve la camara para volver a la aldea
+                    camara.setPosY(altura // 2)
+                    camara.setPosX(ancho // 2)
+
+            if event.type == screenUpdate:
+                # Cuando se actualiza la pantalla, se movera todas las personas y animales
+                for persona in aldea.getPersonas():
+                    persona.makeMoves()
+
+                for animal in isla.getAnimales():
+                    animal.makeMoves()
+
+            if event.type == arboles:
+                # Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer
+                for arbol in isla.getArbolesTalados():
+                    arbol.avanzarTiempo()
+
+            if event.type == guardado:
+                isla.toJson(partida)
+
+        camara.actualizarPantalla()
+        camara.getUI().generarAldeaUI(aldea)
+        camara.dibujarUI()
+        pygame.display.update()
+
+        clock.tick(60)
+        # El reloj por el cual todos los eventos se actualizan
+
 
 def menu():
     ancho = 640
@@ -296,7 +434,7 @@ def menu():
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    Juego(aldea, heroe, explorador, mascota)
+                    Juego(aldea, heroe, explorador, mascota,"partidaDeTuke")
                     Menu = False
 
 def Islasini():
@@ -336,4 +474,4 @@ def Islasini():
                 
         
             
-menu()
+cargarJuego("partidaDeTuke")

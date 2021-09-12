@@ -37,6 +37,8 @@ class Persona(Movible):
     def getCasa(self):
         return self.casa
 
+
+
     def getAldea(self):
         return self.casa.getAldea()
 
@@ -44,6 +46,9 @@ class Persona(Movible):
         result = self.nombre
  
         return result
+
+    def setEdad(self,edad):
+        self.edad = edad
 
     def agregarInventario(self,objeto):
         if len(self.inventario) < 80:

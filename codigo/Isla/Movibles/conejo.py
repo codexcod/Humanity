@@ -18,6 +18,7 @@ class Conejo(Animal):
             'objeto' : 'Conejo',
             'name' : self.nombre,
             'vida' : self.vida,
+            'muerto': self.muerto,
             'x' : self.x,
             'y' : self.y
         }

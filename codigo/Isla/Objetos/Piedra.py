@@ -32,8 +32,9 @@ class Piedra(Objeto):
     
     def setOro(self,oro):
         self.oro = oro
-        self.setImage(Helper.PIEDRA_ORO)
-        self.setNombre("Piedra de oro")
+        if self.oro > 0:
+            self.setImage(Helper.PIEDRA_ORO)
+            self.setNombre("Piedra de oro")
 
     def getOro(self):
         return self.oro

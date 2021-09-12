@@ -19,6 +19,9 @@ class Fogata(Objeto):
             'y' : self.y
         }
 
+
+
+
     def getInfoStr(self):
         result = f"""{self.name}"""
         return result

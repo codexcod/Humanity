@@ -13,12 +13,13 @@ class Casa(Objeto):
 
     def toJson(self):
         jsonText = {
-            'objeto': 'Fogata',
-                    'name': self.nombre,
-                    'aldea': self.aldea.getNombre(),
-                    'x': self.x,
-                    'y': self.y,
-                    'personas': []}
+            'objeto': 'Casa',
+            'name': self.nombre,
+            'aldea': self.aldea.getNombre(),
+            'x': self.x,
+            'y': self.y,
+            'personas': []
+        }
         for persona in self.personas:
             jsonText['personas'].append(persona.toJson())
 
@@ -29,7 +30,7 @@ class Casa(Objeto):
         self.aldea.agregarPersona(persona)
 
     def getInfoStr(self):
-        result = f"{self.aldea.getNombre()}  \n"
+        result = f"Aldea {self.aldea.getNombre()}  \n"
         result += "Casa de : \n"
         for persona in self.personas:
             result += f"{persona.getNombre()} \n"
