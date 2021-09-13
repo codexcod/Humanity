@@ -58,6 +58,9 @@ class Camara:
     def setMouse(self,mouse):
         self.mouse = mouse
 
+    def getMouse(self):
+        return self.mouse
+
     def actualizarPantalla(self):
         self.screen.fill((255, 255, 255))
         self.chquearMaxX()
