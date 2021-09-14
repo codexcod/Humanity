@@ -186,17 +186,28 @@ def Islasini():
     alto = 480
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
-
-    # Crear objeto boton
-    # ((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    botonEmpezar = Boton((ancho, alto), 30, "Empezar", screen, "black", "black", (62, 62, 62))
-
+    brown = (112,140,104)
+    #Crear objeto boton
+    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
+    Iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
+    Borrar1 = Boton((ancho-10,155),20,"  Borrar Isla  ",screen,"white","black","brown")
     Menu = True
 
-    # Tiempo para fondo
-    timerFondo = 4
-    pygame.time.set_timer(timerFondo, 1000)
 
+    #Tiempo para fondo
+    timerFondo = 4
+    pygame.time.set_timer(timerFondo,1000)
+    #Dibujar fondo
+        
+    cuadro = Helper.CUADRO
+    cuadro = pygame.transform.scale(cuadro, (ancho,150))
+
+    recuadroIsla = pygame.Rect((10, 10), (ancho- 20, 150))
+    recuadroIsla1 = pygame.Rect((10, 165), (ancho- 20, 150))
+    recuadroIsla2 = pygame.Rect((10, 320), (ancho- 20, 150))
+    
+   
+    
     while Menu:
 
         for event in pygame.event.get():
@@ -206,8 +217,17 @@ def Islasini():
 
         # Dibujar todo
         pygame.display.update()
-        clock.tick(60)
-        screen.fill((255, 255, 255))
-
-
-cargarJuego("partidaDeTuke")
+        clock.tick(60)     
+        screen.fill("black")
+        
+        pygame.draw.rect(screen, brown, recuadroIsla)
+        pygame.draw.rect(screen, brown, recuadroIsla1)
+        pygame.draw.rect(screen, brown, recuadroIsla2)
+        # screen.blit(cuadro,(10,10))
+        # screen.blit(cuadro,(10, 165))
+        # screen.blit(cuadro,(10, 320))
+        Iniciar1.dibujarBoton(1)
+        Borrar1.dibujarBoton(1)        
+        
+            
+Islasini()

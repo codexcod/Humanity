@@ -27,12 +27,18 @@ class Helper:
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')
+<<<<<<< HEAD
     FONDO = pygame.image.load('../img/fondo/fondo.png') 
     CARNE = pygame.image.load('../img/carne.png')
     ARBUSTO = pygame.image.load('../img/arbusto.png') 
     ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
     BAYA_OBJETO = pygame.image.load('../img/baya.png') 
     
+=======
+    FONDO = pygame.image.load('../img/fondo/fondo.png')
+    CUADRO = pygame.image.load('../img/barro.jpg')
+
+>>>>>>> islas
     def playMusic(music,volume):
         if music == 'menu':
             pygame.mixer.music.set_volume(volume)
