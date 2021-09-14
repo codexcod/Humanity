@@ -28,13 +28,13 @@ pygame.init()
 mixer.init()
 
 
-def Juego(nombreAldea, heroe, explorador, mascota, partida):
+def Juego(nombreAldea, heroe, explorador, partida):
     ancho = 400
     altura = 400
     isla = Isla()
     isla.generarIsla(ancho, altura)
     aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2, heroe, explorador, mascota)
+    isla.agregarAldea(aldea, ancho // 2, altura // 2, heroe, explorador)
 
     # Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
@@ -73,7 +73,7 @@ def menu():
     input_box1 = InputBox(100, 100, 100, 32, "Nombre de aldea")
     input_box2 = InputBox(100, 200, 100, 32, "Heroe")
     input_box3 = InputBox(100, 300, 100, 32, "Explorador")
-    input_box4 = InputBox(100, 400, 100, 32, "Mascota")
+    input_box4 = InputBox(100, 400, 100, 32, "Partida")
     input_boxes = [input_box1, input_box2, input_box3, input_box4]
 
     # Crear objeto boton
@@ -167,17 +167,17 @@ def menu():
             aldea = input_box1.getText()
             heroe = input_box2.getText()
             explorador = input_box3.getText()
-            mascota = input_box4.getText()
+            partida = input_box4.getText()
             botonEmpezar.setRecuadro(Helper.COLORACTIVO)
 
-            if aldea == "" or heroe == "" or explorador == "" or mascota == "":
+            if aldea == "" or heroe == "" or explorador == "" or partida == "":
                 error = True
                 botonEmpezar.setRecuadro("black")
             else:
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    Juego(aldea, heroe, explorador, mascota, "partidaDeTuke")
+                    Juego(aldea, heroe, explorador,  partida)
                     Menu = False
 
 
