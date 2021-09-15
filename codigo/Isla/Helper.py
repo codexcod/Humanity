@@ -32,7 +32,8 @@ class Helper:
     ARBUSTO = pygame.image.load('../img/arbusto.png') 
     ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
     BAYA_OBJETO = pygame.image.load('../img/baya.png') 
-    
+    CUADRO = pygame.image.load('../img/barro.jpg')
+
     def playMusic(music, volume):
         if music == 'menu':
             pygame.mixer.music.set_volume(volume)

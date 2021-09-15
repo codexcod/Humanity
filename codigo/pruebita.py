@@ -28,13 +28,13 @@ pygame.init()
 mixer.init()
 
 
-def Juego(nombreAldea, heroe, explorador, mascota, partida):
+def Juego(nombreAldea, heroe, explorador, partida):
     ancho = 400
     altura = 400
     isla = Isla()
     isla.generarIsla(ancho, altura)
     aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2, heroe, explorador, mascota)
+    isla.agregarAldea(aldea, ancho // 2, altura // 2, heroe, explorador)
 
     # Camara para controlar el zoom
     camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
@@ -73,7 +73,7 @@ def menu():
     input_box1 = InputBox(100, 100, 100, 32, "Nombre de aldea")
     input_box2 = InputBox(100, 200, 100, 32, "Heroe")
     input_box3 = InputBox(100, 300, 100, 32, "Explorador")
-    input_box4 = InputBox(100, 400, 100, 32, "Mascota")
+    input_box4 = InputBox(100, 400, 100, 32, "Partida")
     input_boxes = [input_box1, input_box2, input_box3, input_box4]
 
     # Crear objeto boton
@@ -167,17 +167,17 @@ def menu():
             aldea = input_box1.getText()
             heroe = input_box2.getText()
             explorador = input_box3.getText()
-            mascota = input_box4.getText()
+            partida = input_box4.getText()
             botonEmpezar.setRecuadro(Helper.COLORACTIVO)
 
-            if aldea == "" or heroe == "" or explorador == "" or mascota == "":
+            if aldea == "" or heroe == "" or explorador == "" or partida == "":
                 error = True
                 botonEmpezar.setRecuadro("black")
             else:
                 if error == False:
                     Helper.fadeMusic(3000)
                     degradado()
-                    Juego(aldea, heroe, explorador, mascota, "partidaDeTuke")
+                    Juego(aldea, heroe, explorador,  partida)
                     Menu = False
 
 
@@ -186,17 +186,28 @@ def Islasini():
     alto = 480
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
-
-    # Crear objeto boton
-    # ((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    botonEmpezar = Boton((ancho, alto), 30, "Empezar", screen, "black", "black", (62, 62, 62))
-
+    brown = (112,140,104)
+    #Crear objeto boton
+    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
+    Iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
+    Borrar1 = Boton((ancho-10,155),20,"  Borrar Isla  ",screen,"white","black","brown")
     Menu = True
 
-    # Tiempo para fondo
-    timerFondo = 4
-    pygame.time.set_timer(timerFondo, 1000)
 
+    #Tiempo para fondo
+    timerFondo = 4
+    pygame.time.set_timer(timerFondo,1000)
+    #Dibujar fondo
+        
+    cuadro = Helper.CUADRO
+    cuadro = pygame.transform.scale(cuadro, (ancho,150))
+
+    recuadroIsla = pygame.Rect((10, 10), (ancho- 20, 150))
+    recuadroIsla1 = pygame.Rect((10, 165), (ancho- 20, 150))
+    recuadroIsla2 = pygame.Rect((10, 320), (ancho- 20, 150))
+    
+   
+    
     while Menu:
 
         for event in pygame.event.get():
@@ -206,8 +217,17 @@ def Islasini():
 
         # Dibujar todo
         pygame.display.update()
-        clock.tick(60)
-        screen.fill((255, 255, 255))
-
-
-cargarJuego("partidaDeTuke")
+        clock.tick(60)     
+        screen.fill("black")
+        
+        pygame.draw.rect(screen, brown, recuadroIsla)
+        pygame.draw.rect(screen, brown, recuadroIsla1)
+        pygame.draw.rect(screen, brown, recuadroIsla2)
+        # screen.blit(cuadro,(10,10))
+        # screen.blit(cuadro,(10, 165))
+        # screen.blit(cuadro,(10, 320))
+        Iniciar1.dibujarBoton(1)
+        Borrar1.dibujarBoton(1)        
+        
+            
+Islasini()
