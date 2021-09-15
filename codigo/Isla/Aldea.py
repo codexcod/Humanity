@@ -2,7 +2,7 @@
 
 class Aldea:
 
-    def __init__(self,nombre):
+    def __init__(self, nombre):
         self.nombre = nombre
         self.troncos = 0
         self.piedras = 0
@@ -33,34 +33,34 @@ class Aldea:
     def getMadera(self):
         return self.troncos
 
-    def setMadera(self,troncos):
+    def setMadera(self, troncos):
         self.troncos = troncos
 
     def getPiedra(self):
         return self.piedras
 
-    def setPiedra(self,piedras):
+    def setPiedra(self, piedras):
         self.piedras = piedras
 
     def getCarne(self):
         return self.carne
 
-    def setCarne(self,carne):
+    def setCarne(self, carne):
         self.carne = carne
 
-    def setOro(self,oro):
+    def setOro(self, oro):
         self.oro = oro
 
-    def agregarCasa(self,casa):
+    def agregarCasa(self, casa):
         self.casas.append(casa)
 
-    def agregarPersona(self,persona):
+    def agregarPersona(self, persona):
         self.personas.append(persona)
 
     def getPersonas(self):
         return self.personas
 
-    def añadirObjeto(self,objeto):
+    def añadirObjeto(self, objeto):
         if objeto.getNombre() == "Tronco":
             self.troncos += 1
         

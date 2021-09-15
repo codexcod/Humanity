@@ -5,8 +5,8 @@ from codigo.Isla.Objetos.Roca import Roca
 
 class Piedra(Objeto):
 
-    def __init__(self,x,y,isla):
-        Objeto.__init__(self,x,y,isla)
+    def __init__(self, x, y, isla):
+        Objeto.__init__(self, x, y, isla)
         self.setNombre("Piedra")
         self.image = Helper.PIEDRA
         self.piedras = 0
@@ -23,14 +23,14 @@ class Piedra(Objeto):
             'y' : self.y
         }
 
-    def setPiedras(self,piedras):
+    def setPiedras(self, piedras):
         self.piedras = piedras
 
     def getPiedras(self):
         return self.piedras
 
     
-    def setOro(self,oro):
+    def setOro(self, oro):
         self.oro = oro
         if self.oro > 0:
             self.setImage(Helper.PIEDRA_ORO)

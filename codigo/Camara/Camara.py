@@ -42,6 +42,7 @@ class Camara:
         self.posY += posY
 
     def chquearMaxX(self):
+        # Si la camara se va afuera del mapa, en X, que vuelva
         if self.posX >= self.zoom.getMaxX() - math.ceil(self.zoom.getLimiteXFloat()):
             self.posX = self.zoom.getMaxX() - math.ceil(self.zoom.getLimiteXFloat())
 
@@ -49,6 +50,7 @@ class Camara:
             self.posX = self.zoom.getLimiteX() + 1
 
     def chquearMaxY(self):
+        # Si la camara se va afuera del mapa, en Y, que vuelva
         if self.posY >= self.zoom.getMaxY() - math.ceil(self.zoom.getLimiteYFloat()):
             self.posY = self.zoom.getMaxY() - math.ceil(self.zoom.getLimiteYFloat())
 
@@ -62,10 +64,12 @@ class Camara:
         return self.mouse
 
     def actualizarPantalla(self):
+        # Actualiza la pantalla
         self.screen.fill((255, 255, 255))
         self.chquearMaxX()
         self.chquearMaxY()
         forY = 0
+        # Va de Y a Y y de X a X dibujando
         for y in range(self.posY - math.floor(self.zoom.getLimiteYFloat()),
                        self.posY + math.ceil(self.zoom.getLimiteYFloat())):
             forX = 0

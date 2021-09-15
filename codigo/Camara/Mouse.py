@@ -27,6 +27,7 @@ class Mouse:
 
 
     def clickearPorPoscicion(self,objetosClickeables):
+        # Clickea 
         mousePosition = pygame.mouse.get_pos()
         x = math.ceil(mousePosition[0])
         y = math.ceil(mousePosition[1])
@@ -38,6 +39,7 @@ class Mouse:
 
 
     def getObjectMousePosition(self):
+        # Averigua donde esta el mouse en el mapa
         posX = self.camara.getPosX() - math.floor(self.camara.getZoom().getLimiteXFloat())
         posY = self.camara.getPosY() - math.floor(self.camara.getZoom().getLimiteYFloat())
 

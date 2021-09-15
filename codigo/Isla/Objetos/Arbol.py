@@ -7,8 +7,8 @@ import json
 
 class Arbol(Objeto):
 
-    def __init__(self,x,y,isla):
-        Objeto.__init__(self,x,y,isla)
+    def __init__(self, x, y, isla):
+        Objeto.__init__(self, x, y, isla)
         self.setNombre("Arbol")
         self.setImage(Helper.ARBOL)
         self.troncos = 0
@@ -28,10 +28,10 @@ class Arbol(Objeto):
         }
 
 
-    def setTiempoCrecimiento(self,tiempoCrecimiento):
+    def setTiempoCrecimiento(self, tiempoCrecimiento):
         self.tiempoCrecimiento = tiempoCrecimiento
 
-    def setTroncos(self,troncos):
+    def setTroncos(self, troncos):
         self.troncos = troncos
         if self.troncos >= 15:
             self.setImage(Helper.ARBOL_GRANDE)
@@ -45,7 +45,7 @@ class Arbol(Objeto):
     def getTroncos(self):
         return self.troncos
 
-    def setTalado(self,talado):
+    def setTalado(self, talado):
         self.talado = talado
 
     def onClick(self):
@@ -54,6 +54,7 @@ class Arbol(Objeto):
         return super().onClick()
 
     def talarArbol(self):
+        # Cuando el arbol es talado
         if self.talado == False:
             self.talado = True
             self.setImage(Helper.ARBOL_TALADO)
@@ -64,12 +65,15 @@ class Arbol(Objeto):
 
             
         else:
+            # Si talan el arbol pero ya estaba talado, que lo eliminen
             self.isla.getArbolesTalados().remove(self)
             self.isla.getMapaObjetos()[self.y][self.x] = None
 
     
     def avanzarTiempo(self):
+        # Avanza el tiempo interno del arbol
         if self.talado:
+            # Si el arbol estaba talado que ese tiempo ayude a que pueda crecer
             if not self.isla.getMapaMovible()[self.y][self.x]:
                 self.tiempoCrecimiento += 1
                 if self.tiempoCrecimiento == 25:
@@ -79,8 +83,9 @@ class Arbol(Objeto):
 
 
     def crecerArbol(self):
+        # Que crezca el arbol
         self.setNombre("Arbol")
-        self.setTroncos(random.randrange(5,20))
+        self.setTroncos(random.randrange(5, 20))
         if self.getTroncos() > 15:
             self.setImage(Helper.ARBOL_GRANDE)      
         else:

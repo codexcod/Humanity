@@ -4,7 +4,7 @@ import random
 
 class Animal(Movible):
 
-    def __init__(self, x, y, isla,vida):
+    def __init__(self, x, y, isla, vida):
         Movible.__init__(self, x, y, isla)
         self.ticks = 0  
         self.vida = vida
@@ -12,6 +12,7 @@ class Animal(Movible):
         
 
     def moveToPosition(self,posX,posY):
+        # Se mueve a la posicion deseada a traves de varios pasos
         self.moves.clear()
         
         for y in range(abs(posY - self.y)):
@@ -37,6 +38,7 @@ class Animal(Movible):
 
 
     def makeMoves(self):
+        # Cada cierta cantidad de tiempo genera 4 movimientos alelatorios
         self.ticks += 1
         if self.ticks == 10:
             self.ticks = 0
@@ -44,36 +46,38 @@ class Animal(Movible):
             self.agregarMovimientos(4)
 
         if len(self.moves) > 0:
+            # Hace el movimiento que se encuentra para hacer
             self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])
             self.moves.pop(len(self.moves) - 1)
                 
 
-    def agregarMovimientos(self,movimientos):
+    def agregarMovimientos(self, movimientos):
+        # Agrega movimientos 
         for i in range(movimientos):
-                if random.choice([0,1]) == 0:
-                    self.moves.append([0,random.choice([-1,1])])
+                if random.choice([0, 1]) == 0:
+                    self.moves.append([0, random.choice([-1, 1])])
 
                 else:
-                    self.moves.append([random.choice([-1,1]),0])
+                    self.moves.append([random.choice([-1, 1]), 0])
             
 
 
     def getInfoStr(self):
         result = f"""Nombre : {self.nombre}"""
-        return resultç
+        return result
 
     def getVida(self):
         return self.vida
     
-    def setVida(self,vida):
+    def setVida(self, vida):
         self.vida = vida
 
-    def restarVida(self,vida):
+    def restarVida(self, vida):
         self.vida -= vida
         if self.vida <= 0:
             self.matar()
     
-    def sumarVida(self,suma):
+    def sumarVida(self, suma):
         self.vida += suma
 
     def matar(self):
@@ -83,6 +87,6 @@ class Animal(Movible):
     def getMuerto(self):
         return self.muerto
 
-    def setMuerto(self,muerto):
+    def setMuerto(self, muerto):
         self.muerto = muerto
         

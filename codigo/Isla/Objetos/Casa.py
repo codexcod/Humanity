@@ -26,6 +26,7 @@ class Casa(Objeto):
         return jsonText
 
     def agregarPersona(self, persona):
+        # Agrega una persona a la casa
         self.personas.append(persona)
         self.aldea.agregarPersona(persona)
 

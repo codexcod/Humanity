@@ -31,6 +31,8 @@ class Conejo(Animal):
         return self.carne
 
     def makeMoves(self):
+        # Cada cierta cantidad de tiempo genera 4 movimientos alelatorios y cambia la animacion de acuerdo
+        #  a los ticks
         if not self.muerto:
             self.ticks += 1
             self.animacion += 1
@@ -60,12 +62,15 @@ Vida : {self.vida}"""
         return self.carne * 5
 
     def onClick(self):
+        # en el caso que le peguen, que le reste vida y que se mueva
         self.restarVida(1)
         self.agregarMovimientos(6)
 
     
     def getValor(self):
         if self.muerto == True:
+            # Si el conejo esta muerto y se le pide el valor, se elimina del mapa y se devuelve 
+            # el valor de la carne
             valor = []
             for i in range(self.carne):
                 valor.append(Carne())

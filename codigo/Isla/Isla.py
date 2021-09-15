@@ -294,6 +294,7 @@ class Isla:
         casa = Casa(aldea, posX, posY - 2, self)
         self.agregarObjeto(posX, posY - 2, casa)
         aldea.agregarCasa(casa)
+        # Crea a Gonza
         gonza = Persona("Gonza", casa, posX, posY - 4, self)
         self.agregarMovible(gonza.getX(), gonza.getY(), gonza)
         casa.agregarPersona(gonza)
@@ -308,7 +309,7 @@ class Isla:
         # Crea fogata
         fogata = Fogata(aldea, posX, posY, self)
         self.agregarObjeto(posX, posY, fogata)
-        # Crea a darwin
+        # Crea a Darwin
         Darwin = Conejo(posX + 4, posY, self, 100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre(mascota)

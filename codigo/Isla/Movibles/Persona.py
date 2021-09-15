@@ -7,14 +7,14 @@ from codigo.Isla.Helper import Helper
 
 class Persona(Movible):
 
-    def __init__(self,nombre,casa,x,y,isla):
-        Movible.__init__(self,x,y,isla)
+    def __init__(self, nombre, casa, x, y, isla):
+        Movible.__init__(self, x, y, isla)
         self.edad = 0
         self.casa = casa
         self.nombre = nombre
         self.image = Helper.PERSONA
         self.inventario = []
-        self.accionar = [False,0,0]
+        self.accionar = [False, 0, 0]
         self.trabajando = False
         self.tiempoTrabajando = 0
 
@@ -37,20 +37,18 @@ class Persona(Movible):
     def getCasa(self):
         return self.casa
 
-
-
     def getAldea(self):
         return self.casa.getAldea()
 
     def getInfoStr(self):
         result = self.nombre
- 
         return result
 
-    def setEdad(self,edad):
+    def setEdad(self, edad):
         self.edad = edad
 
-    def agregarInventario(self,objeto):
+    def agregarInventario(self, objeto):
+        # Agrega un objeto al inventario
         if len(self.inventario) < 80:
             self.inventario.append(objeto)
 
@@ -58,6 +56,7 @@ class Persona(Movible):
         return self.inventario
 
     def getUI(self):
+        # Crea un UI para las personas
         info = []
         fondo = pygame.surface.Surface((800, 500))
         fondo.fill((128, 64, 0), None, 0)
@@ -77,10 +76,11 @@ class Persona(Movible):
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
+            # Dibujan los objetos del inventario
             fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
-            info.append(UIObject(fondoObjeto,550 + 40 * forPosX,120+ 40 * forPosY ))
+            info.append(UIObject(fondoObjeto, 550 + 40 * forPosX, 120+ 40 * forPosY ))
             imagenObjeto = pygame.transform.scale(objeto.getImage(), (30, 30))
-            info.append(UIObject(imagenObjeto,550 + 40 * forPosX +  5 ,120 + 40 * forPosY + 5))
+            info.append(UIObject(imagenObjeto, 550 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
             if forPosX == 7:
                 forPosX = 0
                 forPosY += 1
@@ -91,24 +91,24 @@ class Persona(Movible):
         
         return info
 
-    def moveToPosition(self,posX,posY):
+    def moveToPosition(self, posX, posY):
         self.moves.clear()
         self.accionar[0] = False
         
         for y in range(abs(posY - self.y)):
             
             if posY - self.y > 0:
-                self.moves.append([0,1])
+                self.moves.append([0, 1])
 
             elif posY - self.y < 0:
-                self.moves.append([0,-1])
+                self.moves.append([0, -1])
 
         for x in range(abs(posX - self.x)):
             if posX - self.x > 0:
-                self.moves.append([1,0])
+                self.moves.append([1, 0])
 
             elif posX - self.x < 0:
-                self.moves.append([-1,0])
+                self.moves.append([-1, 0])
 
         self.directionX = 0
         self.directionY = 0
@@ -118,16 +118,16 @@ class Persona(Movible):
                     
 
 
-    def accionarObjeto(self,objeto):
+    def accionarObjeto(self, objeto):
         if not self.trabajando:
-            self.moveToPosition(objeto.getX(),objeto.getY())  
-            self.accionar = [True,objeto]
+            self.moveToPosition(objeto.getX(), objeto.getY())  
+            self.accionar = [True, objeto]
 
     def makeMoves(self):
         if not self.trabajando:
             if len(self.moves) > 0:
                 if self.accionar[0]:
-                        if self.tieneAlLado(self.accionar[1].getX(),self.accionar[1].getY()):
+                        if self.tieneAlLado(self.accionar[1].getX(), self.accionar[1].getY()):
                             self.definirTrabajo(self.accionar[1])
 
                         elif len(self.moves) == 1:
@@ -137,7 +137,7 @@ class Persona(Movible):
                             else:
                                 self.accionarObjeto(self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()])
                                 
-                if self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1]):
+                if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
                     self.moves.pop(len(self.moves) - 1)
                             
                 else:
@@ -146,29 +146,30 @@ class Persona(Movible):
 
                 
                         if self.directionX > 0:
-                            self.moves.append([1,0])
-                            self.moves.insert(0,[-1,0])
+                            self.moves.append([1, 0])
+                            self.moves.insert(0, [-1, 0])
 
                         else:
-                            self.moves.append([-1,0])
-                            self.moves.insert(0,[1,0])
+                            self.moves.append([-1, 0])
+                            self.moves.insert(0, [1, 0])
 
                     else:
                         
                         if self.directionY > 0:
-                            self.moves.append([0,1])
-                            self.moves.insert(0,[0,-1])
+                            self.moves.append([0, 1])
+                            self.moves.insert(0, [0, -1])
 
                         else:
-                            self.moves.append([0,-1])
-                            self.moves.insert(0,[0,1])
+                            self.moves.append([0, -1])
+                            self.moves.insert(0, [0, 1])
                 
         else:
             self.trabajar()
 
 
 
-    def definirTrabajo(self,objeto):
+    def definirTrabajo(self, objeto):
+        # Si esta trabajando que le modifiquen la imagen
         if objeto.getNombre()[:4] == "Casa":
             if self.tieneAlgoEnElInventario():
                 self.trabajando = True
@@ -182,24 +183,30 @@ class Persona(Movible):
                     
         
     def trabajar(self):
+        # En el caso que este trabajando
         if self.trabajando:
+            # Si esta trabajando, que le reste un poco de tiempo de trabajo, 
             self.tiempoTrabajando -= 1
             if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                 if self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getNombre()[:4] == "Casa":
+                    # Si esta "trabajando" en la aldea, que guarde su inventario en la aldea
                     self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
                     self.inventario.pop(len(self.inventario) - 1)
 
             if self.tiempoTrabajando == 0:
+                # Si termino de trabajar
                 self.trabajando = False
                 self.setImage(Helper.PERSONA)
                 if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                     if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor() is None:
                         for objeto in self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor():
+                            # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
                             self.agregarInventario(objeto) 
                     self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
 
                 elif not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                     valor = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor()
+                    # Si era un movible en el que estaba trabajando, que agregue sus valores en el inventario
                     if not valor is None:
                         for objeto in valor:
                             self.agregarInventario(objeto) 

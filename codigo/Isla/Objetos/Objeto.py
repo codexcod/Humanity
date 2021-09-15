@@ -6,7 +6,7 @@ import pygame
 
 class Objeto:
 
-    def __init__(self,x,y,isla):
+    def __init__(self, x, y, isla):
         self.nombre = ""
         self.caminable = False
         self.x = x
@@ -16,13 +16,13 @@ class Objeto:
     def getNombre(self):
         return self.nombre
 
-    def setNombre(self,nombre):
+    def setNombre(self, nombre):
         self.nombre = nombre
 
     def getImage(self):
         return self.image
 
-    def setImage(self,image):
+    def setImage(self, image):
         self.image = image
 
     def onClick(self):
@@ -31,7 +31,7 @@ class Objeto:
     def getInfoStr(self):
         return ""
 
-    def setCaminable(self,caminable):
+    def setCaminable(self, caminable):
         self.caminable = caminable
 
     def getCaminable(self):

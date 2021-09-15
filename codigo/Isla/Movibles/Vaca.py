@@ -6,7 +6,7 @@ import random
 class Vaca(Animal):
 
     def __init__(self, x, y, isla, vida):
-        Animal.__init__(self, x, y, isla,vida)
+        Animal.__init__(self, x, y, isla, vida)
         self.animacion = 0
         self.image = Helper.VACA(self.animacion)
         self.carne = 20
@@ -24,7 +24,7 @@ class Vaca(Animal):
         }
         
     
-    def setCarne(self,carne):
+    def setCarne(self, carne):
         self.carne = carne
     
     def getCarne(self):
@@ -59,6 +59,7 @@ Vida : {self.vida}"""
         return result
 
     def onClick(self):
+        # en el caso que le peguen, que le reste vida y que se mueva
         self.restarVida(1)
         self.agregarMovimientos(6)
 

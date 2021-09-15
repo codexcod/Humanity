@@ -1,6 +1,6 @@
 class UIObject:
 
-    def __init__(self,objeto,posX,posY):
+    def __init__(self, objeto, posX, posY):
         self.objeto = objeto
         self.posX = posX
         self.posY = posY

@@ -5,7 +5,7 @@ import pygame
 
 class InputBox:
 
-    def __init__(self, x, y, w, h,header, show=''):
+    def __init__(self, x, y, w, h,header, show = ''):
         self.rect = pygame.Rect(x, y, w, h)
         self.header = header
         self.color = Helper.COLORINACTIVO
@@ -18,7 +18,7 @@ class InputBox:
     
     
         
-    def dibujarTexto(self,screen):
+    def dibujarTexto(self, screen):
         header = self.fuente.render(self.header, True, (0,0,0))
         if self.active:
                 headerSelect = self.fuente.render(self.header, True, Helper.COLORACTIVO)
@@ -63,7 +63,7 @@ class InputBox:
         self.text = self.show
 
 
-    def update(self,ancho):
+    def update(self, ancho):
         # Expandir el input box si el texto es muy grande.        
         self.width = max(200, self.txt_surface.get_width()+5)
         

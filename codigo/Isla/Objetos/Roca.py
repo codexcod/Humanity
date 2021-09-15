@@ -15,11 +15,11 @@ class Roca:
     def getNombre(self):
         return self.nombre
 
-    def setNombre(self,nombre):
+    def setNombre(self, nombre):
         self.nombre = nombre
 
     def getImage(self):
         return self.image
 
-    def setImage(self,image):
+    def setImage(self, image):
         self.image = image

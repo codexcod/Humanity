@@ -5,7 +5,7 @@ from pygame import mixer
 mixer.init()
 
 class Helper:
-    
+    # El helper es una herramienta la cual usamos para achicar el codigo
 
     AGUA = pygame.image.load('../img/agua.jpg')
     PASTO = pygame.image.load('../img/pasto.jpg')
@@ -33,7 +33,7 @@ class Helper:
     ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
     BAYA_OBJETO = pygame.image.load('../img/baya.png') 
     
-    def playMusic(music,volume):
+    def playMusic(music, volume):
         if music == 'menu':
             pygame.mixer.music.set_volume(volume)
             mixer.music.load('../sounds/menumusic.wav')
