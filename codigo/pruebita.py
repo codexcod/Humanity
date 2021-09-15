@@ -192,19 +192,22 @@ def Islasini():
     clock = pygame.time.Clock()
     color = (112,140,104)
 
-    #Crear objeto boton
-    #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
 
     islas = True
 
     partidas = []
-    
+    slotsPartidas = 3
     archivos = os.listdir("Info")
     for partida in archivos:
         partes = partida.split(".")
         partidas.append(partes[0])
-        print(partes[0])
+
     cantPartidas = len(partidas) 
+
+    nuevasPartidas = slotsPartidas
+    for partida in partidas:
+        nuevasPartidas -= 1
+
 
     
     #Tiempo para fondo
@@ -216,10 +219,10 @@ def Islasini():
     cuadro = pygame.transform.scale(cuadro, (ancho,150))
 
     
-    recuadrosIslas = [pygame.Rect((10, 10), (ancho- 20, 150)),
-    pygame.Rect((10, 165), (ancho- 20, 150)),
-    pygame.Rect((10, 320), (ancho- 20, 150))]
-
+    recuadrosIslas = []
+    
+    for i in range(0,3):
+        recuadrosIslas.append(pygame.Rect((10, 10 + (155*i)), (ancho- 20, 150)))
 
     partida = None
     start= ""
@@ -234,95 +237,74 @@ def Islasini():
             screen.blit(pantallaNegra, (0, 0))
             pygame.display.update()
             pygame.time.delay(5)
+          
+    def start(partida):
+        degradado(color)
+        cargarJuego(partida)
+        
+    botonesIniciar = []
+    botonesNew = []
+    botonesBorrar = []
+    botones = []
+    i = 0
+    for partida in partidas:
+        i += 1
+        botonesIniciar.append(Boton((ancho-120,(i*155)),20,"  Elegir Isla  ",screen,"white","black","brown"))
+        botonesBorrar.append(Boton((ancho-10,(i*155)),20,"  Borrar Isla  ",screen,"white","black","brown"))
+    
+    print(cantPartidas)
+    for i in range(3-nuevasPartidas+1, 3+1):
+        botonesNew.append(Boton((ancho-10,(i*155)),20,"Nueva Partida",screen,"white","black","brown"))
+
+    botones = [botonesIniciar , botonesBorrar, botonesNew]
 
     def dibujarMenu(color):
         for recuadro in recuadrosIslas:
             pygame.draw.rect(screen, color, recuadro)
 
-        for boton in botones:  
-            boton.dibujarBoton(1)
         nombrePartida = []
         for partida in partidas:
-            nombrePartida.append(Helper.FUENTE(22).render(partida, True, "black"))
-        for i in range(len(nombrePartida)):
-            screen.blit(nombrePartida[i],(10, (i*150) + 10))           
+            nombrePartida.append(Helper.FUENTE(30).render(partida, True, "black"))
+        for i in range(nuevasPartidas):
+            nombrePartida.append(Helper.FUENTE(30).render("No hay partida creada", True, "black"))
+        i = 0
+        for nombre in nombrePartida:
+            screen.blit(nombre,(20, 50 + (i*155) + 10)) 
+            i += 1
 
+        for listas in botones:
+            for boton in listas:  
+                boton.dibujarBoton(1)
+                
 
-    def start(partida):
-        degradado(color)
-        cargarJuego(partida)
         
-    
-    iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar1 = Boton((ancho-10,155),20,"  Borrar Isla  ",screen,"white","black","brown")
-    nuevaPartida1 = Boton((ancho-10,155),20,"Nueva Partida",screen,"white","black","brown")
-        
-    iniciar2 = Boton((ancho-120,310),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar2 = Boton((ancho-10,310),20,"  Borrar Isla  ",screen,"white","black","brown")
-    nuevaPartida2 = Boton((ancho-10,310),20,"Nueva Partida",screen,"white","black","brown")
-    
-    iniciar3 = Boton((ancho-120,470),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar3 = Boton((ancho-10,470),20,"  Borrar Isla  ",screen,"white","black","brown")
-    nuevaPartida3 = Boton((ancho-10,470),20,"Nueva Partida",screen,"white","black","brown")
-
-    
-    if cantPartidas >= 1:
-        botones = [iniciar1, borrar1, nuevaPartida2, nuevaPartida3]
-        botonesIniciar = [iniciar1]
-        botonesNew = [nuevaPartida2, nuevaPartida3]
-        botonesBorrar = [borrar1]
-
-        if cantPartidas >= 2:
-            botones = [iniciar1, iniciar2, borrar1, borrar2, nuevaPartida3]
-            botonesIniciar = [iniciar1, iniciar2]
-            botonesNew = [nuevaPartida3]
-            botonesBorrar = [borrar1, borrar2]
-
-            if cantPartidas == 3:
-                botones = [iniciar1, iniciar2, iniciar3, borrar1, borrar2, borrar3]
-                botonesIniciar = [iniciar1, iniciar2, iniciar3]
-                botonesNew = []
-                botonesBorrar = [borrar1, borrar2, borrar3]
-
-    if cantPartidas == 0:
-        botones = [nuevaPartida1, nuevaPartida2, nuevaPartida3]
-        botonesNew = [nuevaPartida1, nuevaPartida2, nuevaPartida3]
-        botonesIniciar = []
-        botonesBorrar = []
 
 
-    
-    
 
     while islas:
-
         for event in pygame.event.get():
             # Salir
             if event.type == pygame.QUIT:
                 islas = False
 
-        
-        for i in range(cantPartidas):
-            for boton in botonesIniciar:
-                if boton.click(event):
-                    partida = partidas[i]
-                    start(partida)
-                    islas = False
+
+        i = 0
+        for boton in botonesIniciar:
+            if boton.click(event):
+                partida = partidas[i]
+                start(partida)
+                islas = False
+            i += 1
 
 
-    
-        if borrar1.click(event):
-            remove(f'info/{partidas[0]}.json')
-            partidas[0] = "Partida no creada"
-        elif borrar2.click(event):
-            remove(f'info/{partidas[1]}.json')
-            partidas[1] = "Partida no creada"
-        if borrar3.click(event):
-            remove(f'info/{partidas[2]}.json')
-            partidas[2] = "Partida no creada"
+        i = 0
+        for boton in botonesBorrar:
+            if boton.click(event):
+                remove(f'info/{partidas[i]}.json')
+                nombrePartida[i] = "Partida no creada"
+            i += 1
+
                     
-    
-        
         for boton in botonesNew:
             if boton.click(event):
                 degradado(color)
@@ -330,12 +312,11 @@ def Islasini():
                 menu()
                     
             
-
         # Dibujar todo
-        pygame.display.update()
         clock.tick(60)     
         screen.fill("black")
         dibujarMenu(color)   
+        pygame.display.update()
 
         
 
