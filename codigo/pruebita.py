@@ -241,6 +241,12 @@ def Islasini():
 
         for boton in botones:  
             boton.dibujarBoton(1)
+        nombrePartida = []
+        for partida in partidas:
+            nombrePartida.append(Helper.FUENTE(22).render(partida, True, "black"))
+        for i in range(len(nombrePartida)):
+            screen.blit(nombrePartida[i],(10, (i*150) + 10))           
+
 
     def start(partida):
         degradado(color)
@@ -248,15 +254,15 @@ def Islasini():
         
     
     iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar1 = Boton((ancho-10,1505),20,"  Borrar Isla  ",screen,"white","black","brown")
+    borrar1 = Boton((ancho-10,155),20,"  Borrar Isla  ",screen,"white","black","brown")
     nuevaPartida1 = Boton((ancho-10,155),20,"Nueva Partida",screen,"white","black","brown")
         
     iniciar2 = Boton((ancho-120,310),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar2 = Boton((ancho-1000,310),20,"  Borrar Isla  ",screen,"white","black","brown")
+    borrar2 = Boton((ancho-10,310),20,"  Borrar Isla  ",screen,"white","black","brown")
     nuevaPartida2 = Boton((ancho-10,310),20,"Nueva Partida",screen,"white","black","brown")
     
     iniciar3 = Boton((ancho-120,470),20,"  Elegir Isla  ",screen,"white","black","brown")
-    borrar3 = Boton((ancho-200,470),20,"  Borrar Isla  ",screen,"white","black","brown")
+    borrar3 = Boton((ancho-10,470),20,"  Borrar Isla  ",screen,"white","black","brown")
     nuevaPartida3 = Boton((ancho-10,470),20,"Nueva Partida",screen,"white","black","brown")
 
     
@@ -303,17 +309,17 @@ def Islasini():
                     start(partida)
                     islas = False
 
-            aux = 0
-        if cantPartidas != 0:
-            if borrar1.click(event):
-                remove(f'info/{partidas[0]}.json')
-                partidas[0] = "Partida no creada"
-            elif borrar2.click(event):
-                remove(f'info/{partidas[1]}.json')
-                partidas[1] = "Partida no creada"
-            if borrar3.click(event):
-                remove(f'info/{partidas[2]}.json')
-                partidas[2] = "Partida no creada"
+
+    
+        if borrar1.click(event):
+            remove(f'info/{partidas[0]}.json')
+            partidas[0] = "Partida no creada"
+        elif borrar2.click(event):
+            remove(f'info/{partidas[1]}.json')
+            partidas[1] = "Partida no creada"
+        if borrar3.click(event):
+            remove(f'info/{partidas[2]}.json')
+            partidas[2] = "Partida no creada"
                     
     
         
@@ -330,6 +336,8 @@ def Islasini():
         clock.tick(60)     
         screen.fill("black")
         dibujarMenu(color)   
+
+        
 
             
 Islasini()

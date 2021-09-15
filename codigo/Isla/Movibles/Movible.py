@@ -15,8 +15,7 @@ class Movible(Objeto):
  
 
     def move(self, x, y):
-        if not (self.x + x + 1 >= self.isla.getAncho() or self.x + x  - 1 <= 0) and not 
-        (self.y + y  + 1 >= self.isla.getAltura() or self.y + y - 1 <= 0):
+        if not (self.x + x + 1 >= self.isla.getAncho() or self.x + x  - 1 <= 0) and not (self.y + y  + 1 >= self.isla.getAltura() or self.y + y - 1 <= 0):
         # Si el movimiento no lo lleva afuera del mapa 
             if self.mObjetos[self.y + y][self.x + x] is None and self.mMovibles[self.y + y][self.x + x] is None:
                 
@@ -96,8 +95,7 @@ class Movible(Objeto):
                         self.moves.insert(0, [0, 1])
 
     def tieneAlLado(self, x, y):
-        return (self.getX() == x - 1  and self.getY() == y) or (self.getX() == x + 1 and self.getY() == y) 
-        or (self.getX() == x  and self.getY() == y - 1) or (self.getX() == x and self.getY() == y + 1) 
+        return (self.getX() == x - 1  and self.getY() == y) or (self.getX() == x + 1 and self.getY() == y) or (self.getX() == x  and self.getY() == y - 1) or (self.getX() == x and self.getY() == y + 1) 
                     
             
 
