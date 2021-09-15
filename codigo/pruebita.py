@@ -2,14 +2,17 @@ import sys
 from typing import Text
 
 # Hay que cambiar el path para que detecte bien o usar pycharm y poner add content root to PYTHONPATH
-from codigo.Controlador import Controlador
+
 
 path = sys.path[0]
 sys.path.append(path[:len(path) - 7])
 
 import pygame
 import time
+import os
+from os import remove
 from pygame import mixer
+from codigo.Controlador import Controlador
 from codigo.Isla.Isla import Isla
 from codigo.Camara.Camara import Camara
 from codigo.Camara.UI.UI import UI
@@ -23,6 +26,7 @@ from codigo.Isla.Helper import Helper
 from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
+
 
 pygame.init()
 mixer.init()
@@ -186,14 +190,23 @@ def Islasini():
     alto = 480
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
-    brown = (112,140,104)
+    color = (112,140,104)
+
     #Crear objeto boton
     #((posx,posy)),fuente,texto,screen,colordeletra, color de recuadro,colordefondo
-    Iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
-    Borrar1 = Boton((ancho-10,155),20,"  Borrar Isla  ",screen,"white","black","brown")
-    Menu = True
 
+    islas = True
 
+    partidas = []
+    
+    archivos = os.listdir("Info")
+    for partida in archivos:
+        partes = partida.split(".")
+        partidas.append(partes[0])
+        print(partes[0])
+    cantPartidas = len(partidas) 
+
+    
     #Tiempo para fondo
     timerFondo = 4
     pygame.time.set_timer(timerFondo,1000)
@@ -202,32 +215,121 @@ def Islasini():
     cuadro = Helper.CUADRO
     cuadro = pygame.transform.scale(cuadro, (ancho,150))
 
-    recuadroIsla = pygame.Rect((10, 10), (ancho- 20, 150))
-    recuadroIsla1 = pygame.Rect((10, 165), (ancho- 20, 150))
-    recuadroIsla2 = pygame.Rect((10, 320), (ancho- 20, 150))
     
-   
+    recuadrosIslas = [pygame.Rect((10, 10), (ancho- 20, 150)),
+    pygame.Rect((10, 165), (ancho- 20, 150)),
+    pygame.Rect((10, 320), (ancho- 20, 150))]
+
+
+    partida = None
+    start= ""
     
-    while Menu:
+    def degradado(color):
+        # Pantalla para el degradado
+        pantallaNegra = pygame.Surface((ancho, alto))
+        pantallaNegra.fill((0, 0, 0))
+        for alpha in range(0, 300):
+            pantallaNegra.set_alpha(alpha)
+            dibujarMenu(color)
+            screen.blit(pantallaNegra, (0, 0))
+            pygame.display.update()
+            pygame.time.delay(5)
+
+    def dibujarMenu(color):
+        for recuadro in recuadrosIslas:
+            pygame.draw.rect(screen, color, recuadro)
+
+        for boton in botones:  
+            boton.dibujarBoton(1)
+
+    def start(partida):
+        degradado(color)
+        cargarJuego(partida)
+        
+    
+    iniciar1 = Boton((ancho-120,155),20,"  Elegir Isla  ",screen,"white","black","brown")
+    borrar1 = Boton((ancho-10,1505),20,"  Borrar Isla  ",screen,"white","black","brown")
+    nuevaPartida1 = Boton((ancho-10,155),20,"Nueva Partida",screen,"white","black","brown")
+        
+    iniciar2 = Boton((ancho-120,310),20,"  Elegir Isla  ",screen,"white","black","brown")
+    borrar2 = Boton((ancho-1000,310),20,"  Borrar Isla  ",screen,"white","black","brown")
+    nuevaPartida2 = Boton((ancho-10,310),20,"Nueva Partida",screen,"white","black","brown")
+    
+    iniciar3 = Boton((ancho-120,470),20,"  Elegir Isla  ",screen,"white","black","brown")
+    borrar3 = Boton((ancho-200,470),20,"  Borrar Isla  ",screen,"white","black","brown")
+    nuevaPartida3 = Boton((ancho-10,470),20,"Nueva Partida",screen,"white","black","brown")
+
+    
+    if cantPartidas >= 1:
+        botones = [iniciar1, borrar1, nuevaPartida2, nuevaPartida3]
+        botonesIniciar = [iniciar1]
+        botonesNew = [nuevaPartida2, nuevaPartida3]
+        botonesBorrar = [borrar1]
+
+        if cantPartidas >= 2:
+            botones = [iniciar1, iniciar2, borrar1, borrar2, nuevaPartida3]
+            botonesIniciar = [iniciar1, iniciar2]
+            botonesNew = [nuevaPartida3]
+            botonesBorrar = [borrar1, borrar2]
+
+            if cantPartidas == 3:
+                botones = [iniciar1, iniciar2, iniciar3, borrar1, borrar2, borrar3]
+                botonesIniciar = [iniciar1, iniciar2, iniciar3]
+                botonesNew = []
+                botonesBorrar = [borrar1, borrar2, borrar3]
+
+    if cantPartidas == 0:
+        botones = [nuevaPartida1, nuevaPartida2, nuevaPartida3]
+        botonesNew = [nuevaPartida1, nuevaPartida2, nuevaPartida3]
+        botonesIniciar = []
+        botonesBorrar = []
+
+
+    
+    
+
+    while islas:
 
         for event in pygame.event.get():
             # Salir
             if event.type == pygame.QUIT:
-                Menu = False
+                islas = False
+
+        
+        for i in range(cantPartidas):
+            for boton in botonesIniciar:
+                if boton.click(event):
+                    partida = partidas[i]
+                    start(partida)
+                    islas = False
+
+            aux = 0
+        if cantPartidas != 0:
+            if borrar1.click(event):
+                remove(f'info/{partidas[0]}.json')
+                partidas[0] = "Partida no creada"
+            elif borrar2.click(event):
+                remove(f'info/{partidas[1]}.json')
+                partidas[1] = "Partida no creada"
+            if borrar3.click(event):
+                remove(f'info/{partidas[2]}.json')
+                partidas[2] = "Partida no creada"
+                    
+    
+        
+        for boton in botonesNew:
+            if boton.click(event):
+                degradado(color)
+                islas = False
+                menu()
+                    
+            
 
         # Dibujar todo
         pygame.display.update()
         clock.tick(60)     
         screen.fill("black")
-        
-        pygame.draw.rect(screen, brown, recuadroIsla)
-        pygame.draw.rect(screen, brown, recuadroIsla1)
-        pygame.draw.rect(screen, brown, recuadroIsla2)
-        # screen.blit(cuadro,(10,10))
-        # screen.blit(cuadro,(10, 165))
-        # screen.blit(cuadro,(10, 320))
-        Iniciar1.dibujarBoton(1)
-        Borrar1.dibujarBoton(1)        
-        
+        dibujarMenu(color)   
+
             
 Islasini()
