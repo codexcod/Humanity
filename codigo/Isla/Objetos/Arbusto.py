@@ -12,6 +12,7 @@ class Arbusto(Objeto):
         self.bayas = 0
         self.talado = False
         self.tiempoCrecimiento = 0
+        self.caminable = True
 
     def toJson(self):
         return {
@@ -27,14 +28,6 @@ class Arbusto(Objeto):
     def setTiempoCrecimiento(self, tiempoCrecimiento):
         self.tiempoCrecimiento = tiempoCrecimiento
 
-    def setTroncos(self, troncos):
-        self.troncos = troncos
-        if self.troncos >= 15:
-            self.setImage(Helper.ARBOL_GRANDE)
-
-        else:
-            self.setImage(Helper.ARBOL)
-
     def setTalado(self, talado):
         self.talado = talado
 
@@ -42,7 +35,14 @@ class Arbusto(Objeto):
         return self.talado
  
     def setBayas(self, bayas):
-        self.bayas = bayas
+        if bayas < 5:
+            self.bayas = 0
+
+        else:
+            self.bayas = bayas
+            self.setImage(Helper.ARBUSTO_FRUTAL)
+            self.setNombre("Arbbusto con bayas")
+
 
     def getBayas(self):
         return self.bayas

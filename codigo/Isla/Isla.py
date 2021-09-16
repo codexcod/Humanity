@@ -196,8 +196,12 @@ class Isla:
 
     def generarMapaObjetos(self):
         # Genera el mapa en el cual entran los arboles y piedras
-        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self))
+        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self),0.5)
         mArboles = arboles.getNoise()
+
+        arbustos = NoiseGenerator(self.ancho, self.altura, None, Arbusto(0, 0, self),0.05)
+        mArbustos = arbustos.getNoise()
+
 
         for y in range(self.altura):
             fila = []
@@ -215,15 +219,15 @@ class Isla:
 
                     fila.append(piedra)
 
-                elif random.randrange(1, 50) == 1:
-                    arbusto = Arbusto(x, y, self)
-                    arbusto.setBayas(random.randrange(5, 20))
-
-                    fila.append(arbusto)
-
+                elif not mArbustos[y][x] is None:
+                    mArbustos[y][x] = Arbusto(x, y, self)
+                    mArbustos[y][x].setBayas(random.randrange(1, 10))
+                    fila.append(mArbustos[y][x])
 
                 else:
                     fila.append(mArboles[y][x])
+
+                
 
             self.mObjetos.append(fila)
 

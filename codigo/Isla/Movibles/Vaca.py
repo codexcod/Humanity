@@ -12,6 +12,7 @@ class Vaca(Animal):
         self.carne = 20
         self.nombre = "Vaca" 
         self.ticks = 0
+        self.maxTick = random.randrange(18,23)
 
     def toJson(self):
         return {
@@ -36,7 +37,7 @@ class Vaca(Animal):
             if self.animacion == 3:
                 self.animacion = 0
             self.setImage(Helper.VACA(self.animacion))
-            if self.ticks == 20:
+            if self.ticks == self.maxTick:
                 self.ticks = 0
             
                 for i in range(4):

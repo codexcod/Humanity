@@ -12,6 +12,7 @@ class Conejo(Animal):
         self.carne = 10
         self.nombre = "Conejo" 
         self.ticks = 0
+        self.maxTick = random.randrange(8,13)
 
     def toJson(self):
         return {
@@ -39,7 +40,7 @@ class Conejo(Animal):
             if self.animacion == 14:
                 self.animacion = 0
             self.setImage(Helper.CONEJO(self.animacion))
-            if self.ticks == 10:
+            if self.ticks == self.maxTick:
                 self.ticks = 0
             
                 self.agregarMovimientos(4)

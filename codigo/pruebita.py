@@ -340,4 +340,4 @@ def Islasini():
         
 
             
-Islasini()
+cargarJuego("prueba")

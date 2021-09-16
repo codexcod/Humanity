@@ -30,9 +30,10 @@ class Helper:
     FONDO = pygame.image.load('../img/fondo/fondo.png') 
     CARNE = pygame.image.load('../img/carne.png')
     ARBUSTO = pygame.image.load('../img/arbusto.png') 
+    ARBUSTO_FRUTAL = pygame.image.load('../img/arbusto_frutal.png')
     ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
     BAYA_OBJETO = pygame.image.load('../img/baya.png') 
-    CUADRO = pygame.image.load('../img/barro.jpg')
+    
 
     def playMusic(music, volume):
         if music == 'menu':
