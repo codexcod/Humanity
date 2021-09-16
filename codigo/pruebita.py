@@ -26,7 +26,7 @@ from codigo.Isla.Helper import Helper
 from codigo.Isla.Aldea import Aldea
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Casa import Casa
-
+from codigo.Menu.Partida import Partida
 
 pygame.init()
 mixer.init()
@@ -107,8 +107,9 @@ def menu():
         if error == True:
             popArriba = "Debe completar todos los campos "
             popAbajo = "Pulsa el boton aceptar para continuar"
-
-            popUp.dibujarCuadro(popArriba, popAbajo, screen)
+            popPosArriba = (ancho/ 2 - 128, alto/ 2 - 40)
+            popPosAbajo = (ancho/ 2 - 128, alto/ 2 - 20)
+            popUp.dibujarCuadro(popArriba, popAbajo, screen, popPosArriba, popPosAbajo)
             botonAceptar.dibujarBoton(2)
 
     # Fade out visual
@@ -191,7 +192,8 @@ def Islasini():
     screen = pygame.display.set_mode((ancho, alto))
     clock = pygame.time.Clock()
     color = (112,140,104)
-
+    confirmarBor = False
+    borrar = False
 
     islas = True
 
@@ -250,13 +252,18 @@ def Islasini():
     for partida in partidas:
         i += 1
         botonesIniciar.append(Boton((ancho-120,(i*155)),20,"  Elegir Isla  ",screen,"white","black","brown"))
-        botonesBorrar.append(Boton((ancho-10,(i*155)),20,"  Borrar Isla  ",screen,"white","black","brown"))
+        botonesBorrar.append(Partida((ancho-10,(i*155)),20,"  Borrar Isla  ",screen,"white","black","brown",partida))
     
-    print(cantPartidas)
+    
     for i in range(3-nuevasPartidas+1, 3+1):
         botonesNew.append(Boton((ancho-10,(i*155)),20,"Nueva Partida",screen,"white","black","brown"))
 
     botones = [botonesIniciar , botonesBorrar, botonesNew]
+    advertencia = PopUp(ancho, alto)
+
+    botonAceptar = Boton((ancho / 2 , alto / 2 + 45), 24, "   Si   ", screen, "black", "black", "grey")
+    botonRechazar = Boton((ancho / 2 + 85 , alto / 2 + 45), 24, "   No   ", screen, "black", "black", "grey")
+    
 
     def dibujarMenu(color):
         for recuadro in recuadrosIslas:
@@ -275,12 +282,17 @@ def Islasini():
         for listas in botones:
             for boton in listas:  
                 boton.dibujarBoton(1)
+
+        if confirmarBor == True:
+            popArriba = "Seguro que desea eliminar"
+            popAbajo = "Esta isla"
+            popPosArriba = (ancho/ 2 - 90, alto/ 2 - 40)
+            popPosAbajo = (ancho/ 2 - 30, alto/ 2 - 20)
+            advertencia.dibujarCuadro(popArriba, popAbajo, screen, popPosArriba, popPosAbajo)
+            botonAceptar.dibujarBoton(1)
+            botonRechazar.dibujarBoton(1)
+
                 
-
-        
-
-
-
     while islas:
         for event in pygame.event.get():
             # Salir
@@ -289,7 +301,7 @@ def Islasini():
 
 
         i = 0
-        for boton in botonesIniciar:
+        for boton in botonesIniciar:      
             if boton.click(event):
                 partida = partidas[i]
                 start(partida)
@@ -300,11 +312,19 @@ def Islasini():
         i = 0
         for boton in botonesBorrar:
             if boton.click(event):
-                remove(f'info/{partidas[i]}.json')
-                nombrePartida[i] = "Partida no creada"
+                confirmarBor = True
+                partida = boton.getPartida()
+                
             i += 1
+        
+        if botonAceptar.click(event):
+            remove(f'info/{partida}.json')
+            nombrePartida[i] = "Partida no creada" 
 
-                    
+
+        if botonRechazar.click(event):
+            confirmarBor = False
+
         for boton in botonesNew:
             if boton.click(event):
                 degradado(color)
