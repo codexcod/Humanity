@@ -344,7 +344,7 @@ def Islasini():
         try:
             #Si se confirma que se quiere borrar borrara
             if botonHolder.getBorrar() == True:
-                remove(f'info/{partida}.json')
+                remove(f'info/{botonHolder.getPartida()}.json')
                 islas = False
                 Islasini()
         except:
