@@ -32,7 +32,10 @@ class Helper:
     ARBUSTO = pygame.image.load('../img/arbusto.png') 
     ARBUSTO_FRUTAL = pygame.image.load('../img/arbusto_frutal.png')
     ROCA_OBJETO = pygame.image.load('../img/roca_objeto.png')
-    BAYA_OBJETO = pygame.image.load('../img/baya.png') 
+    BAYA_OBJETO = pygame.image.load('../img/baya.png')
+    HACHA = pygame.image.load('../img/hacha.png')
+    PICO = pygame.image.load('../img/pico.png')
+    LEÑADOR = pygame.image.load('../img/leñador.png')
     
 
     def playMusic(music, volume):
