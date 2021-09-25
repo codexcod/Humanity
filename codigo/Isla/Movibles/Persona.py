@@ -4,6 +4,7 @@ import pygame
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
+from codigo.Isla.Herramientas.Mano import Mano
 
 class Persona(Movible):
 
@@ -17,6 +18,8 @@ class Persona(Movible):
         self.accionar = [False, 0, 0]
         self.trabajando = False
         self.tiempoTrabajando = 0
+        self.herramienta = None
+        
 
     def toJson(self):
         jsonText = {
@@ -33,6 +36,12 @@ class Persona(Movible):
 
         return jsonText
         
+
+    def setHerramienta(self,numInventario):
+        self.herramienta = self.inventario[numInventario]
+
+    def getHerramienta(self):
+        return self.herramienta
 
     def getCasa(self):
         return self.casa
@@ -88,6 +97,13 @@ class Persona(Movible):
             else:
                     
                 forPosX += 1
+
+        fondoHerramienta = pygame.transform.scale(Helper.INVENTARIO, (60, 60))
+        info.append(UIObject(fondoHerramienta,150,100))
+
+        if not self.herramienta is None:
+            imagenHerramienta = pygame.transform.scale(self.herramienta.getImage(), (40, 40))
+            info.append(UIObject(imagenHerramienta,160,110))
         
         return info
 
@@ -169,6 +185,12 @@ class Persona(Movible):
 
 
     def definirTrabajo(self, objeto):
+        if not self.herramienta is None:
+            herramienta = self.herramienta  
+
+        else:
+            herramienta = Mano()
+        
         # Si esta trabajando que le modifiquen la imagen
         if objeto.getNombre()[:4] == "Casa":
             if self.tieneAlgoEnElInventario():
@@ -176,9 +198,11 @@ class Persona(Movible):
                 self.tiempoTrabajando = len(self.inventario)
                 self.setImage(Helper.PERSONA_TRABAJANDO)
 
-        elif not objeto.getTrabajo() == 0:
+         
+        elif not objeto.getTrabajo(herramienta) == 0:
             self.trabajando = True
-            self.tiempoTrabajando = objeto.getTrabajo()
+            self.tiempoTrabajando = objeto.getTrabajo(herramienta)
+
             self.setImage(Helper.PERSONA_TRABAJANDO)
                     
         
