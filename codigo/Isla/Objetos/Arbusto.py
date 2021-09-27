@@ -53,8 +53,11 @@ Bayas : {self.bayas}
 """
         return result
 
-    def getTrabajo(self):
-        return self.bayas * 5
+    def getTrabajo(self,herramienta):
+        if herramienta.getDañoPlanta() > 0:
+            return (self.bayas * 10) // herramienta.getDañoPlanta()
+
+        return self.bayas * 10
 
     def getValor(self):
         valor = []

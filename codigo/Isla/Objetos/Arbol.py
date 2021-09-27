@@ -100,8 +100,11 @@ class Arbol(Objeto):
 Troncos : {self.troncos}"""
         return result
 
-    def getTrabajo(self):
-        return self.troncos * 5
+    def getTrabajo(self,herramienta):
+        if herramienta.getDañoArbol() > 0:
+            return (self.troncos * 10) // herramienta.getDañoArbol() 
+
+        return (self.troncos * 10)
 
     def getValor(self):
         valor = []

@@ -35,6 +35,7 @@ class Helper:
     BAYA_OBJETO = pygame.image.load('../img/baya.png')
     HACHA = pygame.image.load('../img/hacha.png')
     PICO = pygame.image.load('../img/pico.png')
+    PICO_ROTO = pygame.image.load('../img/pico_roto.png')
     LEÑADOR = pygame.image.load('../img/leñador.png')
     
 
