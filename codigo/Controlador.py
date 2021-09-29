@@ -14,6 +14,7 @@ class Controlador:
         self.running = True
 
     def run(self):
+        """ Se corre el jueguito con el personaje """
         # Controlar tiempo en el juego
         clock = pygame.time.Clock()
         screenUpdate = 1
@@ -62,12 +63,12 @@ class Controlador:
             # El reloj por el cual todos los eventos se actualizan
 
     def arbolesUpdate(self):
-        # Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer
+        """ Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer """
         for arbol in self.isla.getArbolesTalados():
             arbol.avanzarTiempo()
 
     def screenUpdate(self):
-        # Cuando se actualiza la pantalla, se movera todas las personas y animales
+        """ Cuando se actualiza la pantalla, se movera todas las personas y animales """
         for persona in self.aldea.getPersonas():
             persona.makeMoves()
 
@@ -75,10 +76,12 @@ class Controlador:
             animal.makeMoves()
 
     def stopGame(self):
+        """ Termina el loop del juego y guarda la partida"""
         self.isla.toJson(self.partida)
         self.running = False
 
     def keyEvent(self, event):
+        """ Detecta cuando una tecla del teclado clickeado """
         if event == pygame.K_RIGHT or event == pygame.K_d:
             self.camara.moveX(2)
 
@@ -103,6 +106,7 @@ class Controlador:
             self.camara.setPosX(self.ancho // 2)
 
     def mousePressed(self, mouse):
+        """ Detecta cuando el mouse es presionado """
         left, middle, right = mouse
         if left:
 

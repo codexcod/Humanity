@@ -78,6 +78,8 @@ class Helper:
     def VACA(animcacionVaca):
         return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
 
+        
+
     
 
 
