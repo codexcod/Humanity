@@ -40,3 +40,6 @@ class Casa(Objeto):
 
     def getAldea(self):
         return self.aldea
+
+    def isCasa(self):
+        return True

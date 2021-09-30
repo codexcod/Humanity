@@ -31,20 +31,6 @@ pygame.init()
 mixer.init()
 
 
-def Juego(nombreAldea, heroe, explorador, partida):
-    ancho = 400
-    altura = 400
-    isla = Isla()
-    isla.generarIsla(ancho, altura)
-    aldea = Aldea(nombreAldea)
-    isla.agregarAldea(aldea, ancho // 2, altura // 2, heroe, explorador)
-
-    # Camara para controlar el zoom
-    camara = Camara(ancho // 2, altura // 2, isla, Zoom.NORMAL_ZOOM, UI())
-    mouse = Mouse(camara)
-
-    controlador = Controlador(isla, camara, partida)
-    controlador.run()
 
 
 def cargarJuego(partida):

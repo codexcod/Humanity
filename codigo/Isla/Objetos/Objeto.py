@@ -74,3 +74,20 @@ class Objeto:
             'x' : self.x,
             'y' : self.y
         }
+
+    def isArbol(self):
+        return False
+
+    def isPiedra(self):
+        return False
+
+    def isArbusto(self):
+        return False
+
+    def isCasa(self):
+        return False
+
+    def isFogata(self):
+        return False
+
+    

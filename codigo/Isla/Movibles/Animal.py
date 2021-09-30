@@ -51,15 +51,6 @@ class Animal(Movible):
             self.moves.pop(len(self.moves) - 1)
                 
 
-    def agregarMovimientos(self, movimientos):
-        # Agrega movimientos 
-        for i in range(movimientos):
-                if random.choice([0, 1]) == 0:
-                    self.moves.append([0, random.choice([-1, 1])])
-
-                else:
-                    self.moves.append([random.choice([-1, 1]), 0])
-            
 
 
     def getInfoStr(self):

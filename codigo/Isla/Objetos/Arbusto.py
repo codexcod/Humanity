@@ -72,3 +72,6 @@ Bayas : {self.bayas}
 
     def onClick(self):
         self.sacarBayas()
+
+    def isArbusto(self):
+        return True

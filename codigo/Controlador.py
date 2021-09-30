@@ -107,6 +107,7 @@ class Controlador:
 
     def mousePressed(self, mouse):
         """ Detecta cuando el mouse es presionado """
+        
         left, middle, right = mouse
         if left:
 

@@ -113,3 +113,6 @@ Troncos : {self.troncos}"""
 
         return valor
 
+    def isArbol(self):
+        return True
+
