@@ -19,15 +19,12 @@ from codigo.Camara.Camara import Camara
 from codigo.Camara.UI.UI import UI
 from codigo.Camara.Zoom import Zoom
 from codigo.Camara.Mouse import Mouse
-from codigo.Menu.InputBox import InputBox
-from codigo.Menu.fondo import Fondo
-from codigo.Menu.buttom import Boton
-from codigo.Menu.popUp import PopUp
 from codigo.Menu.Partida import Partida
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Aldea import Aldea
-from codigo.Isla.Movibles.Persona import Persona
-from codigo.Isla.Objetos.Casa import Casa
+from codigo.Menu.Button import Button
+from codigo.Menu.PopUp import PopUp
+
 
 
 pygame.init()
@@ -68,6 +65,7 @@ def cargarJuego(partida):
 def menu():
     controlador = ControladorMenu()
     controlador.run()
+    
 
     
     
@@ -137,7 +135,7 @@ def Islasini():
     
     #Por cada slot de partida vacio crear un boton "Nueva Partida"
     for i in range(3-nuevasPartidas+1, 3+1):
-        botonesNew.append(Boton((ancho-10,(i*155)),20,"Nueva Partida",screen,"white","black","brown"))
+        botonesNew.append(Button((ancho-10,(i*155)),20,"Nueva Partida",screen,"white","black","brown"))
 
     #Ordenar los tipos de botones en una lista para que sean mas faciles de dibujar
     botones = [botonesIniciar , botonesBorrar, botonesNew]
@@ -146,8 +144,8 @@ def Islasini():
     advertencia = PopUp(ancho, alto)
 
     #Crear los botones para la advertencia de Borrar
-    botonAceptar = Boton((ancho / 2 , alto / 2 + 45), 24, "   Si   ", screen, "black", "black", "grey")
-    botonRechazar = Boton((ancho / 2 + 85 , alto / 2 + 45), 24, "   No   ", screen, "black", "black", "grey")
+    botonAceptar = Button((ancho / 2 , alto / 2 + 45), 24, "   Si   ", screen, "black", "black", "grey")
+    botonRechazar = Button((ancho / 2 + 85 , alto / 2 + 45), 24, "   No   ", screen, "black", "black", "grey")
     
 
     def dibujarMenu():

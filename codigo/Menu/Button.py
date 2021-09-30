@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 
-class Boton:
+class Button:
     #Crear el boton, despues dibujarlo
 
     def __init__(self, pos, font, text, screen, color, colorRec, colorfondo):
