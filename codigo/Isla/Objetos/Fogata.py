@@ -26,3 +26,5 @@ class Fogata(Objeto):
         result = f"""{self.name}"""
         return result
 
+    def isFogata(self):
+            return True

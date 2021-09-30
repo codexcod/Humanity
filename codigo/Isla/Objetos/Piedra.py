@@ -65,5 +65,8 @@ Piedras : {self.piedras}
     def onClick(self):
         self.picarPiedra()
 
+    def isPiedra(self):
+        return True
+
 
 
