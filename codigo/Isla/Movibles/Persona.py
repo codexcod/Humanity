@@ -341,6 +341,8 @@ class Persona(Movible):
         if self.busqueda == 4:
             self.busqueda = 0 
 
+        self.accionar = [False,0,0]
+
 
         
             

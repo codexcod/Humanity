@@ -66,7 +66,8 @@ class Fogata(Objeto):
             fondoActividad.fill(Helper.getActividad(persona.getBusqueda())[0], None, 0)
             info.append(UIObject(fondoActividad, 600 , 215 + 180 * forPersona))
 
-            actividad = font.render(Helper.getActividad(persona.getBusqueda())[1], True, (255, 255, 255), None)
+            fuenteActividad = Helper.FUENTE(20)
+            actividad = fuenteActividad.render(Helper.getActividad(persona.getBusqueda())[1], True, (255, 255, 255), None)
             botonActividad = ActividadUI(actividad, 615 , 230 + 180 * forPersona,lista,persona,ui,self)
             info.append(UIObject(actividad, 615 , 230 + 180 * forPersona))
             clickeables.append(botonActividad)
