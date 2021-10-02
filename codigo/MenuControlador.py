@@ -1,9 +1,9 @@
 import pygame
 from codigo.Isla.Helper import Helper
 from codigo.Menu.InputBox import InputBox
-from codigo.Menu.Fondo import Fondo
+from codigo.Menu.fondo import Fondo
 from codigo.Menu.Button import Button
-from codigo.Menu.PopUp import PopUp
+from codigo.Menu.popUp import PopUp
 from codigo.Isla.Isla import Isla
 from codigo.Isla.Aldea import Aldea
 from codigo.Camara.UI.UI import UI

@@ -91,4 +91,7 @@ class Objeto:
     def isFogata(self):
         return False
 
+    def isAnimal(self):
+        return False
+
     

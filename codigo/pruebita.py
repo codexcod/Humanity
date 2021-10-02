@@ -23,7 +23,7 @@ from codigo.Menu.Partida import Partida
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Aldea import Aldea
 from codigo.Menu.Button import Button
-from codigo.Menu.PopUp import PopUp
+from codigo.Menu.popUp import PopUp
 
 
 

@@ -37,6 +37,8 @@ class Helper:
     PICO = pygame.image.load('../img/pico.png')
     PICO_ROTO = pygame.image.load('../img/pico_roto.png')
     LEÑADOR = pygame.image.load('../img/leñador.png')
+    FLECHA_ABAJO = pygame.image.load('../img/flecha_abajo.png')
+    FLECHA_ARRIBA = pygame.image.load('../img/flecha_arriba.png')
     
     def getImage(image,width,height):
         return pygame.transform.scale(image, (width, height))
