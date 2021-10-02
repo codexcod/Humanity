@@ -70,7 +70,7 @@ Bayas : {self.bayas}
         self.isla.getMapaObjetos()[self.y][self.x] = None
 
 
-    def onClick(self):
+    def onClick(self,herramienta):
         self.sacarBayas()
 
     def isArbusto(self):

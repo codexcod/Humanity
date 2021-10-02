@@ -25,7 +25,7 @@ class Objeto:
     def setImage(self, image):
         self.image = image
 
-    def onClick(self):
+    def onClick(self,herramienta):
         return False
 
     def getInfoStr(self):

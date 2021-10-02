@@ -59,9 +59,9 @@ Carne : {self.carne}
 Vida : {self.vida}"""
         return result
 
-    def onClick(self):
+    def onClick(self,herramienta):
         # en el caso que le peguen, que le reste vida y que se mueva
-        self.restarVida(1)
+        self.restarVida(herramienta)
         self.agregarMovimientos(6)
 
 
@@ -75,7 +75,7 @@ Vida : {self.vida}"""
             self.isla.getMapaMovible()[self.y][self.x] = None
             return valor
 
-    def getTrabajo(self):
+    def getTrabajo(self,herramienta):
         if not self.muerto:
             return 1
         
@@ -85,3 +85,4 @@ Vida : {self.vida}"""
         self.muerto = True
         self.setImage(Helper.VACA(4))
         self.setNombre("Vaca Muerta")
+

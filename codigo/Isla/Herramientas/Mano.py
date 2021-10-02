@@ -7,8 +7,8 @@ class Mano(Herramienta):
         Herramienta.__init__(self)
         self.dañoPiedra = 0
         self.dañoArbol = 0
-        self.dañoPersona = 0
-        self.dañoAnimal = 0
+        self.dañoPersona = 1
+        self.dañoAnimal = 1
         
 
     def restarUso(self):

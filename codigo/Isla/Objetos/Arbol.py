@@ -48,7 +48,7 @@ class Arbol(Objeto):
     def setTalado(self, talado):
         self.talado = talado
 
-    def onClick(self):
+    def onClick(self,herramienta):
         
         self.talarArbol()
         return super().onClick()

@@ -63,8 +63,8 @@ class Animal(Movible):
     def setVida(self, vida):
         self.vida = vida
 
-    def restarVida(self, vida):
-        self.vida -= vida
+    def restarVida(self, herramienta):
+        self.vida -= herramienta.getDañoAnimal()
         if self.vida <= 0:
             self.matar()
     
@@ -80,4 +80,7 @@ class Animal(Movible):
 
     def setMuerto(self, muerto):
         self.muerto = muerto
+
+    def isAnimal(self):
+        return True
         

@@ -243,6 +243,11 @@ class Persona(Movible):
                     
         
     def trabajar(self):
+        if not self.herramienta is None:
+            herramienta = self.herramienta  
+
+        else:
+            herramienta = Mano()
         # En el caso que este trabajando
         if self.trabajando:
             # Si esta trabajando, que le reste un poco de tiempo de trabajo, 
@@ -262,7 +267,7 @@ class Persona(Movible):
                         for objeto in self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor():
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
                             self.agregarInventario(objeto) 
-                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
+                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
                 elif not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                     valor = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor()
@@ -272,7 +277,7 @@ class Persona(Movible):
                             self.agregarInventario(objeto) 
                     
                     else:
-                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
+                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
                 self.accionar[0] = False
                 self.moves.clear()
@@ -325,9 +330,9 @@ class Persona(Movible):
             for x in range(self.x - self.vision,self.x + self.vision):      
                 if not x > self.isla.getAncho() or not x < self.isla.getAncho():
                     if not y > self.isla.getAltura() or not y < self.isla.getAltura():
-                        if not self.isla.getMapaObjetos()[y][x] is None:
-                            if self.isla.getMapaObjetos()[y][x].isAnimal():
-                                self.accionarObjeto(self.isla.getMapaObjetos()[y][x])
+                        if not self.isla.getMapaMovible()[y][x] is None:
+                            if self.isla.getMapaMovible()[y][x].isAnimal():
+                                self.accionarObjeto(self.isla.getMapaMovible()[y][x])
                                 
                                 return True
 
@@ -338,10 +343,11 @@ class Persona(Movible):
 
     def sumarBusqueda(self):
         self.busqueda += 1
-        if self.busqueda == 4:
+        if self.busqueda == 5:
             self.busqueda = 0 
 
         self.accionar = [False,0,0]
+        self.moves.clear()
 
 
         

@@ -56,15 +56,15 @@ Carne : {self.carne}
 Vida : {self.vida}"""
         return result
 
-    def getTrabajo(self):
+    def getTrabajo(self,herramienta):
         if not self.muerto:
             return 1
         
         return self.carne * 5
 
-    def onClick(self):
+    def onClick(self,herramienta):
         # en el caso que le peguen, que le reste vida y que se mueva
-        self.restarVida(1)
+        self.restarVida(herramienta)
         self.agregarMovimientos(6)
 
     
