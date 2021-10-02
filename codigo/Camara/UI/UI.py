@@ -16,11 +16,16 @@ class UI:
 
     def generarInfoObjeto(self, objeto):
         # Genera el UI donde se guardara la informacion de un objeto
-        info = (objeto.getUI())
+        info = []
+        for objetoui in objeto.getUI(self.objetosClickeables, info, self.ui,self):
+            info.append(objetoui)
+
         close = pygame.transform.scale(Helper.CLOSE, (50, 50))
         info.append(UIObject(close, 840, 60))
         self.objetosClickeables.append(CloseUI(close, 840, 60, info, self.ui))
         self.ui.append(info)
+
+        
 
 
 

@@ -34,8 +34,8 @@ class Mouse:
         for object in objetosClickeables:
             if x + 20 >= object.getPosX() >= x - 40:
                 if y + 20 >= object.getPosY() >= y - 40:
+                    objetosClickeables.clear()
                     object.onClick()
-                    objetosClickeables.remove(object)
 
 
     def getObjectMousePosition(self):

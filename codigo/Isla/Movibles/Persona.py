@@ -1,6 +1,5 @@
 from codigo.Isla.Movibles.Movible import Movible
 from codigo.Isla.Helper import Helper
-import pygame
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
@@ -20,6 +19,7 @@ class Persona(Movible):
         self.tiempoTrabajando = 0
         self.herramienta = None
         self.vision = 5
+        self.busqueda = 0
         
 
     def toJson(self):
@@ -67,10 +67,10 @@ class Persona(Movible):
     def getInventario(self):
         return self.inventario
 
-    def getUI(self):
+    def getUI(self,clickeables,lista,listaUI,ui):
         # Crea un UI para las personas
         info = []
-        fondo = pygame.surface.Surface((800, 500))
+        fondo = Helper.getSurface(800,500)
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
         font = Helper.FUENTE(25)
@@ -82,16 +82,17 @@ class Persona(Movible):
             info.append(UIObject(textObject, 550, 70 + forI * 40))
             forI += 1
         
-        image = pygame.transform.scale(self.getImage(), (200, 200))
+        
+        image = Helper.getImage(self.getImage(),200,200)
         info.append(UIObject(image, 200, 200))
 
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
             # Dibujan los objetos del inventario
-            fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
+            fondoObjeto = Helper.getImage(Helper.INVENTARIO,40,40)
             info.append(UIObject(fondoObjeto, 550 + 40 * forPosX, 120+ 40 * forPosY ))
-            imagenObjeto = pygame.transform.scale(objeto.getImage(), (30, 30))
+            imagenObjeto = Helper.getImage(objeto.getImage(),30,30)
             info.append(UIObject(imagenObjeto, 550 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
             if forPosX == 7:
                 forPosX = 0
@@ -101,11 +102,11 @@ class Persona(Movible):
                     
                 forPosX += 1
 
-        fondoHerramienta = pygame.transform.scale(Helper.INVENTARIO, (60, 60))
+        fondoHerramienta = Helper.getImage(Helper.INVENTARIO,60,60)
         info.append(UIObject(fondoHerramienta,150,100))
 
         if not self.herramienta is None:
-            imagenHerramienta = pygame.transform.scale(self.herramienta.getImage(), (40, 40))
+            imagenHerramienta = Helper.getImage(self.herramienta.getImage(),40,40)
             info.append(UIObject(imagenHerramienta,160,110))
         
         return info
@@ -184,15 +185,27 @@ class Persona(Movible):
                             self.moves.insert(0, [0, 1])
 
             else:
-                if not self.accionar[0]: 
-                    if not self.tieneInventarioLleno():
-                        print(f'hola {self.nombre} {len(self.inventario)}')
-                        if not self.buscarPiedras():
-                            self.agregarMovimientos(5)
+                if not self.busqueda == 0:
+                    if not self.accionar[0]: 
+                        if not self.tieneInventarioLleno():
+                            if self.busqueda == 2:
+                                if not self.buscarPiedras():
+                                    self.agregarMovimientos(5)
 
-                    else:
-                        print(f'jaja {self.nombre}')
-                        self.guardarRecursos()
+                            elif self.busqueda == 1:
+                                if not self.buscarArboles():
+                                    self.agregarMovimientos(5)
+
+                            elif self.busqueda == 4:
+                                if not self.buscarArbustos():
+                                    self.agregarMovimientos(5)
+
+                            elif self.busqueda == 3:
+                                if not self.buscarAnimales():
+                                    self.agregarMovimientos(5)
+
+                        else:
+                            self.guardarRecursos()
 
                 
         else:
@@ -294,6 +307,39 @@ class Persona(Movible):
 
         return False
 
+    def buscarArbustos(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            for x in range(self.x - self.vision,self.x + self.vision):      
+                if not x > self.isla.getAncho() or not x < self.isla.getAncho():
+                    if not y > self.isla.getAltura() or not y < self.isla.getAltura():
+                        if not self.isla.getMapaObjetos()[y][x] is None:
+                            if self.isla.getMapaObjetos()[y][x].isArbusto():
+                                self.accionarObjeto(self.isla.getMapaObjetos()[y][x])
+                                
+                                return True
+
+        return False
+
+    def buscarAnimales(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            for x in range(self.x - self.vision,self.x + self.vision):      
+                if not x > self.isla.getAncho() or not x < self.isla.getAncho():
+                    if not y > self.isla.getAltura() or not y < self.isla.getAltura():
+                        if not self.isla.getMapaObjetos()[y][x] is None:
+                            if self.isla.getMapaObjetos()[y][x].isAnimal():
+                                self.accionarObjeto(self.isla.getMapaObjetos()[y][x])
+                                
+                                return True
+
+        return False
+
+    def getBusqueda(self):
+        return self.busqueda
+
+    def sumarBusqueda(self):
+        self.busqueda += 1
+        if self.busqueda == 4:
+            self.busqueda = 0 
 
 
         

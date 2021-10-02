@@ -1,7 +1,7 @@
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
-import pygame
+
 
 
 class Objeto:
@@ -43,9 +43,9 @@ class Objeto:
     def getY(self):
         return self.y
 
-    def getUI(self):
+    def getUI(self,clickeables,lista,listaUI,ui):
         info = []
-        fondo = pygame.surface.Surface((800, 500))
+        fondo = Helper.getSurface(800,500)
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
         font = Helper.FUENTE(25)
@@ -57,7 +57,8 @@ class Objeto:
             info.append(UIObject(textObject, 550, 250 + forI * 40))
             forI += 1
         
-        image = pygame.transform.scale(self.getImage(), (200, 200))
+        
+        image = Helper.getImage(self.getImage(),200, 200)
         info.append(UIObject(image, 200, 200))
         
         return info

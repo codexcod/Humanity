@@ -12,6 +12,7 @@ class Controlador:
         self.altura = self.isla.getAltura()
         self.partida = partida
         self.running = True
+        self.click = True
 
     def run(self):
         """ Se corre el jueguito con el personaje """
@@ -69,6 +70,9 @@ class Controlador:
 
     def screenUpdate(self):
         """ Cuando se actualiza la pantalla, se movera todas las personas y animales """
+
+        self.click = True
+
         for persona in self.aldea.getPersonas():
             persona.makeMoves()
 
@@ -121,7 +125,10 @@ class Controlador:
                     self.camara.getUI().generarInfoObjeto(self.mouse.pedirInfoObjeto())
 
             else:
-                self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
+                if self.click:
+                    self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
+                    self.click = False
+                    
 
         # En el caso que sea derecha checkea si esta seleccionado
         if right:
