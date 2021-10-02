@@ -1,11 +1,10 @@
-from Nodo import Nodo
+from Nodo import nodo
 
 
 class Holandes():
 
     def __init__(self, isla):
         self.isla = isla
-        self.abierta= abierta[]
-        self.cerrada = cerrada[]
+        self.abierta= []
+        self.cerrada = []
     limite = 100
-    def 

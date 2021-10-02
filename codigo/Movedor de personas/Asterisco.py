@@ -1,22 +1,197 @@
-from Nodo import Nodo
+from Nodo import nodo
 
 
 class Asterisco():
 
     def __init__(self, isla):
         self.isla = isla
-        self.abierta= abierta[]
-        self.cerrada = cerrada[]
+        self.abierta = []
+        self.cerrada = []
+
+    def agregar(self, nodo):
+        self.abierta.append(nodo)
 
     def empiezaElCodiguito(self, inicio, final):
 
-        inicioNodo = Nodo(None, inicio)
-        inicioNodo.g = inicioNodo.h = inicioNodo.f = 0
-        objetivoNodo = Nodo(None, final)
-        objetivoNodo.g = objetivoNodo.h = objetivoNodo.f = 0
+        inicioNodo = nodo(None, inicio)
+        inicioNodo.costo = 0
+        inicioNodo.valorProbable = 0
+        inicioNodo.total = 0
+        objetivoNodo = nodo(None, final)
+        objetivoNodo.costo = 0
+        objetivoNodo.valorProbable = 0
+        objetivoNodo.total = 0
         limite = 1000
         vecesQueSeHizo = 0
+        self.abierta.append(inicioNodo)
 
-        while len(abierta[]) > 0:
+        while len(self.abierta) > 0:
             vecesQueSeHizo += 1
-            
+            nodoActual = self.abierta[1]
+            self.cerrada.append(nodoActual)
+
+            if nodoActual == objetivoNodo:
+                return (devuelveCaminito(nodoActual))
+
+        if vecesQueSeHizo > limite:
+            return "No se encontraron arboles cercanos"
+    def devuelveCaminito(self, nodoFinal):
+        caminito = []
+        nodo = nodoFinal
+        while nodo is not None:
+
+            caminito.append.(nodoFinal.posicion)
+        nodoFinal =nodoFinal.padreMia
+
+        return caminito[::-1]
+
+
+    import sys
+
+class Node():
+    def __init__(self, state, parent, action):
+        self.state = state
+        self.parent = parent
+        self.action = action
+
+
+class StackFrontier():
+    def __init__(self):
+        self.frontier = []
+
+    def add(self, node):
+        self.frontier.append(node)
+
+    def contains_state(self, state):
+        return any(node.state == state for node in self.frontier)
+
+    def empty(self):
+        return len(self.frontier) == 0
+
+    def remove(self):
+        if self.empty():
+            raise Exception("empty frontier")
+        else:
+            node = self.frontier[-1]
+            self.frontier = self.frontier[:-1]
+            return node
+
+'''
+class QueueFrontier(StackFrontier):
+
+    def remove(self):
+        if self.empty():
+            raise Exception("empty frontier")
+        else:
+            node = self.frontier[0]
+            self.frontier = self.frontier[1:]
+            return node'''
+
+class Maze():
+
+    def __init__(self, filename):
+        # Keep track of walls
+        self.walls = []
+        for i in range(self.height):
+            row = []
+            for j in range(self.width):
+                try:
+                    if contents[i][j] == "A":
+                        self.start = (i, j)
+                        row.append(False)
+                    elif contents[i][j] == "B":
+                        self.goal = (i, j)
+                        row.append(False)
+                    elif contents[i][j] == " ":
+                        row.append(False)
+                    else:
+                        row.append(True)
+                except IndexError:
+                    row.append(False)
+            self.walls.append(row)
+
+        self.solution = None
+
+
+    def print(self):
+        solution = self.solution[1] if self.solution is not None else None
+        print()
+        for i, row in enumerate(self.walls):
+            for j, col in enumerate(row):
+                if col:
+                    print("â–ˆ", end="")
+                elif (i, j) == self.start:
+                    print("A", end="")
+                elif (i, j) == self.goal:
+                    print("B", end="")
+                elif solution is not None and (i, j) in solution:
+                    print("*", end="")
+                else:
+                    print(" ", end="")
+            print()
+        print()
+
+
+    def neighbors(self, state):
+        row, col = state
+        candidates = [
+            ("up", (row - 1, col)),
+            ("down", (row + 1, col)),
+            ("left", (row, col - 1)),
+            ("right", (row, col + 1))
+        ]
+
+        result = []
+        for action, (r, c) in candidates:
+            if 0 <= r < self.height and 0 <= c < self.width and not self.walls[r][c]:
+                result.append((action, (r, c)))
+        return result
+
+
+    def solve(self):
+        """Finds a solution to maze, if one exists."""
+
+        # Keep track of number of states explored
+        self.num_explored = 0
+
+        # Initialize frontier to just the starting position
+        start = Node(state=self.start, parent=None, action=None)
+        frontier = StackFrontier()
+        frontier.add(start)
+
+        # Initialize an empty explored set
+        self.explored = set()
+
+        # Keep looping until solution found
+        while True:
+
+            # If nothing left in frontier, then no path
+            if frontier.empty():
+                raise Exception("no solution")
+
+            # Choose a node from the frontier
+            node = frontier.remove()
+            self.num_explored += 1
+
+            # If node is the goal, then we have a solution
+            if node.state == self.goal:
+                actions = []
+                cells = []
+                while node.parent is not None:
+                    actions.append(node.action)
+                    cells.append(node.state)
+                    node = node.parent
+                actions.reverse()
+                cells.reverse()
+                self.solution = (actions, cells)
+                return
+
+            # Mark node as explored
+            self.explored.add(node.state)
+
+            # Add neighbors to frontier
+            for action, state in self.neighbors(node.state):
+                if not frontier.contains_state(state) and state not in self.explored:
+                    child = Node(state=state, parent=node, action=action)
+                    frontier.add(child)
+

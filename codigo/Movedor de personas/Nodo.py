@@ -1,12 +1,11 @@
+from codigo.Isla.Objetos import Objeto
 
-class Nodo:
+class nodo:
 
-    def _init_(self, parent = None, position = None):
+    def _init_(self, padreMia = None, posicion = None):
         self.padreMia = padreMia
         self.posicion = posicion
-        self.movible = movible
-        self.objeto = objeto
-
+        self.caminable = True
         self.costo = 0
         self.valorProbable = 0
-        self.sumaDeAmbos = 0
+        self.total = 0
