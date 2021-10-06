@@ -20,6 +20,7 @@ class Persona(Movible):
         self.herramienta = None
         self.vision = 5
         self.busqueda = 0
+        self.busquedas = [None,self.buscarArboles,self.buscarPiedras,self.buscarAnimales,self.buscarArbustos]
         
 
     def toJson(self):
@@ -144,65 +145,62 @@ class Persona(Movible):
             self.moveToPosition(objeto.getX(), objeto.getY())  
             self.accionar = [True, objeto]
 
+    def isTrabajando(self):
+        return self.trabajando
+
+    def hasMoves(self):
+        return len(self.moves) > 0
+
+    def debeAccionar(self):
+        if self.accionar[0]:
+            if self.tieneAlLado(self.accionar[1].getX(), self.accionar[1].getY()):
+                self.definirTrabajo(self.accionar[1])
+
+            elif len(self.moves) == 1:
+                if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
+                    self.accionarObjeto(self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()])
+
+                else:
+                    self.accionarObjeto(self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()])
+
+    def esquivarObjeto(self):
+        if self.moves[len(self.moves) - 1][0] == 0:    
+            if self.directionX > 0:
+                self.moves.append([1, 0])
+                self.moves.insert(0, [-1, 0])
+
+            else:
+                self.moves.append([-1, 0])
+                self.moves.insert(0, [1, 0])
+
+        else:
+            
+            if self.directionY > 0:
+                self.moves.append([0, 1])
+                self.moves.insert(0, [0, -1])
+
+            else:
+                self.moves.append([0, -1])
+                self.moves.insert(0, [0, 1])
+
     def makeMoves(self):
-        if not self.trabajando:
-            if len(self.moves) > 0:
-                if self.accionar[0]:
-                        if self.tieneAlLado(self.accionar[1].getX(), self.accionar[1].getY()):
-                            self.definirTrabajo(self.accionar[1])
+        if not self.isTrabajando():
+            if self.hasMoves():
+                
+                self.debeAccionar()
 
-                        elif len(self.moves) == 1:
-                            if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
-                                self.accionarObjeto(self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()])
-
-                            else:
-                                self.accionarObjeto(self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()])
-                                
                 if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
                     self.moves.pop(len(self.moves) - 1)
                             
                 else:
+                    self.esquivarObjeto()
                     
-                    if self.moves[len(self.moves) - 1][0] == 0:
-
-                
-                        if self.directionX > 0:
-                            self.moves.append([1, 0])
-                            self.moves.insert(0, [-1, 0])
-
-                        else:
-                            self.moves.append([-1, 0])
-                            self.moves.insert(0, [1, 0])
-
-                    else:
-                        
-                        if self.directionY > 0:
-                            self.moves.append([0, 1])
-                            self.moves.insert(0, [0, -1])
-
-                        else:
-                            self.moves.append([0, -1])
-                            self.moves.insert(0, [0, 1])
 
             else:
-                if not self.busqueda == 0:
+                if not self.getTarea() is None:
                     if not self.accionar[0]: 
                         if not self.tieneInventarioLleno():
-                            if self.busqueda == 2:
-                                if not self.buscarPiedras():
-                                    self.agregarMovimientos(5)
-
-                            elif self.busqueda == 1:
-                                if not self.buscarArboles():
-                                    self.agregarMovimientos(5)
-
-                            elif self.busqueda == 4:
-                                if not self.buscarArbustos():
-                                    self.agregarMovimientos(5)
-
-                            elif self.busqueda == 3:
-                                if not self.buscarAnimales():
-                                    self.agregarMovimientos(5)
+                            self.buscarRecursos()
 
                         else:
                             self.guardarRecursos()
@@ -211,11 +209,16 @@ class Persona(Movible):
         else:
             self.trabajar()
 
-    def guardarRecursos(self):
-        self.accionarObjeto(self.getCasa())
 
-    def puedeAgregarAlInventario(self):
-        return len(self.inventario) > 80  
+    def getTarea(self):
+        return self.busquedas[self.busqueda]
+
+    def buscarRecursos(self):
+        if not self.getTarea()():
+            self.agregarMovimientos(5)
+
+    def guardarRecursos(self):
+        self.accionarObjeto(self.getCasa()) 
 
     def tieneInventarioLleno(self):
         return len(self.inventario) >= 80     
@@ -248,36 +251,45 @@ class Persona(Movible):
 
         else:
             herramienta = Mano()
+
+            
         # En el caso que este trabajando
         if self.trabajando:
             # Si esta trabajando, que le reste un poco de tiempo de trabajo, 
             self.tiempoTrabajando -= 1
-            if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
-                if self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getNombre()[:4] == "Casa":
+
+            objetoTrabajado = self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()]
+
+            movibleTrabajado = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()]
+            
+            if objetoTrabajado is None:
+                if objetoTrabajado.getNombre()[:4] == "Casa":
                     # Si esta "trabajando" en la aldea, que guarde su inventario en la aldea
-                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
+                    objetoTrabajado.getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
                     self.inventario.pop(len(self.inventario) - 1)
 
             if self.tiempoTrabajando == 0:
                 # Si termino de trabajar
                 self.trabajando = False
                 self.setImage(Helper.PERSONA)
-                if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
-                    if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor() is None:
-                        for objeto in self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor():
+                
+
+                if not objetoTrabajado is None:
+                    if objetoTrabajado.getValor() is None:
+                        for objeto in objetoTrabajado.getValor():
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
                             self.agregarInventario(objeto) 
                     self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
-                elif not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
-                    valor = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor()
+                elif movibleTrabajado is None:
+                    
                     # Si era un movible en el que estaba trabajando, que agregue sus valores en el inventario
-                    if not valor is None:
-                        for objeto in valor:
+                    if not movibleTrabajado.getValor() is None:
+                        for objeto in movibleTrabajado.getValor():
                             self.agregarInventario(objeto) 
                     
                     else:
-                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
+                        movibleTrabajado.onClick(herramienta)
 
                 self.accionar[0] = False
                 self.moves.clear()
