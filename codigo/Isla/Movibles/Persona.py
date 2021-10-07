@@ -1,11 +1,11 @@
 from codigo.Isla.Movibles.Movible import Movible
 from codigo.Isla.Helper import Helper
-import pygame
 from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Herramientas.Mano import Mano
-
+from codigo.MovedorDePersonas.Asterisco import Asterisco
+from codigo.MovedorDePersonas.Nodo import nodo
 class Persona(Movible):
 
     def __init__(self, nombre, casa, x, y, isla):
@@ -20,6 +20,7 @@ class Persona(Movible):
         self.tiempoTrabajando = 0
         self.herramienta = None
         self.vision = 5
+        self.busqueda = 0
         
 
     def toJson(self):
@@ -67,10 +68,10 @@ class Persona(Movible):
     def getInventario(self):
         return self.inventario
 
-    def getUI(self):
+    def getUI(self,clickeables,lista,listaUI,ui):
         # Crea un UI para las personas
         info = []
-        fondo = pygame.surface.Surface((800, 500))
+        fondo = Helper.getSurface(800,500)
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
         font = Helper.FUENTE(25)
@@ -82,16 +83,17 @@ class Persona(Movible):
             info.append(UIObject(textObject, 550, 70 + forI * 40))
             forI += 1
         
-        image = pygame.transform.scale(self.getImage(), (200, 200))
+        
+        image = Helper.getImage(self.getImage(),200,200)
         info.append(UIObject(image, 200, 200))
 
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
             # Dibujan los objetos del inventario
-            fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
+            fondoObjeto = Helper.getImage(Helper.INVENTARIO,40,40)
             info.append(UIObject(fondoObjeto, 550 + 40 * forPosX, 120+ 40 * forPosY ))
-            imagenObjeto = pygame.transform.scale(objeto.getImage(), (30, 30))
+            imagenObjeto = Helper.getImage(objeto.getImage(),30,30)
             info.append(UIObject(imagenObjeto, 550 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
             if forPosX == 7:
                 forPosX = 0
@@ -101,42 +103,37 @@ class Persona(Movible):
                     
                 forPosX += 1
 
-        fondoHerramienta = pygame.transform.scale(Helper.INVENTARIO, (60, 60))
+        fondoHerramienta = Helper.getImage(Helper.INVENTARIO,60,60)
         info.append(UIObject(fondoHerramienta,150,100))
 
         if not self.herramienta is None:
-            imagenHerramienta = pygame.transform.scale(self.herramienta.getImage(), (40, 40))
+            imagenHerramienta = Helper.getImage(self.herramienta.getImage(),40,40)
             info.append(UIObject(imagenHerramienta,160,110))
         
         return info
-
     def moveToPosition(self, posX, posY):
         self.moves.clear()
         self.accionar[0] = False
-        
-        for y in range(abs(posY - self.y)):
-            
-            if posY - self.y > 0:
-                self.moves.append([0, 1])
+        asterisco = Asterisco(isla)
+        asterisco.empiezaElCodiguito(self.x, self.y, posX, posY)
+        listaDeMovimientos = asterisco.getCaminito()
+        # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
+        for nodo in listaDeMovimientos:
+            if nodo.getPadreMia() is None:
+            # En el caso que no tenga padre, entonces estaras en el nodo incial, por ende no habra que 
+            # caminar hacia ese nodo
+            else:
+                # Al pasar por cada nodo en la lista, buscas su posicion en X e Y, de tal manera que 
+                # se puedan comparar con la X e Y del nodo en el que estabas, osea su padre
+                if nodo.getX() > nodo.getPadreMia().getX():
+                    self.moves.append([1, 0])
+                if nodo.getX() < nodo.getPadreMia().getX():
+                    self.moves.append([-1, 0])
+                if nodo.getY() > nodo.getPadreMia().getY():
+                    self.moves.append([0, 1])
+                if nodo.getY() < nodo.getPadreMia().getY():
+                    self.moves.append([0, -1])
 
-            elif posY - self.y < 0:
-                self.moves.append([0, -1])
-
-        for x in range(abs(posX - self.x)):
-            if posX - self.x > 0:
-                self.moves.append([1, 0])
-
-            elif posX - self.x < 0:
-                self.moves.append([-1, 0])
-
-        self.directionX = 0
-        self.directionY = 0
-        for move in self.moves:
-            self.directionX += move[0]
-            self.directionY += move[1]
-
-        
-                
 
     def accionarObjeto(self, objeto):
         if not self.trabajando:
@@ -159,40 +156,29 @@ class Persona(Movible):
                                 
                 if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
                     self.moves.pop(len(self.moves) - 1)
-                            
-                else:
-                    
-                    if self.moves[len(self.moves) - 1][0] == 0:
-
-                
-                        if self.directionX > 0:
-                            self.moves.append([1, 0])
-                            self.moves.insert(0, [-1, 0])
-
-                        else:
-                            self.moves.append([-1, 0])
-                            self.moves.insert(0, [1, 0])
-
-                    else:
-                        
-                        if self.directionY > 0:
-                            self.moves.append([0, 1])
-                            self.moves.insert(0, [0, -1])
-
-                        else:
-                            self.moves.append([0, -1])
-                            self.moves.insert(0, [0, 1])
 
             else:
-                if not self.accionar[0]: 
-                    if not self.tieneInventarioLleno():
-                        print(f'hola {self.nombre} {len(self.inventario)}')
-                        if not self.buscarPiedras():
-                            self.agregarMovimientos(5)
+                if not self.busqueda == 0:
+                    if not self.accionar[0]: 
+                        if not self.tieneInventarioLleno():
+                            if self.busqueda == 2:
+                                if not self.buscarPiedras():
+                                    self.agregarMovimientos(5)
 
-                    else:
-                        print(f'jaja {self.nombre}')
-                        self.guardarRecursos()
+                            elif self.busqueda == 1:
+                                if not self.buscarArboles():
+                                    self.agregarMovimientos(5)
+
+                            elif self.busqueda == 4:
+                                if not self.buscarArbustos():
+                                    self.agregarMovimientos(5)
+
+                            elif self.busqueda == 3:
+                                if not self.buscarAnimales():
+                                    self.agregarMovimientos(5)
+
+                        else:
+                            self.guardarRecursos()
 
                 
         else:
@@ -230,6 +216,11 @@ class Persona(Movible):
                     
         
     def trabajar(self):
+        if not self.herramienta is None:
+            herramienta = self.herramienta  
+
+        else:
+            herramienta = Mano()
         # En el caso que este trabajando
         if self.trabajando:
             # Si esta trabajando, que le reste un poco de tiempo de trabajo, 
@@ -249,7 +240,7 @@ class Persona(Movible):
                         for objeto in self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getValor():
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
                             self.agregarInventario(objeto) 
-                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
+                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
                 elif not self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                     valor = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].getValor()
@@ -259,7 +250,7 @@ class Persona(Movible):
                             self.agregarInventario(objeto) 
                     
                     else:
-                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick()
+                        self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
                 self.accionar[0] = False
                 self.moves.clear()
@@ -294,6 +285,42 @@ class Persona(Movible):
 
         return False
 
+    def buscarArbustos(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            for x in range(self.x - self.vision,self.x + self.vision):      
+                if not x > self.isla.getAncho() or not x < self.isla.getAncho():
+                    if not y > self.isla.getAltura() or not y < self.isla.getAltura():
+                        if not self.isla.getMapaObjetos()[y][x] is None:
+                            if self.isla.getMapaObjetos()[y][x].isArbusto():
+                                self.accionarObjeto(self.isla.getMapaObjetos()[y][x])
+                                
+                                return True
+
+        return False
+
+    def buscarAnimales(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            for x in range(self.x - self.vision,self.x + self.vision):      
+                if not x > self.isla.getAncho() or not x < self.isla.getAncho():
+                    if not y > self.isla.getAltura() or not y < self.isla.getAltura():
+                        if not self.isla.getMapaMovible()[y][x] is None:
+                            if self.isla.getMapaMovible()[y][x].isAnimal():
+                                self.accionarObjeto(self.isla.getMapaMovible()[y][x])
+                                
+                                return True
+
+        return False
+
+    def getBusqueda(self):
+        return self.busqueda
+
+    def sumarBusqueda(self):
+        self.busqueda += 1
+        if self.busqueda == 5:
+            self.busqueda = 0 
+
+        self.accionar = [False,0,0]
+        self.moves.clear()
 
 
         
