@@ -13,8 +13,28 @@ class Asterisco():
         self.abierta.append(nodo)
 
     def empiezaElCodiguito(self, inicioX, inicioY, finalX, finalY):
+        for y in range(abs(posY - self.y)):
+            # Agrega movimientos en Y
+            if posY - self.y > 0:
+                self.moves.append([0, 1])
+            # Agrega movimientos en Y
+            elif posY - self.y < 0:
+                self.moves.append([0, -1])
 
-        inicioNodo = nodo(None, inicio)
+        for x in range(abs(posX - self.x)):
+            # Agrega movimientos en X
+            if posX - self.x > 0:
+                self.moves.append([1, 0])
+            # Agrega movimientos en X
+            elif posX - self.x < 0:
+                self.moves.append([-1, 0])
+
+        self.directionX = 0
+        self.directionY = 0
+        for move in self.moves:
+            self.directionX += move[0]
+            self.directionY += move[1]
+       ''' inicioNodo = nodo(None, inicio)
         inicioNodo.costo = 0
         inicioNodo.valorProbable = 0
         inicioNodo.total = 0
@@ -43,7 +63,7 @@ class Asterisco():
             caminito.append.(nodoFinal.posicion)
         nodoFinal = nodoFinal.padreMia
 
-        return caminito
+        return caminito'''
         # Generalmente se le da vuelta pero en nuestro codigo como lo tendriamos que dar 
 
     def getCaminito(self):
