@@ -1,6 +1,5 @@
 from Nodo import nodo
 
-
 class Asterisco():
 
     def __init__(self, isla):
@@ -13,20 +12,20 @@ class Asterisco():
         self.abierta.append(nodo)
 
     def empiezaElCodiguito(self, inicioX, inicioY, finalX, finalY):
-        for y in range(abs(posY - self.y)):
+        for y in range(abs(finalY - self.y)):
             # Agrega movimientos en Y
-            if posY - self.y > 0:
+            if finalY - self.y > 0:
                 self.moves.append([0, 1])
             # Agrega movimientos en Y
-            elif posY - self.y < 0:
+            elif finalY - self.y < 0:
                 self.moves.append([0, -1])
 
-        for x in range(abs(posX - self.x)):
+        for x in range(abs(finalX - self.x)):
             # Agrega movimientos en X
-            if posX - self.x > 0:
+            if finalX - self.x > 0:
                 self.moves.append([1, 0])
             # Agrega movimientos en X
-            elif posX - self.x < 0:
+            elif finalX - self.x < 0:
                 self.moves.append([-1, 0])
 
         self.directionX = 0
