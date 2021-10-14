@@ -1,4 +1,4 @@
-from Nodo import nodo
+from codigo.MovedorDePersonas.Nodo import nodo
 
 class Asterisco():
 
@@ -12,49 +12,50 @@ class Asterisco():
         self.abierta.append(nodo)
 
     def empiezaElCodiguito(self, inicioX, inicioY, finalX, finalY):
-        for y in range(abs(finalY - self.y)):
+        inicioNodo = nodo(inicioY, inicioX, None)
+        self.caminito.append(inicioNodo)
+        for y in range(abs(finalY - inicioY)):
+            
             # Agrega movimientos en Y
-            if finalY - self.y > 0:
-                self.moves.append([0, 1])
+            if finalY - inicioY > 0:
+                self.caminito.append(nodo(inicioY + 1, inicioX, self.caminito[-1]))
             # Agrega movimientos en Y
-            elif finalY - self.y < 0:
-                self.moves.append([0, -1])
+            elif finalY - inicioY < 0:
+                self.caminito.append([nodo(inicioY - 1, inicioX,self.caminito[-1]])
 
-        for x in range(abs(finalX - self.x)):
+        for x in range(abs(finalX - inicioX)):
             # Agrega movimientos en X
-            if finalX - self.x > 0:
-                self.moves.append([1, 0])
+            if finalX - inicioX > 0:
+                self.caminito.append([nodo(inicioY, inicioX + 1,self.caminito[-1]])
             # Agrega movimientos en X
-            elif finalX - self.x < 0:
-                self.moves.append([-1, 0])
+            elif finalX - inicioX < 0:
+                self.caminito.append([nodo(inicioY, inicioX - 1,self.caminito[-1]])
+        '''
+            inicioNodo = nodo(inicioY, inicioX, None)
+            inicioNodo.costo = 0
+            inicioNodo.valorProbable = 0
+            inicioNodo.total = 0
+            objetivoNodo = nodo(finalY, inicioX, None)
+            objetivoNodo.costo = 0
+            objetivoNodo.valorProbable = 0
+            objetivoNodo.total = 0
+            limite = 1000
+            vecesQueSeHizo = 0
+            self.abierta.append(inicioNodo)
 
-        self.directionX = 0
-        self.directionY = 0
-        for move in self.moves:
-            self.directionX += move[0]
-            self.directionY += move[1]
-       ''' inicioNodo = nodo(None, inicio)
-        inicioNodo.costo = 0
-        inicioNodo.valorProbable = 0
-        inicioNodo.total = 0
-        objetivoNodo = nodo(None, final)
-        objetivoNodo.costo = 0
-        objetivoNodo.valorProbable = 0
-        objetivoNodo.total = 0
-        limite = 1000
-        vecesQueSeHizo = 0
-        self.abierta.append(inicioNodo)
+            while len(self.abierta) > 0:
+                vecesQueSeHizo += 1
+                nodoActual = self.abierta[1]
+                self.cerrada.append(nodoActual)
 
-        while len(self.abierta) > 0:
-            vecesQueSeHizo += 1
-            nodoActual = self.abierta[1]
-            self.cerrada.append(nodoActual)
+                if nodoActual == objetivoNodo:
+                    return (devuelveCaminito(nodoActual))
 
-            if nodoActual == objetivoNodo:
-                return (devuelveCaminito(nodoActual))
+            if vecesQueSeHizo > limite:
+                return "No se encontraron arboles cercanos" 
+        '''
 
-        if vecesQueSeHizo > limite:
-            return "No se encontraron arboles cercanos"
+    '''                
     def devuelveCaminito(self, nodoFinal):
         nodo = nodoFinal
         while nodo is not None:
@@ -62,8 +63,8 @@ class Asterisco():
             caminito.append.(nodoFinal.posicion)
         nodoFinal = nodoFinal.padreMia
 
-        return caminito'''
-        # Generalmente se le da vuelta pero en nuestro codigo como lo tendriamos que dar 
-
+        return caminito
+    '''
+    # Generalmente se le da vuelta pero en nuestro codigo como lo tendriamos que dar 
     def getCaminito(self):
         return self.caminito

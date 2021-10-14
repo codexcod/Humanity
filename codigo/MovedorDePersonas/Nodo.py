@@ -2,7 +2,8 @@ from codigo.Isla.Objetos import Objeto
 
 class nodo:
 
-    def _init_(self, padreMia = None, y, x):
+    def __init__(self, y, x, padreMia = None):
+
         self.padreMia = padreMia
         self.x = x
         self.y = y

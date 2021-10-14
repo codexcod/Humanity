@@ -112,14 +112,17 @@ class Persona(Movible):
         
         return info
     def moveToPosition(self, posX, posY):
+        
         self.moves.clear()
         self.accionar[0] = False
-        asterisco = Asterisco(isla)
+        asterisco = Asterisco(self.isla)
         asterisco.empiezaElCodiguito(self.x, self.y, posX, posY)
         listaDeMovimientos = asterisco.getCaminito()
         # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
         for nodo in listaDeMovimientos:
             if nodo.getPadreMia() is None:
+                pass
+
             # En el caso que no tenga padre, entonces estaras en el nodo incial, por ende no habra que 
             # caminar hacia ese nodo
             else:
