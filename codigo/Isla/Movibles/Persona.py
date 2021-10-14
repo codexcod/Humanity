@@ -21,13 +21,15 @@ class Persona(Movible):
         self.vision = 5
         self.busqueda = 0
         self.busquedas = [None,self.buscarArboles,self.buscarPiedras,self.buscarAnimales,self.buscarArbustos]
-        
+
+        self.hambre = 100
 
     def toJson(self):
         jsonText = {
             'objeto' : 'Persona',
             'name' : self.nombre,
             'edad' : self.edad,
+            'hambre' : self.hambre,
             'x' : self.x,
             'y' : self.y,
             'inventario' : []
@@ -86,6 +88,21 @@ class Persona(Movible):
         
         image = Helper.getImage(self.getImage(),200,200)
         info.append(UIObject(image, 200, 200))
+
+        fondoHambre = Helper.getSurface(200,15)
+        fondoHambre.fill((102,51,0),None,0)
+        info.append(UIObject(fondoHambre, 200, 450))
+
+        rellenoHambre = Helper.getSurface(180,5)
+        rellenoHambre.fill((128,64,0),None,0)
+        info.append(UIObject(rellenoHambre, 210, 455))
+
+        hambre = Helper.getSurface(self.hambre * 1.8,5)
+        hambre.fill((0,187,45),None,0)
+        info.append(UIObject(hambre, 210, 455))
+
+
+
 
         forPosX = 0
         forPosY = 0
@@ -361,6 +378,18 @@ class Persona(Movible):
         self.accionar = [False,0,0]
         self.moves.clear()
 
+
+    def getHambre(self):
+        return self.hambre
+
+    def setHambre(self,hambre):
+        self.hambre = hambre
+
+    def restarHambre(self,hambre):
+        self.hambre -= hambre
+
+    def cicloVida(self):
+        self.restarHambre(1)
 
         
             

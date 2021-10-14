@@ -74,11 +74,13 @@ class Isla:
         aldea.setPiedra(jsonAldea['piedras'])
         aldea.setCarne(jsonAldea['carne'])
         aldea.setOro(jsonAldea['oro'])
+        aldea.setInteligencia(jsonAldea['inteligencia'])
         for casa in jsonAldea['casas']:
             nuevaCasa = Casa(aldea,casa['x'],casa['y'],self)
             for persona in casa['personas']:
                 nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
                 nuevaPersona.setEdad(persona['edad'])
+                nuevaPersona.setHambre(persona['hambre'])
                 for objeto in persona['inventario']:
                     if objeto['objeto'] == 'Tronco':
                         nuevaPersona.agregarInventario(Tronco())
@@ -298,10 +300,6 @@ class Isla:
         casa = Casa(aldea, posX, posY - 2, self)
         self.agregarObjeto(posX, posY - 2, casa)
         aldea.agregarCasa(casa)
-        # Crea a Gonza
-        gonza = Persona("Gonza", casa, posX, posY - 4, self)
-        self.agregarMovible(gonza.getX(), gonza.getY(), gonza)
-        casa.agregarPersona(gonza)
         # HEROE
         heroe = Persona(heroe, casa, posX - 3, posY, self)
         self.agregarMovible(heroe.getX(), heroe.getY(), heroe)

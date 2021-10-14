@@ -25,8 +25,8 @@ class Controlador:
         arbolesUpdate = 2
         pygame.time.set_timer(arbolesUpdate, 10000)
 
-        guardado = 3
-        pygame.time.set_timer(guardado, 20000)
+        ciclocDeVidaPersonas = 3
+        pygame.time.set_timer(ciclocDeVidaPersonas, 20000)
 
         while self.running:
             # Checkea todos los eventos
@@ -55,6 +55,9 @@ class Controlador:
                 if event.type == arbolesUpdate:
                     self.arbolesUpdate()
 
+                if event.type == ciclocDeVidaPersonas:
+                    self.personasUpdate()
+
             self.camara.actualizarPantalla()
             self.camara.getUI().generarAldeaUI(self.aldea)
             self.camara.dibujarUI()
@@ -62,6 +65,11 @@ class Controlador:
 
             clock.tick(60)
             # El reloj por el cual todos los eventos se actualizan
+
+    def personasUpdate(self):
+        """ Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer """
+        for persona in self.isla.getAldea().getPersonas():
+            persona.cicloVida()
 
     def arbolesUpdate(self):
         """ Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer """
