@@ -23,7 +23,7 @@ class Helper:
     RECUADRO = pygame.image.load('../img/recuadro.png')
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
     COLORINACTIVO = pygame.Color('lightblue')
-    COLORACTIVO = pygame.Color((18,220,110))
+    COLORACTIVO = pygame.Color(18,220,110)
     TRONCO = pygame.image.load('../img/tronco.png')
     INVENTARIO = pygame.image.load('../img/inventario.png')
     MENU_MUSICA = mixer.music.load('../sounds/menumusic.wav')

@@ -8,6 +8,9 @@ class Asterisco():
         self.cerrada = []
         self.caminito = []
 
+    def agregarACaminito(self,nodo):
+        self.caminito.append(nodo)
+
     def agregar(self, nodo):
         self.abierta.append(nodo)
 
@@ -18,18 +21,18 @@ class Asterisco():
             
             # Agrega movimientos en Y
             if finalY - inicioY > 0:
-                self.caminito.append(nodo(inicioY + 1, inicioX, self.caminito[-1]))
+                self.agregarACaminito(nodo(inicioY + 1, inicioX, self.caminito[-1]))
             # Agrega movimientos en Y
             elif finalY - inicioY < 0:
-                self.caminito.append([nodo(inicioY - 1, inicioX,self.caminito[-1]])
+                self.agregarACaminito(nodo(inicioY - 1, inicioX, self.caminito[-1]))
 
-        for x in range(abs(finalX - inicioX)):
+        for y in range(abs(finalX - inicioX)):
             # Agrega movimientos en X
             if finalX - inicioX > 0:
-                self.caminito.append([nodo(inicioY, inicioX + 1,self.caminito[-1]])
+                self.agregarACaminito(nodo(inicioY, inicioX + 1,self.caminito[-1]))
             # Agrega movimientos en X
             elif finalX - inicioX < 0:
-                self.caminito.append([nodo(inicioY, inicioX - 1,self.caminito[-1]])
+                self.agregarACaminito(nodo(inicioY, inicioX - 1,self.caminito[-1]))
         '''
             inicioNodo = nodo(inicioY, inicioX, None)
             inicioNodo.costo = 0

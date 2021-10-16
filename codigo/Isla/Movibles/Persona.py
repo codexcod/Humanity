@@ -120,14 +120,15 @@ class Persona(Movible):
         listaDeMovimientos = asterisco.getCaminito()
         # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
         for nodo in listaDeMovimientos:
+            
             if nodo.getPadreMia() is None:
                 pass
-
             # En el caso que no tenga padre, entonces estaras en el nodo incial, por ende no habra que 
             # caminar hacia ese nodo
+            
             else:
-                # Al pasar por cada nodo en la lista, buscas su posicion en X e Y, de tal manera que 
-                # se puedan comparar con la X e Y del nodo en el que estabas, osea su padre
+                    # Al pasar por cada nodo en la lista, buscas su posicion en X e Y, de tal manera que 
+                    # se puedan comparar con la X e Y del nodo en el que estabas, osea su padre
                 if nodo.getX() > nodo.getPadreMia().getX():
                     self.moves.append([1, 0])
                 if nodo.getX() < nodo.getPadreMia().getX():
@@ -136,6 +137,7 @@ class Persona(Movible):
                     self.moves.append([0, 1])
                 if nodo.getY() < nodo.getPadreMia().getY():
                     self.moves.append([0, -1])
+                print(self.moves)
 
 
     def accionarObjeto(self, objeto):
