@@ -13,6 +13,7 @@ from codigo.Isla.Objetos.Arbusto import Arbusto
 from codigo.Isla.Objetos.Carne import Carne
 from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Fogata import Fogata
+from codigo.Isla.Objetos.MesaTrabajo import MesaTrabajo
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Movibles.conejo import Conejo
 from codigo.Isla.Movibles.Vaca import Vaca
@@ -325,6 +326,9 @@ class Isla:
         # Crea fogata
         fogata = Fogata(aldea, posX, posY, self)
         self.agregarObjeto(posX, posY, fogata)
+        # Crea Mesa de Trabajo
+        mesaDeTrabajo = MesaTrabajo(aldea, posX, posY + 2, self)
+        self.agregarObjeto(posX, posY + 2, mesaDeTrabajo)
         # Crea a Darwin
         Darwin = Conejo(posX + 4, posY, self, 100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)

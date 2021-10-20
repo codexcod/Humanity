@@ -45,6 +45,8 @@ class Helper:
     CEREBRO_CHICO = pygame.image.load('../img//cerebro/cerebro_chico.png')
     CEREBRO_DIMINUTO = pygame.image.load('../img//cerebro/cerebro_diminuto.png')
 
+    MESA_DE_TRABAJO = pygame.image.load('../img/mesa_de_trabajo.png')
+
     
     def getImage(image,width,height):
         return pygame.transform.scale(image, (width, height))
