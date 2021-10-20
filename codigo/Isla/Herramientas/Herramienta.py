@@ -1,6 +1,7 @@
 class Herramienta:
 
     def __init__(self):
+        self.nombre = ""
         self.usos = 0
         self.dañoArbol = 0
         self.dañoPiedra = 0
@@ -32,6 +33,13 @@ class Herramienta:
     def getRota(self):
         return self.rota
 
+    def setRota(self,rota):
+        self.rota = rota
+
+    def getNombre(self):
+        return  self.nombre
+
+
     def restarUso(self):
         self.usos -= 1
         if self.usos == 0:
@@ -40,5 +48,13 @@ class Herramienta:
 
     def getImage(self):
         return self.image
+
+    def setImage(self,image):
+        self.image = image
+
+    def setUsos(self,usos):
+        self.usos = usos
+
+
 
     

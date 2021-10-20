@@ -28,20 +28,20 @@ class Persona(Movible):
             'edad' : self.edad,
             'x' : self.x,
             'y' : self.y,
-            'inventario' : []
+            'inventario' : [],
+            'herramienta' : self.herramienta
         }
 
         for objeto in self.inventario:
             jsonText['inventario'].append(objeto.toJson())
 
         return jsonText
-        
 
     def setHerramienta(self,numInventario):
-        self.herramienta = self.inventario[numInventario]
+        self.herramienta = numInventario
 
     def getHerramienta(self):
-        return self.herramienta
+        return self.inventario[self.herramienta]
 
     def getCasa(self):
         return self.casa
@@ -76,20 +76,23 @@ class Persona(Movible):
         forI = 0 
         for i in lineas:
             textObject = font.render(i, True, (255, 255, 255), None)
-            info.append(UIObject(textObject, 550, 70 + forI * 40))
+            info.append(UIObject(textObject, 500, 70 + forI * 40))
             forI += 1
         
         image = pygame.transform.scale(self.getImage(), (200, 200))
         info.append(UIObject(image, 200, 200))
 
+        for y in range(10):
+            for x in range(8):
+                fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
+                info.append(UIObject(fondoObjeto, 500 + 40 * x, 120 + 40 * y))
+
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
             # Dibujan los objetos del inventario
-            fondoObjeto = pygame.transform.scale(Helper.INVENTARIO, (40, 40))
-            info.append(UIObject(fondoObjeto, 550 + 40 * forPosX, 120+ 40 * forPosY ))
             imagenObjeto = pygame.transform.scale(objeto.getImage(), (30, 30))
-            info.append(UIObject(imagenObjeto, 550 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
+            info.append(UIObject(imagenObjeto, 500 + 40 * forPosX + 5, 120 + 40 * forPosY + 5))
             if forPosX == 7:
                 forPosX = 0
                 forPosY += 1
@@ -102,7 +105,7 @@ class Persona(Movible):
         info.append(UIObject(fondoHerramienta,150,100))
 
         if not self.herramienta is None:
-            imagenHerramienta = pygame.transform.scale(self.herramienta.getImage(), (40, 40))
+            imagenHerramienta = pygame.transform.scale(self.getHerramienta().getImage(), (40, 40))
             info.append(UIObject(imagenHerramienta,160,110))
         
         return info
@@ -131,8 +134,6 @@ class Persona(Movible):
         for move in self.moves:
             self.directionX += move[0]
             self.directionY += move[1]
-                    
-
 
     def accionarObjeto(self, objeto):
         if not self.trabajando:
@@ -159,8 +160,6 @@ class Persona(Movible):
                 else:
                     
                     if self.moves[len(self.moves) - 1][0] == 0:
-
-                
                         if self.directionX > 0:
                             self.moves.append([1, 0])
                             self.moves.insert(0, [-1, 0])
@@ -182,11 +181,9 @@ class Persona(Movible):
         else:
             self.trabajar()
 
-
-
     def definirTrabajo(self, objeto):
         if not self.herramienta is None:
-            herramienta = self.herramienta  
+            herramienta = self.getHerramienta()
 
         else:
             herramienta = Mano()
@@ -214,8 +211,8 @@ class Persona(Movible):
             if not self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()] is None:
                 if self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getNombre()[:4] == "Casa":
                     # Si esta "trabajando" en la aldea, que guarde su inventario en la aldea
-                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1])
-                    self.inventario.pop(len(self.inventario) - 1)
+                    if self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1]):
+                        self.inventario.pop(len(self.inventario) - 1)
 
             if self.tiempoTrabajando == 0:
                 # Si termino de trabajar
@@ -243,7 +240,4 @@ class Persona(Movible):
 
     def tieneAlgoEnElInventario(self):
         return len(self.inventario) > 0
-            
 
-        
-                    

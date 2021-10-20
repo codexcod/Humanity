@@ -6,6 +6,7 @@ class Pico(Herramienta):
 
     def __init__(self):
         Herramienta.__init__(self)
+        self.nombre = "Pico"
         self.image = Helper.PICO
         self.dañoPiedra = 5
         self.dañoArbol = 1
@@ -18,3 +19,11 @@ class Pico(Herramienta):
         if self.usos == 0:
             self.rota = True
             self.image = Helper.PICO_ROTO
+
+    def toJson(self):
+        return {
+            'objeto': 'Pico',
+            'usos' : self.usos,
+            'rota' : self.rota
+        }
+

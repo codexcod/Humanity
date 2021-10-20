@@ -5,6 +5,7 @@ from codigo.Isla.Estaticos.Agua import Agua
 from codigo.Isla.Estaticos.Arena import Arena
 from codigo.Isla.Estaticos.Pasto import Pasto
 from codigo.Isla.Helper import Helper
+from codigo.Isla.Herramientas.Pico import Pico
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.NoiseGenerator import NoiseGenerator
 from codigo.Isla.Objetos.Arbol import Arbol
@@ -79,6 +80,7 @@ class Isla:
             for persona in casa['personas']:
                 nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
                 nuevaPersona.setEdad(persona['edad'])
+
                 for objeto in persona['inventario']:
                     if objeto['objeto'] == 'Tronco':
                         nuevaPersona.agregarInventario(Tronco())
@@ -88,6 +90,18 @@ class Isla:
 
                     elif objeto['objeto'] == 'Carne':
                         nuevaPersona.agregarInventario(Carne())
+
+                    elif objeto['objeto'] == 'Pico':
+                        pico = Pico()
+                        pico.setUsos(objeto['usos'])
+                        pico.setRota(objeto['rota'])
+                        if pico.getRota():
+                            pico.setImage(Helper.PICO_ROTO)
+
+                        nuevaPersona.agregarInventario(pico)
+
+                if not persona['herramienta'] is None:
+                    nuevaPersona.setHerramienta(persona['herramienta'])
 
                 nuevaCasa.agregarPersona(nuevaPersona)
                 self.mMovible[persona['y']][persona['x']] = nuevaPersona

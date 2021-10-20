@@ -63,11 +63,16 @@ class Aldea:
     def añadirObjeto(self, objeto):
         if objeto.getNombre() == "Tronco":
             self.troncos += 1
-        
+            return True
+
         elif objeto.getNombre() == "Roca":
             self.piedras += 1
+            return True
 
         elif objeto.getNombre() == "Carne":
             self.carne += 1
+            return True
+
+        return False
 
     
