@@ -81,7 +81,6 @@ class Isla:
             for persona in casa['personas']:
                 nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
                 nuevaPersona.setEdad(persona['edad'])
-
                 nuevaPersona.setHambre(persona['hambre'])
 
                 for objeto in persona['inventario']:
