@@ -16,11 +16,16 @@ class UI:
 
     def generarInfoObjeto(self, objeto):
         # Genera el UI donde se guardara la informacion de un objeto
-        info = (objeto.getUI())
+        info = []
+        for objetoui in objeto.getUI(self.objetosClickeables, info, self.ui,self):
+            info.append(objetoui)
+
         close = pygame.transform.scale(Helper.CLOSE, (50, 50))
         info.append(UIObject(close, 840, 60))
         self.objetosClickeables.append(CloseUI(close, 840, 60, info, self.ui))
         self.ui.append(info)
+
+        
 
 
 
@@ -49,8 +54,33 @@ class UI:
         font = Helper.FUENTE(10)
         textoCarne = font.render(f"{aldea.getCarne()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoCarne, 645, 35))
+         # Rellena el UI de la carne de la aldea
+
+        fondoInteligencia = pygame.surface.Surface((800, 10))
+        fondoInteligencia.fill((253,188,180),None,0)
+        ui.append(UIObject(fondoInteligencia, 100, 550))
+
+        rellenoInteligencia = pygame.surface.Surface((790, 4))
+        rellenoInteligencia.fill((168,122,109),None,0)
+        ui.append(UIObject(rellenoInteligencia, 105, 553))
+
+        inteligencia = pygame.surface.Surface((aldea.getInteligencia() * 0.79, 4))
+        inteligencia.fill((0,187,45),None,0)
+        ui.append(UIObject(inteligencia, 105, 553))
+
+        
+        ui.append(UIObject(Helper.getImage(Helper.CEREBRO_DIMINUTO,70,70), 65, 515))
+
+        ui.append(UIObject(Helper.getImage(Helper.CEREBRO_CHICO,70,70), 331.66, 520))
+
+        ui.append(UIObject(Helper.getImage(Helper.CEREBRO_MEDIANO,70,70), 598.33, 520))
+
+        ui.append(UIObject(Helper.getImage(Helper.CEREBRO,70,70), 865, 520))
+
         self.aldeaUI = ui
-        # Rellena el UI de la carne de la aldea
+       
+
+
 
     def getUIList(self):
         return self.ui

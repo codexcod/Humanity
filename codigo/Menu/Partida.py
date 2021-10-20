@@ -1,9 +1,9 @@
-from Menu.buttom import Boton
+from codigo.Menu.Button import Button
 
-class Partida(Boton):
+class Partida(Button):
 
     def __init__(self, pos, font, text, screen, color, colorRec, colorfondo,partida):
-        Boton.__init__(self, pos, font, text, screen, color, colorRec, colorfondo)
+        Button.__init__(self, pos, font, text, screen, color, colorRec, colorfondo)
         self.partida = partida
         self.borrar = None
 

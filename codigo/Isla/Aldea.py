@@ -10,6 +10,7 @@ class Aldea:
         self.oro = 0
         self.casas = []
         self.personas = []
+        self.inteligencia = 0
 
     def toJson(self):
         jsonText = {
@@ -20,12 +21,23 @@ class Aldea:
             'oro': self.oro,
             'carne': self.carne,
             'casas' : [],
+            'inteligencia' : self.inteligencia
         }
 
         for casa in self.casas:
             jsonText['casas'].append(casa.toJson())
 
         return jsonText
+
+
+    def getInteligencia(self):
+        return self.inteligencia
+
+    def setInteligencia(self,inteligencia):
+        self.inteligencia = inteligencia
+
+    def sumarInteligencia(self,inteligencia):
+        self.inteligencia += inteligencia
 
     def getNombre(self):
         return self.nombre

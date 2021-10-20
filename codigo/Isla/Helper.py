@@ -37,7 +37,20 @@ class Helper:
     PICO = pygame.image.load('../img/pico.png')
     PICO_ROTO = pygame.image.load('../img/pico_roto.png')
     LEÑADOR = pygame.image.load('../img/leñador.png')
+    FLECHA_ABAJO = pygame.image.load('../img/flecha_abajo.png')
+    FLECHA_ARRIBA = pygame.image.load('../img/flecha_arriba.png')
+
+    CEREBRO = pygame.image.load('../img//cerebro/cerebro.png')
+    CEREBRO_MEDIANO = pygame.image.load('../img//cerebro/cerebro_mediano.png')
+    CEREBRO_CHICO = pygame.image.load('../img//cerebro/cerebro_chico.png')
+    CEREBRO_DIMINUTO = pygame.image.load('../img//cerebro/cerebro_diminuto.png')
+
     
+    def getImage(image,width,height):
+        return pygame.transform.scale(image, (width, height))
+
+    def getSurface(width,height):
+        return pygame.surface.Surface((width, height))
 
     def playMusic(music, volume):
         if music == 'menu':
@@ -77,6 +90,23 @@ class Helper:
 
     def VACA(animcacionVaca):
         return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
+
+    def getActividad(actividad):
+        if actividad == 1:
+            return (128,64,0),"Talando arboles"
+
+        elif actividad == 2:
+            return (155,155,155),"Picando piedra"
+
+        elif actividad == 4:
+            return (0,143,57),"Cortando Arbustos"
+
+        elif actividad == 3:
+            return (250,128,114),"Cazando animales"
+
+        elif actividad == 0:
+            return (155,155,155),"Sin tarea"
+        
 
     
 

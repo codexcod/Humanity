@@ -11,7 +11,7 @@ class Pico(Herramienta):
         self.dañoPiedra = 5
         self.dañoArbol = 1
         self.dañoPersona = 4
-        self.dañoAnimal = 4
+        self.dañoAnimal = 3
         
 
     def restarUso(self):

@@ -1,6 +1,7 @@
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Objetos.Objeto import Objeto
 import math
+import random 
 
 class Movible(Objeto):
 
@@ -63,6 +64,15 @@ class Movible(Objeto):
             self.directionY += move[1]
                 
 
+    def agregarMovimientos(self, movimientos):
+        # Agrega movimientos 
+        for i in range(movimientos):
+                if random.choice([0, 1]) == 0:
+                    self.moves.append([0, random.choice([-1, 1])])
+
+                else:
+                    self.moves.append([random.choice([-1, 1]), 0])
+            
 
     def makeMoves(self):
         # Averigua si tiene movimientos

@@ -1,5 +1,4 @@
 import pygame
-from codigo.Menu.buttom import Boton
 from codigo.Isla.Helper import Helper
 
 class PopUp:

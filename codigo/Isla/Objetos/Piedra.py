@@ -62,8 +62,11 @@ Piedras : {self.piedras}
         self.isla.getMapaObjetos()[self.y][self.x] = None
 
 
-    def onClick(self):
+    def onClick(self,herramienta):
         self.picarPiedra()
+
+    def isPiedra(self):
+        return True
 
 
 
