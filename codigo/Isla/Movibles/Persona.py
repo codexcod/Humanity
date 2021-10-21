@@ -315,6 +315,7 @@ class Persona(Movible):
 
             if self.tiempoTrabajando == 0:
                 # Si termino de trabajar
+
                 self.trabajando = False
                 self.setImage(Helper.PERSONA)
                 
@@ -325,6 +326,9 @@ class Persona(Movible):
                         for objeto in objetoTrabajado.getValor():
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
                             self.agregarInventario(objeto)
+
+                        self.getAldea().sumarInteligencia(5)
+                        self.restarHambre(10)
                             
                     self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
 
@@ -334,7 +338,10 @@ class Persona(Movible):
                     # Si era un movible en el que estaba trabajando, que agregue sus valores en el inventario
                     if not movibleTrabajado.getValor() is None:
                         for objeto in movibleTrabajado.getValor():
-                            self.agregarInventario(objeto) 
+                            self.agregarInventario(objeto)
+
+                        self.getAldea().sumarInteligencia(10)
+                        self.restarHambre(10)
                     
                     else:
                         movibleTrabajado.onClick(herramienta)
@@ -477,12 +484,13 @@ class Persona(Movible):
         return self.busqueda
 
     def sumarBusqueda(self):
-        self.busqueda += 1
-        if self.busqueda == 5:
-            self.busqueda = 0 
+        if not self.trabajando:
+            self.busqueda += 1
+            if self.busqueda == 5:
+                self.busqueda = 0
 
-        self.accionar = [False,0,0]
-        self.moves.clear()
+            self.accionar = [False,0,0]
+            self.moves.clear()
 
 
     def getHambre(self):
@@ -498,4 +506,4 @@ class Persona(Movible):
         self.restarHambre(1)
 
         
-            
+

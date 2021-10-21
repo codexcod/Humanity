@@ -103,6 +103,8 @@ class Isla:
 
                         nuevaPersona.agregarInventario(pico)
 
+
+
                 if not persona['herramienta'] is None:
                     nuevaPersona.setHerramienta(persona['herramienta'])
 
@@ -167,8 +169,12 @@ class Isla:
                 self.mObjetos[objeto['y']][objeto['x']] = fogata
                 fogata.setNombre(objeto['name'])
 
-        self.generarMapaEstatico()
+            elif objeto['objeto'] == 'Mesa de trabajo':
+                mesaDeTrabajo = MesaTrabajo(self.aldea, objeto['x'], objeto['y'], self)
+                self.mObjetos[objeto['y']][objeto['x']] = mesaDeTrabajo
+                mesaDeTrabajo.setNombre(objeto['name'])
 
+        self.generarMapaEstatico()
 
     def toJson(self,partida):
         jsonText = {}
