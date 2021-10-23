@@ -1,4 +1,5 @@
 import pygame
+from codigo.Isla.Isla import Isla
 
 
 class Controlador:
@@ -13,6 +14,7 @@ class Controlador:
         self.partida = partida
         self.running = True
         self.click = True
+        
 
     def run(self):
         """ Se corre el jueguito con el personaje """

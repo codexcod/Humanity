@@ -128,3 +128,9 @@ class Camara:
 
     def setSeleccionado(self,seleccionado):
         self.seleccionado = seleccionado
+
+    def setIsla(self,isla):
+        self.isla = isla
+        self.mEstatico = isla.getMapaEstatico()
+        self.mObjetos = isla.getMapaObjetos()
+        self.mMovibles = isla.getMapaMovible()

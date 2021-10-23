@@ -9,6 +9,7 @@ from codigo.Isla.Herramientas.Pico import Pico
 from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.NoiseGenerator import NoiseGenerator
 from codigo.Isla.Objetos.Arbol import Arbol
+from codigo.Isla.Objetos.Barco import Barco
 from codigo.Isla.Objetos.Arbusto import Arbusto
 from codigo.Isla.Objetos.Carne import Carne
 from codigo.Isla.Objetos.Casa import Casa
@@ -340,6 +341,9 @@ class Isla:
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre("Darwin")
         self.animales.append(Darwin)
+
+        barco = Barco(self.ancho // 2,self.altura - 1,self)
+        self.agregarObjeto(self.ancho // 2,self.altura - 1,barco)
 
     def getArbolesTalados(self):
         return self.arbolesTalados

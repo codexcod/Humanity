@@ -47,6 +47,8 @@ class Helper:
 
     MESA_DE_TRABAJO = pygame.image.load('../img/mesa_de_trabajo.png')
 
+    BARCO = pygame.image.load('../img/barco.png')
+
     
     def getImage(image,width,height):
         return pygame.transform.scale(image, (width, height))
