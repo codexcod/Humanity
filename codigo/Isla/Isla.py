@@ -39,8 +39,10 @@ class Isla:
         self.arbolesTalados = []
         self.arbustosSinBaya = []
         self.aldea = None
+        self.image = None
 
     def generarIsla(self,ancho, altura):
+        self.image = Helper.ARBOL
         self.altura = altura
         self.ancho = ancho
         self.generarMapaObjetos()
@@ -48,12 +50,12 @@ class Isla:
         self.generarMapaMovible()
 
     def cargarMapa(self,partida):
+        self.image = Helper.ARBOL
         with open(f'Info/{partida}.json', 'r') as file:
             data = json.load(file)
 
         self.ancho = data['ancho']
         self.altura = data['altura']
-
 
 
 
@@ -70,6 +72,8 @@ class Isla:
                 fila.append(None)
 
             self.mMovible.append(fila)
+
+        self.generarMapaEstatico()
 
         jsonAldea = data['aldea']
         aldea = Aldea(jsonAldea['name'])
@@ -175,7 +179,14 @@ class Isla:
                 self.mObjetos[objeto['y']][objeto['x']] = mesaDeTrabajo
                 mesaDeTrabajo.setNombre(objeto['name'])
 
-        self.generarMapaEstatico()
+            elif objeto['objeto'] == 'Barco':
+                barco = Barco(objeto['x'], objeto['y'], self)
+                barco.setNombre(objeto['name'])
+                self.mObjetos[objeto['y']][objeto['x']] = barco
+
+
+
+
 
     def toJson(self,partida):
         jsonText = {}
@@ -393,3 +404,9 @@ class Isla:
 
     def getAldea(self):
         return self.aldea
+
+    def setImage(self,image):
+        self.image = image
+
+    def getImage(self):
+        return self.image

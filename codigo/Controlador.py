@@ -14,6 +14,7 @@ class Controlador:
         self.partida = partida
         self.running = True
         self.click = True
+        self.camara.setControlador(self)
         
 
     def run(self):

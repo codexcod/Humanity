@@ -19,6 +19,7 @@ class Camara:
         self.zoom = Zoom(zoom, isla.getAncho(), isla.getAltura())
         self.mouse = None
         self.seleccionado = None
+        self.controlador = None
 
     def getSeleccionado(self):
         return self.seleccionado
@@ -62,6 +63,10 @@ class Camara:
 
     def getMouse(self):
         return self.mouse
+
+    def setControlador(self,controlador):
+        self.controlador = controlador
+        self.ui.setControlador(controlador)
 
     def actualizarPantalla(self):
         # Actualiza la pantalla

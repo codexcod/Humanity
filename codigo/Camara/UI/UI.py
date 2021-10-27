@@ -13,6 +13,7 @@ class UI:
         self.ui = []
         self.objetosClickeables = []
         self.aldeaUI = None
+        self.controlador = None
 
     def generarInfoObjeto(self, objeto):
         # Genera el UI donde se guardara la informacion de un objeto
@@ -25,9 +26,8 @@ class UI:
         self.objetosClickeables.append(CloseUI(close, 840, 60, info, self.ui))
         self.ui.append(info)
 
-        
-
-
+    def setControlador(self,controlador):
+        self.controlador = controlador
 
     def generarAldeaUI(self, aldea):
         # Genera el UI de la aldea
@@ -93,3 +93,6 @@ class UI:
 
     def getAldeaUI(self):
         return self.aldeaUI
+
+    def getControlador(self):
+        return self.controlador
