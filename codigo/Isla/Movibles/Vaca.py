@@ -36,10 +36,11 @@ class Vaca(Animal):
             self.ticks += 1
             if self.animacion == 3:
                 self.animacion = 0
+                # Que vaya avanzando la animacion de acuerdo a los ticks
             self.setImage(Helper.VACA(self.animacion))
             if self.ticks == self.maxTick:
                 self.ticks = 0
-            
+                # Agrega moves alelatorios tanto en X como en Y, de acuerdo a los ticks
                 for i in range(4):
                     if random.choice([0,1]) == 0:
                         self.moves.append([0,random.choice([-1,1])])
@@ -66,13 +67,17 @@ Vida : {self.vida}"""
 
 
     def getValor(self):
+        # En el caso de que este muerto y se le haya pegado
         if self.muerto == True:
             valor = []
+            # Que se le agregue carne al inventario
             for i in range(self.carne):
                 valor.append(Carne())
 
             self.isla.getAnimales().remove(self)
+            # Que saque a la vaca de la lista de animales
             self.isla.getMapaMovible()[self.y][self.x] = None
+            # Que desaparezca del mapa
             return valor
 
     def getTrabajo(self):

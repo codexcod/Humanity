@@ -5,6 +5,7 @@ class Pico(Herramienta):
 
 
     def __init__(self):
+        # Es la herramienta principal para minar piedra
         Herramienta.__init__(self)
         self.image = Helper.PICO
         self.dañoPiedra = 5

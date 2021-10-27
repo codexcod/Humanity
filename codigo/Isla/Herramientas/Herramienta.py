@@ -1,6 +1,7 @@
 class Herramienta:
 
     def __init__(self):
+        # Se crea una herramienta que es la base
         self.usos = 0
         self.dañoArbol = 0
         self.dañoPiedra = 0

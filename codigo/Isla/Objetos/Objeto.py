@@ -44,6 +44,7 @@ class Objeto:
         return self.y
 
     def getUI(self):
+        # Crea un UI con la imagen del objeto
         info = []
         fondo = pygame.surface.Surface((800, 500))
         fondo.fill((128, 64, 0), None, 0)

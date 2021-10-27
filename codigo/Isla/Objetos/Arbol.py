@@ -34,6 +34,8 @@ class Arbol(Objeto):
     def setTroncos(self, troncos):
         self.troncos = troncos
         if self.troncos >= 15:
+            # En el caso que tenga muchos troncos que la imagen se vea mas grande para mantener la ilusion del mundo
+            # real
             self.setImage(Helper.ARBOL_GRANDE)
 
         else:
@@ -75,8 +77,10 @@ class Arbol(Objeto):
         if self.talado:
             # Si el arbol estaba talado que ese tiempo ayude a que pueda crecer
             if not self.isla.getMapaMovible()[self.y][self.x]:
+                # Si no esta en el mapa que crezca el tiempo de crecimiento
                 self.tiempoCrecimiento += 1
                 if self.tiempoCrecimiento == 25:
+                    # Si ya llego al tiempo maximo, que crezca y que ya no sea considerado talado
                     self.tiempoCrecimiento = 0
                     self.crecerArbol()
                     self.isla.getArbolesTalados().remove(self)      

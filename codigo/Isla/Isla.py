@@ -45,6 +45,7 @@ class Isla:
         self.generarMapaMovible()
 
     def cargarMapa(self,partida):
+        # Abre el mapa de la partida, gracias al json
         with open(f'Info/{partida}.json', 'r') as file:
             data = json.load(file)
 
@@ -67,7 +68,7 @@ class Isla:
                 fila.append(None)
 
             self.mMovible.append(fila)
-
+        # Agarra toda la data necesaria para cargar el mapa
         jsonAldea = data['aldea']
         aldea = Aldea(jsonAldea['name'])
         aldea.setMadera(jsonAldea['troncos'])
@@ -154,6 +155,7 @@ class Isla:
 
 
     def toJson(self,partida):
+        # Convierte la informacion en json
         jsonText = {}
         jsonText['aldea'] = self.aldea.toJson()
         jsonText['ancho'] = self.ancho
@@ -178,40 +180,45 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
+                    # En los limites de tanto X como Y crea agua
                     fila.append(Agua())
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
                 elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
-
+                    # Si es el limite de al lado del agua, que sea arena
                     fila.append(Arena())
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
 
                 else:
+                    # En cualquier otro caso que cree pasto
                     fila.append(Pasto())
 
             self.mEstatico.append(fila)
 
     def generarMapaObjetos(self):
         # Genera el mapa en el cual entran los arboles y piedras
-        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self),0.5)
+        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self), 0.5)
+        # Gracias al noiseGenerator crea arboles con el ancho y altura definido
         mArboles = arboles.getNoise()
 
-        arbustos = NoiseGenerator(self.ancho, self.altura, None, Arbusto(0, 0, self),0.05)
+        arbustos = NoiseGenerator(self.ancho, self.altura, None, Arbusto(0, 0, self), 0.05)
         mArbustos = arbustos.getNoise()
 
 
         for y in range(self.altura):
             fila = []
             for x in range(self.ancho):
+                # Dado el ancho, que vaya agregando los arboles con una cantidad de troncos alelatorios
                 if not mArboles[y][x] is None:
                     mArboles[y][x] = Arbol(x, y, self)
                     mArboles[y][x].setTroncos(random.randrange(5, 20))
                     fila.append(mArboles[y][x])
 
                 elif random.randrange(1, 50) == 1:
+                    # Dado el ancho, que vaya agregando las piedras con una cantidad de piedras y oro alelatorio alelatorios
                     piedra = Piedra(x, y, self)
                     piedra.setPiedras(random.randrange(5, 20))
                     if random.randrange(1, 30) == 1:
@@ -220,6 +227,7 @@ class Isla:
                     fila.append(piedra)
 
                 elif not mArbustos[y][x] is None:
+                    # Dado el ancho, que vaya agregando los arbustos con una cantidad de bayas alelatorias
                     mArbustos[y][x] = Arbusto(x, y, self)
                     mArbustos[y][x].setBayas(random.randrange(1, 10))
                     fila.append(mArbustos[y][x])
@@ -243,6 +251,8 @@ class Isla:
         for y in range(self.altura):
             for x in range(self.ancho):
                 if self.getMapaObjetos()[y][x] is None:
+                    # Va creando grupos de animales ya sea de conejos o vacas, al rededor del mundo,
+                    # con una probabilidad del 1 al 1500
                     if random.randrange(1, 1500) == 1:
                         if random.choice([0, 1]) == 0:
                             self.crearGrupoDeAnimales(5, x, y, "conejo")
@@ -289,6 +299,7 @@ class Isla:
             self.mMovible[y][x] = None
 
     def agregarAldea(self, aldea, posX, posY, heroe, explorador):
+        # Quita todos los objetos que hay en un rango de 5x5 desde el centro de la aldea
         for y in range(posY - 5, posY + 5):
             for x in range(posX - 5, posX + 5):
                 self.mObjetos[y][x] = None
@@ -329,18 +340,23 @@ class Isla:
         return self.animales
 
     def crearGrupoDeAnimales(self, numero, x, y, animal):
+        # Crea una manada de animales
         if animal == "conejo":
             for i in range(numero):
+                # Dado el numero de animales q hay, los pone en una posicion alelatoria
                 aleatorioX = random.randrange(-3, 3)
                 aleatorioY = random.randrange(-3, 3)
                 while x + aleatorioX >= self.ancho or x + aleatorioX <= 0:
+                    # Si la posicion de X es la misma que la del centro, que lo haga otra vez
                     aleatorioX = random.randrange(-3, 3)
 
                 while y + aleatorioY >= self.altura or y + aleatorioY <= 0:
+                    # Si la posicion de Y es la misma que la del centro, que lo haga otra vez
                     aleatorioY = random.randrange(-3, 3)
 
                 if self.getMapaMovible()[y + aleatorioY][x + aleatorioX] is None and \
                         self.getMapaObjetos()[y + aleatorioY][x + aleatorioX] is None:
+                    # Que se cree un conejo con esas X e Y
                     conejo = Conejo(x + aleatorioX, y + aleatorioY, self, 10)
                     self.agregarMovible(conejo.getX(), conejo.getY(), conejo)
                     self.animales.append(conejo)
@@ -350,16 +366,20 @@ class Isla:
 
         elif animal == "vaca":
             for i in range(numero):
+                # Dado el numero de animales q hay, los pone en una posicion alelatoria
                 aleatorioX = random.randrange(-6, 6)
                 aleatorioY = random.randrange(-6, 6)
                 while x + aleatorioX >= self.ancho or x + aleatorioX <= 0:
+                    # Si la posicion de X es la misma que la del centro, que lo haga otra vez
                     aleatorioX = random.randrange(-6, 6)
 
                 while y + aleatorioY >= self.altura or y + aleatorioY <= 0:
+                    # Si la posicion de Y es la misma que la del centro, que lo haga otra vez
                     aleatorioY = random.randrange(-6, 6)
 
                 if self.getMapaMovible()[y + aleatorioY][x + aleatorioX] is None and \
                         self.getMapaObjetos()[y + aleatorioY][x + aleatorioX] is None:
+                    # Que se cree un conejo con esas X e Y
                     vaca = Vaca(x + aleatorioX, y + aleatorioY, self, 15)
                     self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
                     self.animales.append(vaca)

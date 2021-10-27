@@ -2,18 +2,16 @@ import pygame
 
 
 class Zoom:
-
     MIN_ZOOM = 3
     NORMAL_ZOOM = 2
     MED_ZOOM = 1
     MAX_ZOOM = 0
 
-    def __init__(self, zoom,maxX,maxY):
+    def __init__(self, zoom, maxX, maxY):
         self.zoom = zoom
         self.rangoZoom = [50, 40, 25, 20]
         self.maxX = maxX
         self.maxY = maxY
-
 
     def subirZoom(self):
         # Aumenta el zoom
@@ -23,7 +21,7 @@ class Zoom:
             return False
         # Si el zoom ya es el maximo, que no pueda aumentar mas
         if (1000 // self.rangoZoom[self.zoom]) >= self.maxX or (600 // self.rangoZoom[self.zoom]) >= self.maxY:
-            # Si 1000 dividido el rango es mayor al ancho dela isla, que no se pueda aumentar mas
+            # Si 1000 dividido el rango es mayor al ancho de la isla, que no se pueda aumentar mas
             self.zoom -= 1
             return False
 
@@ -59,4 +57,3 @@ class Zoom:
 
     def getMaxY(self):
         return self.maxY
-

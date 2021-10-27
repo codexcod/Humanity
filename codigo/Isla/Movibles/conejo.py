@@ -77,7 +77,9 @@ Vida : {self.vida}"""
                 valor.append(Carne())
 
             self.isla.getAnimales().remove(self)
+            # Saca al animal de la lista de animales en  el mapa
             self.isla.getMapaMovible()[self.y][self.x] = None
+            # Desaparece el conejo
             return valor
 
     def matar(self):

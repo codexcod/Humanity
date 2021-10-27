@@ -9,25 +9,27 @@ class Mouse:
         self.camara.setMouse(self)
 
     def pedirInfoObjeto(self):
+        
         x = self.getObjectMousePosition()[0]
         y = self.getObjectMousePosition()[1]
         if not self.camara.getMapaObjetos()[y][x] is None:
+            # Se fija si la posicion que agarro no es none, entonces manda el objeto
             return self.camara.getMapaObjetos()[y][x]
 
         if not self.camara.getMapaMovible()[y][x] is None:
+            # Se fija si la posicion que agarro no es none, entonces manda el movible
             return self.camara.getMapaMovible()[y][x]
 
     def seleccionarMovible(self):
+
+        # Selecciona el movible agarrando la posicion del objeto movible
         x = self.getObjectMousePosition()[0]
         y = self.getObjectMousePosition()[1]
-        
+
         return self.camara.getMapaMovible()[y][x]
 
-
-
-
-    def clickearPorPoscicion(self,objetosClickeables):
-        # Clickea 
+    def clickearPorPoscicion(self, objetosClickeables):
+        # Clickea
         mousePosition = pygame.mouse.get_pos()
         x = math.ceil(mousePosition[0])
         y = math.ceil(mousePosition[1])
@@ -37,16 +39,13 @@ class Mouse:
                     object.onClick()
                     objetosClickeables.remove(object)
 
-
     def getObjectMousePosition(self):
-        # Averigua donde esta el mouse en el mapa
+        # Averigua donde esta la camara en el mapa agarrando la posicion que esta ahora, clculando con el zoom
         posX = self.camara.getPosX() - math.floor(self.camara.getZoom().getLimiteXFloat())
         posY = self.camara.getPosY() - math.floor(self.camara.getZoom().getLimiteYFloat())
-
+        # Luego pide la posicion del mouse y lo promedia
         mousePosition = pygame.mouse.get_pos()
         x = posX + math.floor(mousePosition[0] / self.camara.getZoom().getRangoZoom())
         y = posY + math.floor(mousePosition[1] / self.camara.getZoom().getRangoZoom())
 
-    
-        
-        return x,y
+        return x, y

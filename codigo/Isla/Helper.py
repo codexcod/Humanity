@@ -70,12 +70,15 @@ class Helper:
         return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
 
     def FONDOANIMACION(animacionFondo):
+        # Animaciones del fondo de pantalla
         return pygame.image.load(f'../img/fondo/fondo{animacionFondo}.png')
   
     def CONEJO(animacionConejo):
+        # Animaciones del conejo
         return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
 
     def VACA(animcacionVaca):
+        # Animaciones de la vaca
         return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
 
         

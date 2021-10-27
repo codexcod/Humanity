@@ -33,7 +33,7 @@ class UI:
         font = Helper.FUENTE(10)
         textoMadera = font.render(f"{aldea.getMadera()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoMadera, 245, 35))
-        # Rellena el UI de la madera de la aldea
+        # Rellena el UI de la madera de la aldea, agrega que es un nuevo UI, crea un texto que muestre la cantidad
 
         piedra = pygame.surface.Surface((100, 30))
         piedra.fill((155, 155, 155), None, 0)
@@ -41,7 +41,7 @@ class UI:
         font = Helper.FUENTE(10)
         textoPiedra = font.render(f"{aldea.getPiedra()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoPiedra, 445, 35))
-        # Rellena el UI de la piedra de la aldea
+        # Rellena el UI de la piedra de la aldea, agrega que es un nuevo UI, crea un texto que muestre la cantidad
 
         carne = pygame.surface.Surface((100, 30))
         carne.fill((249, 144, 111), None, 0)
@@ -50,7 +50,7 @@ class UI:
         textoCarne = font.render(f"{aldea.getCarne()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoCarne, 645, 35))
         self.aldeaUI = ui
-        # Rellena el UI de la carne de la aldea
+        # Rellena el UI de la carne de la aldea, agrega que es un nuevo UI, crea un texto que muestre la cantidad
 
     def getUIList(self):
         return self.ui

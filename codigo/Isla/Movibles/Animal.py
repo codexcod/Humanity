@@ -18,17 +18,22 @@ class Animal(Movible):
         for y in range(abs(posY - self.y)):
             
             if posY - self.y > 0:
-                self.moves.append([0,1])
+                # Si la posicion de Y del animal es mayor a la posicion de Y del objetivo
+                self.moves.append([0, 1])
 
             elif posY - self.y < 0:
-                self.moves.append([0,-1])
+                # Si la posicion de Y del animal es menor a la posicion de Y del objetivo
+                self.moves.append([0, -1])
 
         for x in range(abs(posX - self.x)):
+
             if posX - self.x > 0:
-                self.moves.append([1,0])
+                # Si la posicion de X del animal es mayor a la posicion de X del objetivo
+                self.moves.append([1, 0])
 
             elif posX - self.x < 0:
-                self.moves.append([-1,0])
+                # Si la posicion de X del animal es menor a la posicion de X del objetivo
+                self.moves.append([-1, 0])
 
         self.directionX = 0
         self.directionY = 0

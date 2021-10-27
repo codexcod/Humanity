@@ -4,6 +4,7 @@ class Mano(Herramienta):
 
 
     def __init__(self):
+        # Es la herramienta base, o la FALTA de herramienta
         Herramienta.__init__(self)
         self.dañoPiedra = 0
         self.dañoArbol = 0
