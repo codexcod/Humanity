@@ -4,7 +4,8 @@ from codigo.Camara.UI.CloseUI import CloseUI
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Herramientas.Mano import Mano
-
+from codigo.MovedorDePersonas.Asterisco import Asterisco
+from codigo.MovedorDePersonas.Nodo import nodo
 class Persona(Movible):
 
     def __init__(self, nombre, casa, x, y, isla):
@@ -21,8 +22,8 @@ class Persona(Movible):
         self.vision = 5
         self.busqueda = 0
         self.busquedas = [None,self.buscarArboles,self.buscarPiedras,self.buscarAnimales,self.buscarArbustos]
-
         self.hambre = 100
+
 
     def toJson(self):
         jsonText = {
@@ -114,11 +115,8 @@ class Persona(Movible):
         forPosY = 0
         for objeto in self.inventario:
             # Dibujan los objetos del inventario
-
-
             imagenObjeto = Helper.getImage(objeto.getImage(),30,30)
             info.append(UIObject(imagenObjeto, 500 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
-
 
             if forPosX == 7:
                 forPosX = 0
@@ -137,35 +135,34 @@ class Persona(Movible):
             info.append(UIObject(imagenHerramienta,160,110))
         
         return info
-
     def moveToPosition(self, posX, posY):
+        
         self.moves.clear()
         self.accionar[0] = False
-        
-        for y in range(abs(posY - self.y)):
+        asterisco = Asterisco(self.isla)
+        asterisco.empiezaElCodiguito(self.x, self.y, posX, posY)
+        listaDeMovimientos = asterisco.getCaminito()
+        # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
+        for nodo in listaDeMovimientos:
             
-            if posY - self.y > 0:
-                self.moves.append([0, 1])
+            if nodo.getPadreMia() is None:
+                pass
+            # En el caso que no tenga padre, entonces estaras en el nodo incial, por ende no habra que 
+            # caminar hacia ese nodo
+            
+            else:
+                    # Al pasar por cada nodo en la lista, buscas su posicion en X e Y, de tal manera que 
+                    # se puedan comparar con la X e Y del nodo en el que estabas, osea su padre
+                if nodo.getX() > nodo.getPadreMia().getX():
+                    self.moves.append([1, 0])
+                if nodo.getX() < nodo.getPadreMia().getX():
+                    self.moves.append([-1, 0])
+                if nodo.getY() > nodo.getPadreMia().getY():
+                    self.moves.append([0, 1])
+                if nodo.getY() < nodo.getPadreMia().getY():
+                    self.moves.append([0, -1])
+                print(self.moves)
 
-            elif posY - self.y < 0:
-                self.moves.append([0, -1])
-
-        for x in range(abs(posX - self.x)):
-            if posX - self.x > 0:
-                self.moves.append([1, 0])
-
-            elif posX - self.x < 0:
-                self.moves.append([-1, 0])
-
-        self.directionX = 0
-        self.directionY = 0
-        for move in self.moves:
-            self.directionX += move[0]
-            self.directionY += move[1]
-
-
-        
-                
 
     def accionarObjeto(self, objeto):
         if not self.trabajando:
@@ -293,7 +290,6 @@ class Persona(Movible):
         else:
             herramienta = Mano()
 
-            
         # En el caso que este trabajando
         if self.trabajando:
             # Si esta trabajando, que le reste un poco de tiempo de trabajo, 
@@ -325,12 +321,14 @@ class Persona(Movible):
                     if not objetoTrabajado.getValor() is None:
                         for objeto in objetoTrabajado.getValor():
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
+
                             self.agregarInventario(objeto)
+
 
                         self.getAldea().sumarInteligencia(5)
                         self.restarHambre(10)
                             
-                    self.isla.getMapaObjetos()[self.accionar[1].getY()][self.accionar[1].getX()].onClick(herramienta)
+                    objetoTrabajado.onClick(herramienta)
 
                 elif not movibleTrabajado is None:
 
@@ -344,7 +342,9 @@ class Persona(Movible):
                         self.restarHambre(10)
                     
                     else:
+
                         movibleTrabajado.onClick(herramienta)
+
 
                 self.accionar[0] = False
                 self.moves.clear()
@@ -388,6 +388,33 @@ class Persona(Movible):
                                 self.accionarObjeto(self.isla.getMapaObjetos()[y][x])
                                 
                                 return True
+
+        return False
+
+    def buscarAnimales(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            for x in range(self.x - self.vision,self.x + self.vision):      
+                if not x > self.isla.getAncho() or not x < self.isla.getAncho():
+                    if not y > self.isla.getAltura() or not y < self.isla.getAltura():
+                        if not self.isla.getMapaMovible()[y][x] is None:
+                            if self.isla.getMapaMovible()[y][x].isAnimal():
+                                self.accionarObjeto(self.isla.getMapaMovible()[y][x])
+                                
+                                return True
+
+        return False
+
+    def getBusqueda(self):
+        return self.busqueda
+
+    def sumarBusqueda(self):
+        self.busqueda += 1
+        if self.busqueda == 5:
+            self.busqueda = 0 
+
+        self.accionar = [False,0,0]
+        self.moves.clear()
+
 
         return False
 
