@@ -19,10 +19,9 @@ class BotonIslaUI(UIObject):
     def getUI(self):
         ui = []
         boton = Helper.getSurface(150,50)
-        boton.fill((0,255,0),None,0)
+        boton.fill((0,190,57),None,0)
         ui.append(UIObject(boton,self.posX,self.posY))
         font = Helper.FUENTE(24)
         texto = font.render("Visitar", True, (255, 255, 255), None)
-        ui.append(UIObject(texto,self.posX + 65,self.posY + 20))
-
+        ui.append(UIObject(texto,self.posX + 30 ,self.posY + 10))
         return ui
