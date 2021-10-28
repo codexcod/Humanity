@@ -11,28 +11,31 @@ class Asterisco():
     def agregarACaminito(self,nodo):
         self.caminito.append(nodo)
 
+    def getNodoAnterior(self):
+        return self.caminito[len(self.caminito) - 1]
+
     def agregar(self, nodo):
         self.abierta.append(nodo)
 
     def empiezaElCodiguito(self, inicioX, inicioY, finalX, finalY):
         inicioNodo = nodo(inicioY, inicioX, None)
         self.caminito.append(inicioNodo)
-        for y in range(abs(finalY - inicioY)):
-            
-            # Agrega movimientos en Y
-            if finalY - inicioY > 0:
-                self.agregarACaminito(nodo(inicioY + 1, inicioX, self.caminito[-1]))
-            # Agrega movimientos en Y
-            elif finalY - inicioY < 0:
-                self.agregarACaminito(nodo(inicioY - 1, inicioX, self.caminito[-1]))
 
-        for y in range(abs(finalX - inicioX)):
-            # Agrega movimientos en X
+
+        for y in range(abs(finalY - self.getNodoAnterior().getY())):
+
+            if finalY - inicioY > 0:
+                self.agregarACaminito(nodo(self.getNodoAnterior().getY() + 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+
+            elif finalY - inicioY < 0:
+                self.agregarACaminito(nodo(self.getNodoAnterior().getY() - 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+
+        for x in range(abs(finalX - self.getNodoAnterior().getX())):
             if finalX - inicioX > 0:
-                self.agregarACaminito(nodo(inicioY, inicioX + 1,self.caminito[-1]))
-            # Agrega movimientos en X
+                self.agregarACaminito(nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() + 1, self.getNodoAnterior()))
+
             elif finalX - inicioX < 0:
-                self.agregarACaminito(nodo(inicioY, inicioX - 1,self.caminito[-1]))
+                self.agregarACaminito(nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() - 1, self.getNodoAnterior()))
         '''
             inicioNodo = nodo(inicioY, inicioX, None)
             inicioNodo.costo = 0

@@ -15,13 +15,15 @@ class Controlador:
         self.running = True
         self.click = True
         self.camara.setControlador(self)
+
         
 
     def run(self):
         """ Se corre el jueguito con el personaje """
         # Controlar tiempo en el juego
+
         clock = pygame.time.Clock()
-        screenUpdate = 1
+        screenUpdate = 4
         # Tiempo para movibles
         pygame.time.set_timer(screenUpdate, 250)
         # Tiempo para arboles
@@ -81,7 +83,6 @@ class Controlador:
 
     def screenUpdate(self):
         """ Cuando se actualiza la pantalla, se movera todas las personas y animales """
-
         self.click = True
 
         for persona in self.aldea.getPersonas():

@@ -66,75 +66,70 @@ class Persona(Movible):
         if not self.tieneInventarioLleno():
             self.inventario.append(objeto)
 
-            
-
     def getInventario(self):
         return self.inventario
 
     def getUI(self,clickeables,lista,listaUI,ui):
         # Crea un UI para las personas
         info = []
-        fondo = Helper.getSurface(800,500)
+        fondo = Helper.getSurface(800, 500)
         fondo.fill((128, 64, 0), None, 0)
         info.append(UIObject(fondo, 100, 50))
         font = Helper.FUENTE(25)
         texto = self.getInfoStr()
         lineas = texto.splitlines()
-        forI = 0 
+        forI = 0
         for i in lineas:
             textObject = font.render(i, True, (255, 255, 255), None)
             info.append(UIObject(textObject, 500, 70 + forI * 40))
             forI += 1
-        
-        
-        image = Helper.getImage(self.getImage(),200,200)
+
+        image = Helper.getImage(self.getImage(), 200, 200)
         info.append(UIObject(image, 200, 200))
-
-
 
         for y in range(10):
             for x in range(8):
-                fondoObjeto = Helper.getImage(Helper.INVENTARIO,40, 40)
+                fondoObjeto = Helper.getImage(Helper.INVENTARIO, 40, 40)
                 info.append(UIObject(fondoObjeto, 500 + 40 * x, 120 + 40 * y))
 
-
-        fondoHambre = Helper.getSurface(200,15)
-        fondoHambre.fill((102,51,0),None,0)
+        fondoHambre = Helper.getSurface(200, 15)
+        fondoHambre.fill((102, 51, 0), None, 0)
         info.append(UIObject(fondoHambre, 200, 450))
 
-        rellenoHambre = Helper.getSurface(180,5)
-        rellenoHambre.fill((128,64,0),None,0)
+        rellenoHambre = Helper.getSurface(180, 5)
+        rellenoHambre.fill((128, 64, 0), None, 0)
         info.append(UIObject(rellenoHambre, 210, 455))
 
-        hambre = Helper.getSurface(self.hambre * 1.8,5)
-        hambre.fill((0,187,45),None,0)
+        hambre = Helper.getSurface(self.hambre * 1.8, 5)
+        hambre.fill((0, 187, 45), None, 0)
         info.append(UIObject(hambre, 210, 455))
-
 
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
             # Dibujan los objetos del inventario
-            imagenObjeto = Helper.getImage(objeto.getImage(),30,30)
-            info.append(UIObject(imagenObjeto, 500 + 40 * forPosX +  5 , 120 + 40 * forPosY + 5))
+
+            imagenObjeto = Helper.getImage(objeto.getImage(), 30, 30)
+            info.append(UIObject(imagenObjeto, 500 + 40 * forPosX + 5, 120 + 40 * forPosY + 5))
 
             if forPosX == 7:
                 forPosX = 0
                 forPosY += 1
 
             else:
-                    
+
                 forPosX += 1
 
-        fondoHerramienta = Helper.getImage(Helper.INVENTARIO,60,60)
-        info.append(UIObject(fondoHerramienta,150,100))
+        fondoHerramienta = Helper.getImage(Helper.INVENTARIO, 60, 60)
+        info.append(UIObject(fondoHerramienta, 150, 100))
 
         if not self.herramienta is None:
-            imagenHerramienta = Helper.getImage(self.herramienta.getImage(),40,40)
+            imagenHerramienta = Helper.getImage(self.herramienta.getImage(), 40, 40)
 
-            info.append(UIObject(imagenHerramienta,160,110))
-        
+            info.append(UIObject(imagenHerramienta, 160, 110))
+
         return info
+
     def moveToPosition(self, posX, posY):
         
         self.moves.clear()
@@ -161,7 +156,7 @@ class Persona(Movible):
                     self.moves.append([0, 1])
                 if nodo.getY() < nodo.getPadreMia().getY():
                     self.moves.append([0, -1])
-                print(self.moves)
+
 
 
     def accionarObjeto(self, objeto):
@@ -451,6 +446,8 @@ class Persona(Movible):
 
     def restarHambre(self,hambre):
         self.hambre -= hambre
+        if (self.hambre < 0):
+            self.hambre = 0
 
     def cicloVida(self):
         self.restarHambre(1)
