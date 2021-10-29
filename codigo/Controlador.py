@@ -171,3 +171,7 @@ class Controlador:
                         # Si selecciona a un movible, desde una persona, se fija de poder hacerle algo al movile
                         if not self.mouse.seleccionarMovible() in self.aldea.getPersonas():
                             self.camara.getSeleccionado().accionarObjeto(self.mouse.seleccionarMovible())
+
+    def cargarIsla(self,isla):
+        self.camara.setIsla(isla)
+        print("holai")

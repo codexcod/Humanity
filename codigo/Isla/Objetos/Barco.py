@@ -1,3 +1,4 @@
+from codigo.Isla import Isla
 from codigo.Camara.UI.IslaObjeto import IslaObjeto
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
@@ -43,12 +44,15 @@ class Barco(Objeto):
         textPrecio = font.render("Barco", True, (255, 255, 255), None)
         info.append(UIObject(textPrecio, 400,75))
 
-        listaIslas = [[self.isla,50]]
+        isla = Isla.Isla()
+        isla.generarIsla(200,200)
+
+        listaIslas = [[isla,50]]
 
         forIsla = 0
         for isla in listaIslas:
             islaObjeto = IslaObjeto(isla[0], isla[1])
-            uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,listaUI,ui)
+            uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,lista,ui,clickeables)
             for uiObject in uiIsla:
                 info.append(uiObject)
 

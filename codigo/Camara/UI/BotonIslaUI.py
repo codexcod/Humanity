@@ -10,18 +10,19 @@ class BotonIslaUI(UIObject):
         self.ui = ui
         self.isla = isla
 
-    def onClickIslaSecundaria(self):
-        self.ui.getControlador().cargarIslaSecundaria(self.isla)
 
-    def onClickIsla(self):
+    def onClick(self):
         self.ui.getControlador().cargarIsla(self.isla)
+        self.ui.getUIList().remove(self.lista)
 
-    def getUI(self):
+    def getUI(self,clickeables):
         ui = []
         boton = Helper.getSurface(150,50)
         boton.fill((0,190,57),None,0)
         ui.append(UIObject(boton,self.posX,self.posY))
         font = Helper.FUENTE(24)
         texto = font.render("Visitar", True, (255, 255, 255), None)
-        ui.append(UIObject(texto,self.posX + 30 ,self.posY + 10))
+        visitar = UIObject(texto,self.posX + 30 ,self.posY + 10)
+        ui.append(visitar)
+        clickeables.append(self)
         return ui

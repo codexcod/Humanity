@@ -40,13 +40,14 @@ class Isla:
         self.arbustosSinBaya = []
         self.aldea = None
         self.image = None
+        self.nombre = ""
 
     def generarIsla(self,ancho, altura):
         self.image = Helper.ARBOL
         self.altura = altura
         self.ancho = ancho
         self.generarMapaObjetos()
-        self.generarMapaEstatico()
+        self.generarMapaEstaticoConocido()
         self.generarMapaMovible()
 
     def cargarMapa(self,partida):
@@ -73,8 +74,9 @@ class Isla:
 
             self.mMovible.append(fila)
 
-        self.generarMapaEstatico()
+        self.generarMapaEstaticoConocido()
 
+        self.nombre = data['nombre']
         jsonAldea = data['aldea']
         aldea = Aldea(jsonAldea['name'])
         aldea.setMadera(jsonAldea['troncos'])
@@ -190,6 +192,7 @@ class Isla:
 
     def toJson(self,partida):
         jsonText = {}
+        jsonText['nombre'] = self.nombre
         jsonText['aldea'] = self.aldea.toJson()
         jsonText['ancho'] = self.ancho
         jsonText['altura'] = self.altura
@@ -207,7 +210,31 @@ class Isla:
         with open(f'Info/{partida}.json', 'w') as file:
             json.dump(jsonText, file, indent=4)
 
-    def generarMapaEstatico(self):
+    def generarMapaEstaticoConocido(self):
+        # Genera el mapa de fondo como la tierra
+        for y in range(self.altura):
+            fila = []
+            for x in range(self.ancho):
+                if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
+                    fila.append(Agua())
+                    if not self.mObjetos[y][x] is None:
+                        self.mObjetos[y][x] = None
+
+                elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
+
+                    fila.append(Arena())
+                    if not self.mObjetos[y][x] is None:
+                        self.mObjetos[y][x] = None
+
+
+                else:
+                    fila.append(Pasto())
+
+                fila[len(fila) - 1].setVisivilidad(True)
+
+            self.mEstatico.append(fila)
+
+    def generarMapaEstaticoDesconocido(self):
         # Genera el mapa de fondo como la tierra
         for y in range(self.altura):
             fila = []
@@ -410,3 +437,6 @@ class Isla:
 
     def getImage(self):
         return self.image
+
+    def setNombre(self,nombre):
+        self.nombre = nombre

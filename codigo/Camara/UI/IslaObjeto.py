@@ -18,7 +18,7 @@ class IslaObjeto:
     def getNivelNecesario(self):
         return self.nivelNecesario
 
-    def getUI(self,posX,posY,listaUI,ui):
+    def getUI(self,posX,posY,listaUI,ui,clickeables):
         card = []
 
         fondoObjeto = Helper.getSurface(200, 300)
@@ -29,7 +29,7 @@ class IslaObjeto:
         card.append(UIObject(imagenObjeto,posX + 50,posY + 50))
 
         boton = BotonIslaUI(None,posX + 25,posY + 200,listaUI,ui,self.isla)
-        for uiBoton in boton.getUI():
+        for uiBoton in boton.getUI(clickeables):
             card.append(uiBoton)
 
         return card

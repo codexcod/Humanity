@@ -49,6 +49,9 @@ class Helper:
 
     BARCO = pygame.image.load('../img/barco.png')
 
+
+    NIEBLA = pygame.image.load('../img/niebla.png')
+
     
     def getImage(image,width,height):
         return pygame.transform.scale(image, (width, height))

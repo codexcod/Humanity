@@ -93,15 +93,24 @@ class Camara:
                         select = pygame.transform.scale(Helper.SELECCIONADO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                         self.screen.blit(select, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 
-                if not self.mObjetos[y][x] is None:
-                    objeto = pygame.transform.scale(self.mObjetos[y][x].getImage(),
+                if self.mEstatico[y][x].getVisibilidad():
+                    if not self.mObjetos[y][x] is None:
+                        objeto = pygame.transform.scale(self.mObjetos[y][x].getImage(),
+                                                        (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                        self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+                    if not self.mMovibles[y][x] is None:
+                        objeto = pygame.transform.scale(self.mMovibles[y][x].getImage(),
+                                                        (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                        self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+                else:
+                    objeto = pygame.transform.scale(Helper.NIEBLA,
                                                     (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                     self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
 
-                if not self.mMovibles[y][x] is None:
-                    objeto = pygame.transform.scale(self.mMovibles[y][x].getImage(),
-                                                    (self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
-                    self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
+
 
 
                 forX += 1

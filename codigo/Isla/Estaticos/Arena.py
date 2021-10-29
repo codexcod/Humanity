@@ -1,10 +1,11 @@
+from codigo.Isla.Estaticos.Estatico import Estatico
 from codigo.Isla.Helper import Helper
 
 
-class Arena:
+class Arena(Estatico):
 
     def __init__(self):
-        
+        Estatico.__init__(self)
         self.image = Helper.ARENA
         self.velocidad = 0.5
 
