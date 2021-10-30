@@ -46,7 +46,7 @@ class Barco(Objeto):
         info.append(UIObject(textPrecio, 400,75))
 
         isla = Isla.Isla()
-        isla.generarIslaDesconocida(200,200)
+        isla.generarIslaDesconocida(400,400)
 
         listaIslas = [[isla,50]]
 

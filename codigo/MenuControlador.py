@@ -173,8 +173,8 @@ class ControladorMenu():
                     self.botonEmpezar.setRecuadro("black")
                 else:
                     if error == False:
-                        ancho = 200
-                        alto = 200
+                        ancho = 400
+                        alto = 400
                         Helper.fadeMusic(3000)
                         self.degradado()
                         # dato1 = aldea/ dato2 = heroe/ dato3 = explorador/ dato4 = partida 
