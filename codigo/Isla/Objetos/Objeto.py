@@ -12,6 +12,7 @@ class Objeto:
         self.x = x
         self.y = y
         self.isla = isla
+        self.velocidad = 1
 
     def getNombre(self):
         return self.nombre
@@ -93,5 +94,8 @@ class Objeto:
 
     def isAnimal(self):
         return False
+
+    def getVelocidad(self):
+        return self.velocidad
 
     

@@ -180,3 +180,6 @@ class Controlador:
         self.camara.getIsla().enviarViajero(explorador)
         self.camara.setIsla(isla)
         isla.agregarViajero(explorador)
+
+    def getIsla(self):
+        return self.isla

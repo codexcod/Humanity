@@ -59,6 +59,7 @@ class Arbol(Objeto):
             self.setImage(Helper.ARBOL_TALADO)
             self.setNombre("Arbol talado")
             self.setCaminable(True)
+            self.velocidad = 3
             self.troncos = 1
             self.isla.getArbolesTalados().append(self)
 
@@ -91,6 +92,7 @@ class Arbol(Objeto):
             self.setImage(Helper.ARBOL)
 
         self.setCaminable(False)
+        self.velocidad = 1
         self.talado = False
               
             

@@ -13,6 +13,7 @@ class Arbusto(Objeto):
         self.talado = False
         self.tiempoCrecimiento = 0
         self.caminable = True
+        self.velocidad = 4
 
     def toJson(self):
         return {

@@ -19,10 +19,11 @@ class Persona(Movible):
         self.trabajando = False
         self.tiempoTrabajando = 0
         self.herramienta = None
-        self.vision = 2
+        self.vision = 4
         self.busqueda = 0
         self.busquedas = [None,self.buscarArboles,self.buscarPiedras,self.buscarAnimales,self.buscarArbustos]
         self.hambre = 100
+        self.tiempoMovimiento = 1
 
 
     def toJson(self):
@@ -131,7 +132,7 @@ class Persona(Movible):
         return info
 
     def moveToPosition(self, posX, posY):
-        
+
         self.moves.clear()
         self.accionar[0] = False
         asterisco = Asterisco(self.isla)
@@ -205,15 +206,34 @@ class Persona(Movible):
     def makeMoves(self):
         if not self.isTrabajando():
             if self.hasMoves():
-                self.debeAccionar()
+                if not self.isla.getMapaObjetos()[self.y][self.x] is None:
+                    if self.tiempoMovimiento == self.isla.getMapaObjetos()[self.y][self.x].getVelocidad():
+                        self.debeAccionar()
 
-                if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
-                    self.moves.pop(len(self.moves) - 1)
-                            
+                        if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
+                            self.moves.pop(len(self.moves) - 1)
+
+                        else:
+                            self.esquivarObjeto()
+
+                        self.descubrir()
+
+                        self.tiempoMovimiento = 1
+
+                    else:
+                        self.tiempoMovimiento += 1
+
                 else:
-                    self.esquivarObjeto()
+                    self.debeAccionar()
 
-                self.descubrir()
+                    if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
+                        self.moves.pop(len(self.moves) - 1)
+
+                    else:
+                        self.esquivarObjeto()
+
+                    self.descubrir()
+
 
             else:
                 if not self.getTarea() is None:

@@ -48,11 +48,13 @@ class Barco(Objeto):
         isla = Isla.Isla()
         isla.generarIslaDesconocida(400,400)
 
-        listaIslas = [[isla,50]]
+        listaIslas = [[ui.getControlador().getIsla(),0],[isla,50]]
 
         forIsla = 0
         for isla in listaIslas:
-            islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador)
+            botonActivaddo = isla[0] != self.isla
+            islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador,botonActivaddo)
+
             uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,lista,ui,clickeables)
             for uiObject in uiIsla:
                 info.append(uiObject)
@@ -60,7 +62,3 @@ class Barco(Objeto):
             forIsla += 1
 
         return info
-
-
-
-        

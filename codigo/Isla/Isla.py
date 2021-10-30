@@ -82,7 +82,29 @@ class Isla:
 
             self.mMovible.append(fila)
 
-        self.generarMapaEstaticoConocido()
+        for y in range(self.altura):
+            fila = []
+            for x in range(self.ancho):
+                fila.append(None)
+
+            self.mEstatico.append(fila)
+
+        for objeto in data['visibilidad']:
+            if objeto['objeto'] == 'Pasto':
+                pasto = Pasto([objeto['y']],[objeto['x']])
+                pasto.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = pasto
+
+            if objeto['objeto'] == 'Arena':
+                arena = Arena([objeto['y']],[objeto['x']])
+                arena.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = arena
+
+            if objeto['objeto'] == 'Agua':
+                agua = Agua([objeto['y']],[objeto['x']])
+                agua.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = agua
+
 
         self.nombre = data['nombre']
         jsonAldea = data['aldea']
@@ -204,6 +226,11 @@ class Isla:
         jsonText['aldea'] = self.aldea.toJson()
         jsonText['ancho'] = self.ancho
         jsonText['altura'] = self.altura
+        jsonText['visibilidad'] = []
+        for y in range(self.altura):
+            for x in range(self.ancho):
+                    jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
+
         jsonText['mObjetos'] = []
         for y in range(self.altura):
             for x in range(self.ancho):
@@ -224,19 +251,19 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
-                    fila.append(Agua())
+                    fila.append(Agua(x,y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
                 elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
 
-                    fila.append(Arena())
+                    fila.append(Arena(x,y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
 
                 else:
-                    fila.append(Pasto())
+                    fila.append(Pasto(x,y))
 
                 fila[len(fila) - 1].setVisivilidad(True)
 
@@ -248,19 +275,19 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
-                    fila.append(Agua())
+                    fila.append(Agua(x,y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
                 elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
 
-                    fila.append(Arena())
+                    fila.append(Arena(x,y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
 
                 else:
-                    fila.append(Pasto())
+                    fila.append(Pasto(x,y))
 
             self.mEstatico.append(fila)
 
