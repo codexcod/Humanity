@@ -9,11 +9,12 @@ import random
 
 class Barco(Objeto):
     
-    def __init__(self,x,y,isla):
+    def __init__(self,x,y,isla,explorador):
         Objeto.__init__(self,x,y,isla)
         self.image = Helper.BARCO
         self.nombre = "Barco de travesias"
         self.roto = True
+        self.explorador = explorador
 
     def toJson(self):
         return {
@@ -45,13 +46,13 @@ class Barco(Objeto):
         info.append(UIObject(textPrecio, 400,75))
 
         isla = Isla.Isla()
-        isla.generarIsla(200,200)
+        isla.generarIslaDesconocida(200,200)
 
         listaIslas = [[isla,50]]
 
         forIsla = 0
         for isla in listaIslas:
-            islaObjeto = IslaObjeto(isla[0], isla[1])
+            islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador)
             uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,lista,ui,clickeables)
             for uiObject in uiIsla:
                 info.append(uiObject)

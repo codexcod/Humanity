@@ -108,6 +108,16 @@ class Movible(Objeto):
         return (self.getX() == x - 1  and self.getY() == y) or (self.getX() == x + 1 and self.getY() == y) or (self.getX() == x  and self.getY() == y - 1) or (self.getX() == x and self.getY() == y + 1) 
                     
             
+    def setIsla(self,isla):
+        self.isla = isla
+        self.mObjetos = isla.getMapaObjetos()
+        self.mMovibles = isla.getMapaMovible()
+
+    def setX(self,x):
+        self.x = x
+
+    def setY(self, y):
+        self.y = y
 
 
 

@@ -4,15 +4,16 @@ from codigo.Isla.Helper import Helper
 
 class BotonIslaUI(UIObject):
 
-    def __init__(self, objeto, posX, posY, lista,ui,isla):
+    def __init__(self, objeto, posX, posY, lista,ui,isla,explorador):
         super().__init__(objeto, posX, posY)
         self.lista = lista
         self.ui = ui
         self.isla = isla
+        self.explorador = explorador
 
 
     def onClick(self):
-        self.ui.getControlador().cargarIsla(self.isla)
+        self.ui.getControlador().cargarIsla(self.isla,self.explorador)
         self.ui.getUIList().remove(self.lista)
 
     def getUI(self,clickeables):

@@ -148,3 +148,6 @@ class Camara:
         self.mEstatico = isla.getMapaEstatico()
         self.mObjetos = isla.getMapaObjetos()
         self.mMovibles = isla.getMapaMovible()
+
+    def getIsla(self):
+        return self.isla

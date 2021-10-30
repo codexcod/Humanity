@@ -12,65 +12,65 @@ class Controlador:
         self.ancho = self.isla.getAncho()
         self.altura = self.isla.getAltura()
         self.partida = partida
-        self.running = True
+        self.running = False
         self.click = True
         self.camara.setControlador(self)
-
-
-        
 
     def run(self):
         """ Se corre el jueguito con el personaje """
         # Controlar tiempo en el juego
 
-        clock = pygame.time.Clock()
-        screenUpdate = 1
-        # Tiempo para movibles
-        pygame.time.set_timer(screenUpdate, 250)
-        # Tiempo para arboles
-        arbolesUpdate = 2
-        pygame.time.set_timer(arbolesUpdate, 10000)
+        if not self.running:
+            self.running =True
 
-        ciclocDeVidaPersonas = 3
-        pygame.time.set_timer(ciclocDeVidaPersonas, 20000)
+            clock = pygame.time.Clock()
+            screenUpdate = 1
+            # Tiempo para movibles
+            pygame.time.set_timer(screenUpdate, 250)
+            # Tiempo para arboles
+            arbolesUpdate = 2
+            pygame.time.set_timer(arbolesUpdate, 10000)
 
-        while self.running:
-            # Checkea todos los eventos
-            for event in pygame.event.get():
-                # Cerrar juego
-                if event.type == pygame.QUIT:
-                    self.stopGame()
+            ciclocDeVidaPersonas = 3
+            pygame.time.set_timer(ciclocDeVidaPersonas, 20000)
 
-                # Checkea si algun boton del mouse es presionado
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.mousePressed(pygame.mouse.get_pressed())
-                    if event.button == 4:
-                        # Baja el zoom
-                        self.camara.getZoom().bajarZoom()
+            while self.running:
+                # Checkea todos los eventos
+                for event in pygame.event.get():
+                    # Cerrar juego
+                    if event.type == pygame.QUIT:
+                        self.stopGame()
 
-                    if event.button == 5:
-                        # Aumenta el zoom
-                        self.camara.getZoom().subirZoom()
+                    # Checkea si algun boton del mouse es presionado
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        self.mousePressed(pygame.mouse.get_pressed())
+                        if event.button == 4:
+                            # Baja el zoom
+                            self.camara.getZoom().bajarZoom()
 
-                if event.type == pygame.KEYDOWN:
-                    self.keyEvent(event.key)
+                        if event.button == 5:
+                            # Aumenta el zoom
+                            self.camara.getZoom().subirZoom()
 
-                if event.type == screenUpdate:
-                    self.screenUpdate()
+                    if event.type == pygame.KEYDOWN:
+                        self.keyEvent(event.key)
 
-                if event.type == arbolesUpdate:
-                    self.arbolesUpdate()
+                    if event.type == screenUpdate:
+                        self.screenUpdate()
 
-                if event.type == ciclocDeVidaPersonas:
-                    self.personasUpdate()
+                    if event.type == arbolesUpdate:
+                        self.arbolesUpdate()
 
-            self.camara.actualizarPantalla()
-            self.camara.getUI().generarAldeaUI(self.aldea)
-            self.camara.dibujarUI()
-            pygame.display.update()
+                    if event.type == ciclocDeVidaPersonas:
+                        self.personasUpdate()
 
-            clock.tick(60)
-            # El reloj por el cual todos los eventos se actualizan
+                self.camara.actualizarPantalla()
+                self.camara.getUI().generarAldeaUI(self.aldea)
+                self.camara.dibujarUI()
+                pygame.display.update()
+
+                clock.tick(60)
+                # El reloj por el cual todos los eventos se actualizan
 
     def personasUpdate(self):
         """ Dentro de los arboles talados, se suma el tiempo para que vuelva a crecer """
@@ -89,7 +89,7 @@ class Controlador:
 
             persona.makeMoves()
 
-        for animal in self.isla.getAnimales():
+        for animal in self.camara.getIsla().getAnimales():
             animal.makeMoves()
 
     def stopGame(self):
@@ -145,10 +145,14 @@ class Controlador:
 
         # En el caso que sea derecha checkea si esta seleccionado
         if right:
+
             # Si esta seleccionado y no es una persona, y trata de seleccionar una persona, la selecciona.
             if not self.mouse.seleccionarMovible() is None:
+
                 if not self.camara.getSeleccionado() == self.mouse.seleccionarMovible():
+
                     if self.mouse.seleccionarMovible() in self.aldea.getPersonas():
+
                         self.camara.setSeleccionado(self.mouse.seleccionarMovible())
 
                 else:
@@ -172,6 +176,7 @@ class Controlador:
                         if not self.mouse.seleccionarMovible() in self.aldea.getPersonas():
                             self.camara.getSeleccionado().accionarObjeto(self.mouse.seleccionarMovible())
 
-    def cargarIsla(self,isla):
+    def cargarIsla(self,isla,explorador):
+        self.camara.getIsla().enviarViajero(explorador)
         self.camara.setIsla(isla)
-        print("holai")
+        isla.agregarViajero(explorador)

@@ -90,7 +90,7 @@ class CargarPartidaControlador:
         orange = (210,137,8)
 
         #Tiempo para fondo
-        timerFondo = 4
+        timerFondo = 5
         pygame.time.set_timer(timerFondo,1000)
 
         for recuadro in self.recuadrosIslas:

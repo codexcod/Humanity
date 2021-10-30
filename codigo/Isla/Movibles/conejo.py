@@ -76,6 +76,7 @@ Vida : {self.vida}"""
             for i in range(self.carne):
                 valor.append(Carne())
 
+
             self.isla.getAnimales().remove(self)
             self.isla.getMapaMovible()[self.y][self.x] = None
             return valor

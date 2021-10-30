@@ -5,9 +5,10 @@ from codigo.Isla.Helper import Helper
 
 class IslaObjeto:
 
-    def __init__(self,isla,nivelNecesario):
+    def __init__(self,isla,nivelNecesario,explorador):
         self.isla = isla
         self.nivelNecesario = nivelNecesario
+        self.explorador = explorador
 
     def getImageIsla(self):
         return self.isla.getImage()
@@ -28,7 +29,7 @@ class IslaObjeto:
         imagenObjeto = Helper.getImage(self.isla.getImage(),100,100)
         card.append(UIObject(imagenObjeto,posX + 50,posY + 50))
 
-        boton = BotonIslaUI(None,posX + 25,posY + 200,listaUI,ui,self.isla)
+        boton = BotonIslaUI(None,posX + 25,posY + 200,listaUI,ui,self.isla,self.explorador)
         for uiBoton in boton.getUI(clickeables):
             card.append(uiBoton)
 

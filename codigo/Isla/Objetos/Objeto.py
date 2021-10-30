@@ -63,7 +63,7 @@ class Objeto:
         
         return info
 
-    def getTrabajo(self):
+    def getTrabajo(self,herramienta):
         return 0
 
     def getValor(self):

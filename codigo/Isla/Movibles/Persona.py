@@ -19,7 +19,7 @@ class Persona(Movible):
         self.trabajando = False
         self.tiempoTrabajando = 0
         self.herramienta = None
-        self.vision = 5
+        self.vision = 2
         self.busqueda = 0
         self.busquedas = [None,self.buscarArboles,self.buscarPiedras,self.buscarAnimales,self.buscarArbustos]
         self.hambre = 100
@@ -205,7 +205,6 @@ class Persona(Movible):
     def makeMoves(self):
         if not self.isTrabajando():
             if self.hasMoves():
-                
                 self.debeAccionar()
 
                 if self.move(self.moves[len(self.moves) - 1][0], self.moves[len(self.moves) - 1][1]):
@@ -214,6 +213,7 @@ class Persona(Movible):
                 else:
                     self.esquivarObjeto()
 
+                self.descubrir()
 
             else:
                 if not self.getTarea() is None:
@@ -312,9 +312,9 @@ class Persona(Movible):
                 
 
                 if not objetoTrabajado is None:
-
-                    if not objetoTrabajado.getValor() is None:
-                        for objeto in objetoTrabajado.getValor():
+                    valor = objetoTrabajado.getValor()
+                    if not valor is  None:
+                        for objeto in valor:
                             # Si era un objeto en el que estaba trabajando, que agregue sus items en el inventario
 
                             self.agregarInventario(objeto)
@@ -327,10 +327,10 @@ class Persona(Movible):
 
                 elif not movibleTrabajado is None:
 
-                    
+                    valor = movibleTrabajado.getValor()
                     # Si era un movible en el que estaba trabajando, que agregue sus valores en el inventario
-                    if not movibleTrabajado.getValor() is None:
-                        for objeto in movibleTrabajado.getValor():
+                    if not valor is None:
+                        for objeto in valor:
                             self.agregarInventario(objeto)
 
                         self.getAldea().sumarInteligencia(10)
@@ -529,5 +529,10 @@ class Persona(Movible):
     def cicloVida(self):
         self.restarHambre(1)
 
-        
-
+    def descubrir(self):
+        for y in range(self.y - self.vision,self.y + self.vision):
+            if y > 0 and y < self.isla.getAltura():
+                for x in range(self.x - self.vision, self.x + self.vision):
+                    if x > 0 and x < self.isla.getAncho():
+                        if not self.isla.getMapaEstatico()[y][x].getVisibilidad():
+                            self.isla.getMapaEstatico()[y][x].setVisivilidad(True)

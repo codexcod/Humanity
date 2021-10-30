@@ -50,6 +50,14 @@ class Isla:
         self.generarMapaEstaticoConocido()
         self.generarMapaMovible()
 
+    def generarIslaDesconocida(self,ancho, altura):
+        self.image = Helper.ARBOL
+        self.altura = altura
+        self.ancho = ancho
+        self.generarMapaObjetos()
+        self.generarMapaEstaticoDesconocido()
+        self.generarMapaMovible()
+
     def cargarMapa(self,partida):
         self.image = Helper.ARBOL
         with open(f'Info/{partida}.json', 'r') as file:
@@ -182,7 +190,7 @@ class Isla:
                 mesaDeTrabajo.setNombre(objeto['name'])
 
             elif objeto['objeto'] == 'Barco':
-                barco = Barco(objeto['x'], objeto['y'], self)
+                barco = Barco(objeto['x'], objeto['y'], self,self.getAldea().getPersonas()[0])
                 barco.setNombre(objeto['name'])
                 self.mObjetos[objeto['y']][objeto['x']] = barco
 
@@ -380,7 +388,7 @@ class Isla:
         Darwin.setNombre("Darwin")
         self.animales.append(Darwin)
 
-        barco = Barco(self.ancho // 2,self.altura - 1,self)
+        barco = Barco(self.ancho // 2,self.altura - 1,self,self.getAldea().getPersonas()[0])
         self.agregarObjeto(self.ancho // 2,self.altura - 1,barco)
 
     def getArbolesTalados(self):
@@ -408,9 +416,6 @@ class Isla:
                     conejo = Conejo(x + aleatorioX, y + aleatorioY, self, 10)
                     self.agregarMovible(conejo.getX(), conejo.getY(), conejo)
                     self.animales.append(conejo)
-
-
-
 
         elif animal == "vaca":
             for i in range(numero):
@@ -440,3 +445,14 @@ class Isla:
 
     def setNombre(self,nombre):
         self.nombre = nombre
+
+    def enviarViajero(self,explorador):
+        self.mMovible[explorador.getY()].remove(explorador)
+
+    def agregarViajero(self,explorador):
+        explorador.setX(self.ancho // 2)
+        explorador.setY(self.altura - 2)
+        explorador.setIsla(self)
+        self.mMovible[self.altura - 2][self.ancho // 2] = explorador
+        explorador.descubrir()
+        self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2,self.altura - 1, self,explorador)
