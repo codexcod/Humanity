@@ -1,4 +1,8 @@
+import json
+import os
+
 from codigo.Isla import Isla
+
 from codigo.Camara.UI.IslaObjeto import IslaObjeto
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
@@ -29,7 +33,7 @@ class Barco(Objeto):
         self.roto = False
 
     def getInfoStr(self):
-        return  "Barco de traversias"
+        return "Barco de traversias"
 
     def onClick(self,herramienta):
         return
@@ -43,12 +47,27 @@ class Barco(Objeto):
 
         font = Helper.FUENTE(30)
         textPrecio = font.render("Barco", True, (255, 255, 255), None)
-        info.append(UIObject(textPrecio, 400,75))
+        info.append(UIObject(textPrecio, 450,75))
 
-        isla = Isla.Isla()
-        isla.generarIslaDesconocida(400,400)
+        data = None
+        with open(f'Islas/IslaMisteriosa.json', 'r') as file:
+            data = json.load(file)
 
-        listaIslas = [[ui.getControlador().getIsla(),0],[isla,50]]
+        archivos = os.listdir("Islas")
+
+        islaMisteriosa = None
+
+
+        if not len(archivos) == 0:
+            islaMisteriosa = Isla.Isla()
+            islaMisteriosa.cargarMapaConArchivo(data)
+
+        else:
+            islaMisteriosa = Isla.Isla()
+            islaMisteriosa.generarIslaDesconocida(400,400)
+            islaMisteriosa.setNombre("IslaMisteriosa")
+
+        listaIslas = [[ui.getControlador().getIsla(),0],[islaMisteriosa,50]]
 
         forIsla = 0
         for isla in listaIslas:

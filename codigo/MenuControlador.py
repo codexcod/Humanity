@@ -180,7 +180,7 @@ class ControladorMenu():
                         # dato1 = aldea/ dato2 = heroe/ dato3 = explorador/ dato4 = partida 
                         isla = Isla()
                         isla.generarIsla(ancho, alto)
-                        isla.setNombre("Isla principal")
+                        isla.setNombre(partida)
                         aldea = Aldea(aldea)
                         isla.agregarAldea(aldea, ancho // 2, alto // 2, heroe, explorador)
 

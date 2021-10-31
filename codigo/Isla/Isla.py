@@ -91,23 +91,24 @@ class Isla:
 
         for objeto in data['visibilidad']:
             if objeto['objeto'] == 'Pasto':
-                pasto = Pasto([objeto['y']],[objeto['x']])
+                pasto = Pasto(objeto['y'],objeto['x'])
                 pasto.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = pasto
 
             if objeto['objeto'] == 'Arena':
-                arena = Arena([objeto['y']],[objeto['x']])
+                arena = Arena(objeto['y'],objeto['x'])
                 arena.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = arena
 
             if objeto['objeto'] == 'Agua':
-                agua = Agua([objeto['y']],[objeto['x']])
+                agua = Agua(objeto['y'],objeto['x'])
                 agua.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = agua
 
 
         self.nombre = data['nombre']
         jsonAldea = data['aldea']
+
         aldea = Aldea(jsonAldea['name'])
         aldea.setMadera(jsonAldea['troncos'])
         aldea.setPiedra(jsonAldea['piedras'])
@@ -217,13 +218,207 @@ class Isla:
                 self.mObjetos[objeto['y']][objeto['x']] = barco
 
 
+    def cargarMapaConArchivo(self,archivo):
+        self.image = Helper.ARBOL
+
+        data = archivo
+
+        self.ancho = data['ancho']
+        self.altura = data['altura']
 
 
+
+        for y in range(self.altura):
+            fila = []
+            for x in range(self.ancho):
+                fila.append(None)
+
+            self.mObjetos.append(fila)
+
+        for y in range(self.altura):
+            fila = []
+            for x in range(self.ancho):
+                fila.append(None)
+
+            self.mMovible.append(fila)
+
+        for y in range(self.altura):
+            fila = []
+            for x in range(self.ancho):
+                fila.append(None)
+
+            self.mEstatico.append(fila)
+
+        for objeto in data['visibilidad']:
+            if objeto['objeto'] == 'Pasto':
+                pasto = Pasto(objeto['y'],objeto['x'])
+                pasto.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = pasto
+
+            if objeto['objeto'] == 'Arena':
+                arena = Arena(objeto['y'],objeto['x'])
+                arena.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = arena
+
+            if objeto['objeto'] == 'Agua':
+                agua = Agua(objeto['y'],objeto['x'])
+                agua.setVisivilidad(objeto['visibilidad'])
+                self.mEstatico[objeto['y']][objeto['x']] = agua
+
+
+        self.nombre = data['nombre']
+        jsonAldea = data['aldea']
+
+        if not jsonAldea is None:
+            aldea = Aldea(jsonAldea['name'])
+            aldea.setMadera(jsonAldea['troncos'])
+            aldea.setPiedra(jsonAldea['piedras'])
+            aldea.setCarne(jsonAldea['carne'])
+            aldea.setOro(jsonAldea['oro'])
+            aldea.setInteligencia(jsonAldea['inteligencia'])
+            for casa in jsonAldea['casas']:
+                nuevaCasa = Casa(aldea,casa['x'],casa['y'],self)
+                for persona in casa['personas']:
+                    nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
+                    nuevaPersona.setEdad(persona['edad'])
+                    nuevaPersona.setHambre(persona['hambre'])
+
+                    for objeto in persona['inventario']:
+                        if objeto['objeto'] == 'Tronco':
+                            nuevaPersona.agregarInventario(Tronco())
+
+                        elif objeto['objeto'] == 'Roca':
+                            nuevaPersona.agregarInventario(Roca())
+
+                        elif objeto['objeto'] == 'Carne':
+                            nuevaPersona.agregarInventario(Carne())
+
+                        elif objeto['objeto'] == 'Pico':
+                            pico = Pico()
+                            pico.setUsos(objeto['usos'])
+                            pico.setRota(objeto['rota'])
+                            if pico.getRota():
+                                pico.setImage(Helper.PICO_ROTO)
+
+                            nuevaPersona.agregarInventario(pico)
+
+
+
+                    if not persona['herramienta'] is None:
+                        nuevaPersona.setHerramienta(persona['herramienta'])
+
+                    nuevaCasa.agregarPersona(nuevaPersona)
+                    self.mMovible[persona['y']][persona['x']] = nuevaPersona
+
+                aldea.agregarCasa(nuevaCasa)
+                self.mObjetos[casa['y']][casa['x']] = nuevaCasa
+
+            self.aldea = aldea
+
+        jsonAnimales = data['animales']
+        for animal in jsonAnimales:
+            if animal['objeto'] == 'Vaca':
+                vaca = Vaca(animal['x'],animal['y'],self,animal['vida'])
+                vaca.setMuerto(animal['muerto'])
+                if vaca.getMuerto():
+                    vaca.setImage(Helper.VACA(4))
+                self.animales.append(vaca)
+                self.mMovible[animal['y']][animal['x']] = vaca
+
+            elif animal['objeto'] == 'Conejo':
+                conejo = Conejo(animal['x'],animal['y'],self,animal['vida'])
+                conejo.setMuerto(animal['muerto'])
+                if conejo.getMuerto():
+                    conejo.setImage(Helper.CONEJO(14))
+                self.animales.append(conejo)
+                self.mMovible[animal['y']][animal['x']] = conejo
+
+
+
+        for objeto in data['mObjetos']:
+            if objeto['objeto'] == 'Arbol':
+                arbol = Arbol(objeto['x'], objeto['y'], self)
+                arbol.setTroncos(objeto['troncos'])
+                arbol.setTalado(objeto['talado'])
+                arbol.setTiempoCrecimiento(objeto['tiempoCrecimiento'])
+                if arbol.getTalado():
+                    self.arbolesTalados.append(arbol)
+                    arbol.setImage(Helper.ARBOL_TALADO)
+                    arbol.setCaminable(True)
+                self.mObjetos[objeto['y']][objeto['x']] = arbol
+                arbol.setNombre(objeto['name'])
+
+            elif objeto['objeto'] == 'Piedra':
+                piedra = Piedra(objeto['x'], objeto['y'], self)
+                piedra.setPiedras(objeto['piedras'])
+                piedra.setOro(objeto['oro'])
+                self.mObjetos[objeto['y']][objeto['x']] = piedra
+                piedra.setNombre(objeto['name'])
+
+            elif objeto['objeto'] == 'Arbusto':
+                arbusto = Arbusto(objeto['x'], objeto['y'], self)
+                arbusto.setBayas(objeto['bayas'])
+                arbusto.setTalado(objeto['talado'])
+                arbusto.setTiempoCrecimiento(objeto['tiempoCrecimiento'])
+                arbusto.setNombre(objeto['name'])
+                self.mObjetos[objeto['y']][objeto['x']] = arbusto
+
+            elif objeto['objeto'] == 'Fogata':
+                fogata = Fogata(self.aldea, objeto['x'], objeto['y'], self)
+                self.mObjetos[objeto['y']][objeto['x']] = fogata
+                fogata.setNombre(objeto['name'])
+
+            elif objeto['objeto'] == 'Mesa de trabajo':
+                mesaDeTrabajo = MesaTrabajo(self.aldea, objeto['x'], objeto['y'], self)
+                self.mObjetos[objeto['y']][objeto['x']] = mesaDeTrabajo
+                mesaDeTrabajo.setNombre(objeto['name'])
+
+            elif objeto['objeto'] == 'Barco':
+                barco = Barco(objeto['x'], objeto['y'], self,self.getAldea().getPersonas()[0])
+                barco.setNombre(objeto['name'])
+                self.mObjetos[objeto['y']][objeto['x']] = barco
+
+
+
+
+    def toJsonPath(self,partida):
+        jsonText = {}
+        jsonText['nombre'] = self.nombre
+
+        if not self.aldea is None:
+            jsonText['aldea'] = self.aldea.toJson()
+
+        else:
+            jsonText['aldea'] = self.aldea
+
+        jsonText['ancho'] = self.ancho
+        jsonText['altura'] = self.altura
+        jsonText['visibilidad'] = []
+        for y in range(self.altura):
+            for x in range(self.ancho):
+                    jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
+
+        jsonText['mObjetos'] = []
+        for y in range(self.altura):
+            for x in range(self.ancho):
+                if not self.mObjetos[y][x] is None:
+                    jsonText['mObjetos'].append(self.mObjetos[y][x].toJson())
+
+
+        jsonText['animales'] = []
+        for animal in self.animales:
+            jsonText['animales'].append(animal.toJson())
+
+        with open(partida, 'w') as file:
+            json.dump(jsonText, file, indent=4)
 
     def toJson(self,partida):
         jsonText = {}
         jsonText['nombre'] = self.nombre
+
         jsonText['aldea'] = self.aldea.toJson()
+
+
         jsonText['ancho'] = self.ancho
         jsonText['altura'] = self.altura
         jsonText['visibilidad'] = []
@@ -483,3 +678,6 @@ class Isla:
         self.mMovible[self.altura - 2][self.ancho // 2] = explorador
         explorador.descubrir()
         self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2,self.altura - 1, self,explorador)
+
+    def getNombre(self):
+        return self.nombre

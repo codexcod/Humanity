@@ -1,3 +1,5 @@
+import json
+
 import pygame
 from codigo.Isla.Isla import Isla
 
@@ -95,6 +97,9 @@ class Controlador:
     def stopGame(self):
         """ Termina el loop del juego y guarda la partida"""
         self.isla.toJson(self.partida)
+        if not self.camara.getIsla() == self.isla:
+            self.camara.getIsla().toJsonPath(f'Islas/'+self.camara.getIsla().getNombre()+'.json')
+
         self.running = False
 
     def keyEvent(self, event):
