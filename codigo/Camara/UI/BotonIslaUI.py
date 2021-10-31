@@ -13,7 +13,11 @@ class BotonIslaUI(UIObject):
 
 
     def onClick(self):
-        self.ui.getControlador().cargarIsla(self.isla,self.explorador)
+        if self.isla == self.ui.getControlador().getIsla().getNombre():
+            self.ui.getControlador().cargarIslaPrincipal(self.explorador)
+        else:
+            self.ui.getControlador().cargarIslaSecundaria(self.isla, self.explorador)
+
         self.ui.getUIList().remove(self.lista)
 
     def getUI(self,clickeables):

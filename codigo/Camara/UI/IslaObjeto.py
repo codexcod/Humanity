@@ -11,10 +11,9 @@ class IslaObjeto:
         self.explorador = explorador
         self.botonActivado = botonActivado
 
-    def getImageIsla(self):
-        return self.isla.getImage()
 
-    def getIsla(self):
+
+    def getIslaNombre(self):
         return self.isla
 
     def getNivelNecesario(self):
@@ -27,8 +26,10 @@ class IslaObjeto:
         fondoObjeto.fill((102, 51, 0), None, 0)
         card.append(UIObject(fondoObjeto, posX, posY))
 
-        imagenObjeto = Helper.getImage(self.isla.getImage(),100,100)
-        card.append(UIObject(imagenObjeto,posX + 50,posY + 50))
+        font = Helper.FUENTE(24)
+        textPrecio = font.render(self.isla, True, (255, 255, 255), None)
+        card.append(UIObject(textPrecio, posX +25, posY + 50))
+
 
         if self.botonActivado:
             boton = BotonIslaUI(None,posX + 25,posY + 200,listaUI,ui,self.isla,self.explorador)

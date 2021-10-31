@@ -1,4 +1,5 @@
 import json
+import os
 
 import pygame
 from codigo.Isla.Isla import Isla
@@ -181,10 +182,39 @@ class Controlador:
                         if not self.mouse.seleccionarMovible() in self.aldea.getPersonas():
                             self.camara.getSeleccionado().accionarObjeto(self.mouse.seleccionarMovible())
 
-    def cargarIsla(self,isla,explorador):
+    def cargarIslaPrincipal(self,explorador):
         self.camara.getIsla().enviarViajero(explorador)
-        self.camara.setIsla(isla)
-        isla.agregarViajero(explorador)
+        self.camara.getIsla().toJsonPath(f'Islas/' + self.camara.getIsla().getNombre() + '.json')
+        self.camara.setIsla(self.isla)
+        self.isla.agregarViajero(explorador)
+
+    def cargarIslaSecundaria(self,isla,explorador):
+        islaSecundaria = None
+        archivos = os.listdir("Islas")
+        for archivo in archivos:
+            if archivo.split(".") == isla:
+                data = None
+                with open(f'Islas/' + isla + '.json', 'r') as file:
+                    data = json.load(file)
+
+                islaSecundaria = Isla()
+                islaSecundaria.cargarMapaConArchivo(data)
+                self.camara.getIsla().enviarViajero(explorador)
+                self.camara.setIsla(islaSecundaria)
+                islaSecundaria.agregarViajero(explorador)
+                return
+
+
+        islaSecundaria = Isla()
+        islaSecundaria.generarIslaDesconocida(400, 400)
+        islaSecundaria.setNombre(isla)
+
+
+        self.camara.getIsla().enviarViajero(explorador)
+        if self.camara.getIsla().getNombre() != self.isla.getNombre():
+            self.camara.getIsla().toJsonPath(f'Islas/'+self.camara.getIsla().getNombre()+'.json')
+        self.camara.setIsla(islaSecundaria)
+        islaSecundaria.agregarViajero(explorador)
 
     def getIsla(self):
         return self.isla

@@ -1,6 +1,7 @@
 import json
 import os
 
+from codigo.Camara.UI.ExploradorObjeto import ExploradorObjeto
 from codigo.Isla import Isla
 
 from codigo.Camara.UI.IslaObjeto import IslaObjeto
@@ -50,29 +51,11 @@ class Barco(Objeto):
         info.append(UIObject(textPrecio, 450,75))
 
 
-
-        archivos = os.listdir("Islas")
-
-        islaMisteriosa = None
-
-
-        if not len(archivos) == 0:
-            data = None
-            with open(f'Islas/IslaMisteriosa.json', 'r') as file:
-                data = json.load(file)
-            islaMisteriosa = Isla.Isla()
-            islaMisteriosa.cargarMapaConArchivo(data)
-
-        else:
-            islaMisteriosa = Isla.Isla()
-            islaMisteriosa.generarIslaDesconocida(400,400)
-            islaMisteriosa.setNombre("IslaMisteriosa")
-
-        listaIslas = [[ui.getControlador().getIsla(),0],[islaMisteriosa,50]]
+        listaIslas = [[ui.getControlador().getIsla().getNombre(),0],["Isla Misteriosa",50],["Isla Desconocida",50]]
 
         forIsla = 0
         for isla in listaIslas:
-            botonActivaddo = isla[0] != self.isla
+            botonActivaddo = isla[0] != self.isla.getNombre()
             islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador,botonActivaddo)
 
             uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,lista,ui,clickeables)
