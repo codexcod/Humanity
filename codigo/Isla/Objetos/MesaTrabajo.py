@@ -41,6 +41,8 @@ class MesaTrabajo(Objeto):
         textPrecio = font.render("Mesa de trabajo", True, (255, 255, 255), None)
         info.append(UIObject(textPrecio, 400,75))
 
+
+
         listaObjetos = [[Arbol(23,50,self.isla),[[Tronco(),40],[Roca(),20]]],[Piedra(23,50,self.isla),[[Tronco(),20],[Roca(),10]]],[Conejo(23,50,self.isla,50),[[Tronco(),20],[Roca(),10]]]]
 
         forVenta = 0;
@@ -51,6 +53,10 @@ class MesaTrabajo(Objeto):
                 info.append(uiObeject)
 
             forVenta += 1
+
+        font = Helper.FUENTE(55)
+        textPrecio = font.render("PROXIMAMENTE", True, (255, 255, 255), None)
+        info.append(UIObject(textPrecio, 300, 250))
 
 
         return info

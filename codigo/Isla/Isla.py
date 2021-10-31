@@ -373,10 +373,7 @@ class Isla:
                 self.mObjetos[objeto['y']][objeto['x']] = mesaDeTrabajo
                 mesaDeTrabajo.setNombre(objeto['name'])
 
-            elif objeto['objeto'] == 'Barco':
-                barco = Barco(objeto['x'], objeto['y'], self,self.getAldea().getPersonas()[0])
-                barco.setNombre(objeto['name'])
-                self.mObjetos[objeto['y']][objeto['x']] = barco
+
 
 
 

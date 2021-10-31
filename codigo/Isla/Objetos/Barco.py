@@ -49,9 +49,7 @@ class Barco(Objeto):
         textPrecio = font.render("Barco", True, (255, 255, 255), None)
         info.append(UIObject(textPrecio, 450,75))
 
-        data = None
-        with open(f'Islas/IslaMisteriosa.json', 'r') as file:
-            data = json.load(file)
+
 
         archivos = os.listdir("Islas")
 
@@ -59,6 +57,9 @@ class Barco(Objeto):
 
 
         if not len(archivos) == 0:
+            data = None
+            with open(f'Islas/IslaMisteriosa.json', 'r') as file:
+                data = json.load(file)
             islaMisteriosa = Isla.Isla()
             islaMisteriosa.cargarMapaConArchivo(data)
 
