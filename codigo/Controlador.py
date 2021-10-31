@@ -192,7 +192,7 @@ class Controlador:
         islaSecundaria = None
         archivos = os.listdir("Islas")
         for archivo in archivos:
-            if archivo.split(".") == isla:
+            if archivo.split(".")[0] == isla:
                 data = None
                 with open(f'Islas/' + isla + '.json', 'r') as file:
                     data = json.load(file)
