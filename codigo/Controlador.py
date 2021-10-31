@@ -97,9 +97,14 @@ class Controlador:
 
     def stopGame(self):
         """ Termina el loop del juego y guarda la partida"""
-        self.isla.toJson(self.partida)
         if not self.camara.getIsla() == self.isla:
+            for persona in self.isla.getAldea().getPersonas():
+                if persona.getIsla() == self.camara.getIsla():
+                    self.camara.getIsla().enviarViajero(persona)
+                    self.isla.agregarViajero(persona)
             self.camara.getIsla().toJsonPath(f'Islas/'+self.camara.getIsla().getNombre()+'.json')
+        self.isla.toJson(self.partida)
+
 
         self.running = False
 

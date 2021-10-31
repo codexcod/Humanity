@@ -98,4 +98,7 @@ class Objeto:
     def getVelocidad(self):
         return self.velocidad
 
+    def getIsla(self):
+        return self.isla
+
     
