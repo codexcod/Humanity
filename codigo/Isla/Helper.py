@@ -86,14 +86,12 @@ class Helper:
     def FUENTE(size):
         return pygame.font.Font('../fonts/poppinsmedium.ttf', size)
 
-    def CONEJO(animacionConejo):
-        return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
 
     def FONDOANIMACION(animacionFondo):
         return pygame.image.load(f'../img/fondo/fondo{animacionFondo}.png')
   
     def CONEJO(animacionConejo):
-        return pygame.image.load(f'../img/Conejo/Conejo-{animacionConejo}.png')
+        return pygame.image.load(f'../img/Conejo/CONEJO-{animacionConejo}.png')
 
     def VACA(animcacionVaca):
         return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
