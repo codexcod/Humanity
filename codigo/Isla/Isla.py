@@ -213,7 +213,7 @@ class Isla:
                 mesaDeTrabajo.setNombre(objeto['name'])
 
             elif objeto['objeto'] == 'Barco':
-                barco = Barco(objeto['x'], objeto['y'], self,self.getAldea().getPersonas()[0])
+                barco = Barco(objeto['x'], objeto['y'], self)
                 barco.setNombre(objeto['name'])
                 self.mObjetos[objeto['y']][objeto['x']] = barco
 
@@ -607,7 +607,7 @@ class Isla:
         Darwin.setNombre("Darwin")
         self.animales.append(Darwin)
 
-        barco = Barco(self.ancho // 2,self.altura - 1,self,self.getAldea().getPersonas()[0])
+        barco = Barco(self.ancho // 2,self.altura - 1,self)
         self.agregarObjeto(self.ancho // 2,self.altura - 1,barco)
 
     def getArbolesTalados(self):
@@ -674,7 +674,7 @@ class Isla:
         explorador.setIsla(self)
         self.mMovible[self.altura - 2][self.ancho // 2] = explorador
         explorador.descubrir()
-        self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2,self.altura - 1, self,explorador)
+        self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2,self.altura - 1, self)
 
     def getNombre(self):
         return self.nombre

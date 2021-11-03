@@ -14,12 +14,12 @@ import random
 
 class Barco(Objeto):
     
-    def __init__(self,x,y,isla,explorador):
+    def __init__(self,x,y,isla):
         Objeto.__init__(self,x,y,isla)
         self.image = Helper.BARCO
         self.nombre = "Barco de travesias"
         self.roto = True
-        self.explorador = explorador
+        self.explorador =  None
 
     def toJson(self):
         return {
@@ -55,13 +55,37 @@ class Barco(Objeto):
 
         forIsla = 0
         for isla in listaIslas:
-            botonActivaddo = isla[0] != self.isla.getNombre()
-            islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador,botonActivaddo)
+            if forIsla < 2:
+                botonActivaddo = isla[0] != self.isla.getNombre()
+                islaObjeto = IslaObjeto(isla[0], isla[1],self.explorador,botonActivaddo)
 
-            uiIsla = islaObjeto.getUI(150 + 250 * forIsla, 150,lista,ui,clickeables)
-            for uiObject in uiIsla:
+                uiIsla = islaObjeto.getUI(150 + 235 * forIsla, 150,lista,ui,clickeables)
+                for uiObject in uiIsla:
+                    info.append(uiObject)
+
+                forIsla += 1
+
+
+        personas = []
+        for persona in ui.getControlador().getIsla().getAldea().getPersonas():
+
+            personas.append(persona)
+
+        forExplorador = 0
+        for explorador in personas:
+            exploradorObjeto = ExploradorObjeto(explorador)
+
+            uiExplorador = exploradorObjeto.getUI(600, 160 + 160 * forExplorador, lista, listaUI, ui, clickeables, self)
+            for uiObject in uiExplorador:
                 info.append(uiObject)
 
-            forIsla += 1
+            forExplorador += 1
 
         return info
+
+    def getExplorador(self):
+        return self.explorador
+
+    def setExplorador(self,explorador):
+        self.explorador = explorador
+
