@@ -12,6 +12,7 @@ class Movible(Objeto):
         self.moves = []
         self.directionX = 0
         self.directionY = 0
+        self.muerto = False
         
  
 

@@ -87,4 +87,10 @@ class Aldea:
 
         return False
 
+    def tieneComida(self):
+        return self.carne >= 1
+
+    def conseguirComida(self):
+        self.carne -= 1
+
     

@@ -69,6 +69,7 @@ class Helper:
         else:
             pass
     menumusic= True
+
     def pauseMusic():
         pygame.mixer.music.pause()
         menumusic= True

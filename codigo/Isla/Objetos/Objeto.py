@@ -101,4 +101,7 @@ class Objeto:
     def getIsla(self):
         return self.isla
 
+    def isCasa(self):
+        return False
+
     

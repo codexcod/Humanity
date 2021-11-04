@@ -1,3 +1,5 @@
+import math
+
 from codigo.Isla.Movibles.Movible import Movible
 from codigo.Isla.Helper import Helper
 from codigo.Camara.UI.CloseUI import CloseUI
@@ -35,6 +37,7 @@ class Persona(Movible):
             'name': self.nombre,
             'edad': self.edad,
             'hambre': self.hambre,
+            'vida': self.vida,
             'x': self.x,
             'y': self.y,
             'inventario': [],
@@ -104,24 +107,32 @@ class Persona(Movible):
         info.append(UIObject(fondoHambre, 200, 450))
 
         rellenoHambre = Helper.getSurface(180, 5)
-        rellenoHambre.fill((187, 45, 0), None, 0)
+        rellenoHambre.fill((128, 64, 0), None, 0)
         info.append(UIObject(rellenoHambre, 210, 455))
 
         hambre = Helper.getSurface(self.hambre * 1.8, 5)
-        hambre.fill((57, 12, 2), None, 0)
+        hambre.fill((250,128,114), None, 0)
         info.append(UIObject(hambre, 210, 455))
+
+        fuente = Helper.FUENTE(14)
+        textoHambre = fuente.render("Hambre :", True, (255, 255, 255), None)
+        info.append(UIObject(textoHambre,130,447))
 
         fondoVida = Helper.getSurface(200, 15)
         fondoVida.fill((102, 51, 0), None, 0)
-        info.append(UIObject(fondoVida, 200, 170))
+        info.append(UIObject(fondoVida, 200, 420))
 
         rellenoVida = Helper.getSurface(180, 5)
-        rellenoVida.fill((187, 45, 0), None, 0)
-        info.append(UIObject(rellenoVida, 210, 175))
+        rellenoVida.fill((128, 64, 0), None, 0)
+        info.append(UIObject(rellenoVida, 210, 425))
 
         vida = Helper.getSurface(self.vida * 1.8, 5)
         vida.fill((0, 187, 45), None, 0)
-        info.append(UIObject(vida, 210, 175))
+        info.append(UIObject(vida, 210, 425))
+
+        textoVida = fuente.render("Vida :", True, (255, 255, 255), None)
+        info.append(UIObject(textoVida, 140, 417))
+
         forPosX = 0
         forPosY = 0
         for objeto in self.inventario:
@@ -259,6 +270,9 @@ class Persona(Movible):
                         else:
                             self.guardarRecursos()
 
+                        if self.tieneHambre() and self.getAldea().tieneComida():
+                            self.guardarRecursos()
+
 
         else:
             self.trabajar()
@@ -276,12 +290,11 @@ class Persona(Movible):
     def tieneInventarioLleno(self):
         return len(self.inventario) >= 80
 
+    def tieneHambre(self):
+        return self.hambre <= 20
+
     def getTarea(self):
         return self.busquedas[self.busqueda]
-
-    def buscarRecursos(self):
-        if not self.getTarea()():
-            self.agregarMovimientos(5)
 
     def guardarRecursos(self):
         self.accionarObjeto(self.getCasa())
@@ -297,11 +310,22 @@ class Persona(Movible):
             herramienta = Mano()
 
         # Si esta trabajando que le modifiquen la imagen
-        if objeto.getNombre()[:4] == "Casa":
+        if objeto.isCasa():
             if self.tieneAlgoEnElInventario():
                 self.trabajando = True
                 self.tiempoTrabajando = len(self.inventario)
                 self.setImage(Helper.PERSONA_TRABAJANDO)
+
+            if self.hambre < 100:
+                self.trabajando = True
+                if self.tieneAlgoEnElInventario():
+                    self.tiempoTrabajando += math.ceil((100 - self.hambre) / 10)
+
+                else:
+                    self.tiempoTrabajando = math.ceil((100 - self.hambre) / 10)
+
+                self.setImage(Helper.PERSONA_TRABAJANDO)
+
 
 
         elif not objeto.getTrabajo(herramienta) == 0:
@@ -328,11 +352,15 @@ class Persona(Movible):
                 movibleTrabajado = self.isla.getMapaMovible()[self.accionar[1].getY()][self.accionar[1].getX()]
 
                 if not objetoTrabajado is None:
-                    if objetoTrabajado.getNombre()[:4] == "Casa":
+                    if objetoTrabajado.isCasa():
                         # Si esta "trabajando" en la aldea, que guarde su inventario en la aldea
+                        if self.tieneAlgoEnElInventario():
+                            if objetoTrabajado.getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1]):
+                                self.inventario.pop(len(self.inventario) - 1)
 
-                        if objetoTrabajado.getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1]):
-                            self.inventario.pop(len(self.inventario) - 1)
+                        elif self.hambre < 100 and objetoTrabajado.getAldea().tieneComida():
+                            objetoTrabajado.getAldea().conseguirComida()
+                            self.sumarHambre(10)
 
                 if self.tiempoTrabajando == 0:
                     # Si termino de trabajar
@@ -465,17 +493,11 @@ class Persona(Movible):
         self.accionar = [False, 0, 0]
         self.moves.clear()
 
-    def getHambre(self):
-        return self.hambre
-
-    def setHambre(self, hambre):
-        self.hambre = hambre
-
-    def restarHambre(self, hambre, vida):
+    def restarHambre(self, hambre):
         self.hambre -= hambre
-        if self.hambre <= 0:
-            self.vida -= vida
-            self.hambre = 3
+        if self.hambre < 1:
+            self.restarVida(hambre)
+            self.hambre = 1
 
     def sumarVida(self, vida):
         self.vida -= vida
@@ -483,7 +505,7 @@ class Persona(Movible):
             self.vida += vida
 
     def cicloVida(self):
-        self.restarHambre(1, 1)
+        self.restarHambre(1)
         self.sumarVida(1)
 
     def buscarArboles(self):
@@ -556,9 +578,6 @@ class Persona(Movible):
     def setHambre(self, hambre):
         self.hambre = hambre
 
-    def restarHambre(self, hambre):
-        self.hambre -= hambre
-
     def cicloVida(self):
         self.restarHambre(1)
 
@@ -569,3 +588,19 @@ class Persona(Movible):
                     if x > 0 and x < self.isla.getAncho():
                         if not self.isla.getMapaEstatico()[y][x].getVisibilidad():
                             self.isla.getMapaEstatico()[y][x].setVisivilidad(True)
+
+    def restarVida(self, vida):
+        self.vida -= vida
+        if self.vida <= 0:
+            self.muerto = True
+
+    def setVida(self, vida):
+        self.vida = vida
+
+    def getVida(self):
+        return self.vida
+
+    def sumarHambre(self, hambre):
+        self.hambre += hambre
+        if self.hambre > 100:
+            self.hambre = 100

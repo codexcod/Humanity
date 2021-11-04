@@ -112,3 +112,6 @@ class Casa(Objeto):
 
         elif self.numeroListaPersonas < 2:
             self.numeroListaPersonas = len(self.aldea.getPersonas()) - 2
+
+    def isCasa(self):
+        return True
