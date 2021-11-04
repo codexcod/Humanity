@@ -28,7 +28,7 @@ class IslaObjeto:
 
         font = Helper.FUENTE(24)
         textPrecio = font.render(self.isla, True, (255, 255, 255), None)
-        card.append(UIObject(textPrecio, posX +25, posY + 50))
+        card.append(UIObject(textPrecio, posX + 25, posY + 50))
 
 
         if self.botonActivado:
