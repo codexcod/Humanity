@@ -1,13 +1,13 @@
 
 class Estatico:
 
-    def __init__(self,x,y):
+    def __init__(self, x, y):
         self.visible = False
         self.image = None
         self.x = x
         self.y = y
 
-    def setVisivilidad(self,visibilidad):
+    def setVisivilidad(self, visibilidad):
         self.visible = visibilidad
 
     def getVisibilidad(self):
@@ -15,7 +15,7 @@ class Estatico:
 
     def toJson(self):
         return {
-            'x' : self.x,
-            'y' : self.y,
-            'visibilidad' : self.visible
+            'x': self.x,
+            'y': self.y,
+            'visibilidad': self.visible
         }
