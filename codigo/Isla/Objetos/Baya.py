@@ -22,5 +22,5 @@ class Baya:
     def getImage(self):
         return self.image
 
-    def setImage(self,image):
+    def setImage(self, image):
         self.image = image
