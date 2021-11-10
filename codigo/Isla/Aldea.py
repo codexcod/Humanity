@@ -29,6 +29,8 @@ class Aldea:
 
         return jsonText
 
+    def getCasa(self, posicion):
+        return self.casas[posicion]
 
     def getInteligencia(self):
         return self.inteligencia

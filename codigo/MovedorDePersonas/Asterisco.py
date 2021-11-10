@@ -18,26 +18,28 @@ class Asterisco:
         self.abierta.append(Nodo)
 
     def empiezaElCodiguito(self, inicioX, inicioY, finalX, finalY):
-        """
+        inicioNodo = Nodo(inicioY, inicioX, None)
+        self.agregarACaminito(inicioNodo)
         for y in range(abs(finalY - self.getNodoAnterior().getY())):
 
             if finalY - inicioY > 0:
                 self.agregarACaminito(
-                    nodo(self.getNodoAnterior().getY() + 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+                    Nodo(self.getNodoAnterior().getY() + 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
 
             elif finalY - inicioY < 0:
                 self.agregarACaminito(
-                    nodo(self.getNodoAnterior().getY() - 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+                    Nodo(self.getNodoAnterior().getY() - 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
 
         for x in range(abs(finalX - self.getNodoAnterior().getX())):
             if finalX - inicioX > 0:
                 self.agregarACaminito(
-                    nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() + 1, self.getNodoAnterior()))
+                    Nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() + 1, self.getNodoAnterior()))
 
             elif finalX - inicioX < 0:
                 self.agregarACaminito(
-                    nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() - 1, self.getNodoAnterior()))
-        """
+                    Nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() - 1, self.getNodoAnterior()))
+
+        '''
         inicioNodo = Nodo(inicioY, inicioX, None)
         objetivoNodo = Nodo(finalY, finalX, None)
         limite = 512
@@ -61,16 +63,11 @@ class Asterisco:
                         nodo.setPadreMia(nodoActual)
                         self.abierta.append(nodo)
 
-            '''por cada nodo al lado que hay, fijarse que se puedan caminar y que no esten ya en la lista de caminito
-            Luego nos fijamos si el camino a ese es menor al camino al q estamos o no esta en la lista de abierta,
-            entonces digo cuales cson sus valores, digo q el nodo actual es su padre y lo agrego a la lista abierta'''
-
         if vecesQueSeHizo > limite:
             self.abierta = []
             self.caminito = []
             return "No se encontraron arboles cercanos"
-
-    '''          
+    
     def devuelveCaminito(self, nodoFinal):
         nodo = nodoFinal
         while nodo is not None:

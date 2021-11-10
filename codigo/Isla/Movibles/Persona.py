@@ -7,7 +7,7 @@ from codigo.Camara.UI.UIObject import UIObject
 from codigo.Isla.Helper import Helper
 from codigo.Isla.Herramientas.Mano import Mano
 from codigo.MovedorDePersonas.Asterisco import Asterisco
-from codigo.MovedorDePersonas.Nodo import nodo
+from codigo.MovedorDePersonas.Nodo import Nodo
 
 
 class Persona(Movible):

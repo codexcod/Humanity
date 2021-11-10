@@ -1,14 +1,17 @@
 from codigo.Camara.UI.VentaObjeto import VentaObjeto
 from codigo.Isla.Helper import Helper
-from codigo.Isla.Movibles.conejo import Conejo
-from codigo.Isla.Objetos.Arbol import Arbol
+from codigo.Isla.Movibles.Persona import Persona
 from codigo.Isla.Objetos.Objeto import Objeto
 from codigo.Camara.UI.UIObject import UIObject
 from codigo.Camara.UI.ActividadUI import ActividadUI
 from codigo.Camara.UI.FlechaUI import FlechaUI
-from codigo.Isla.Objetos.Piedra import Piedra
+from codigo.Isla.Herramientas.Pico import Pico
+from codigo.Isla.Herramientas.Hacha import Hacha
+from codigo.Isla.Objetos.Casa import Casa
 from codigo.Isla.Objetos.Roca import Roca
 from codigo.Isla.Objetos.Tronco import Tronco
+from codigo.Isla.Objetos.Carne import Carne
+
 
 
 class MesaTrabajo(Objeto):
@@ -28,6 +31,13 @@ class MesaTrabajo(Objeto):
             'x' : self.x,
             'y' : self.y
         }
+    
+    def checkTable(self):
+        # muestra algo en pantalla
+        # Espera a un clic del usuario en algún tipo de objeto
+        # Crea una instancia del tipo que el usuario especificó.
+            # Casa(self.aldea, get_mouse_pos(), isla_actual)
+        return
 
     
     def getUI(self,clickeables,lista,listaUI,ui):
@@ -40,10 +50,10 @@ class MesaTrabajo(Objeto):
         font = Helper.FUENTE(30)
         textPrecio = font.render("Mesa de trabajo", True, (255, 255, 255), None)
         info.append(UIObject(textPrecio, 400,75))
+        cosas_que_necesito = {'casa': [('troncos', 40),('roca',20)]}
 
 
-
-        listaObjetos = [[Arbol(23,50,self.isla),[[Tronco(),40],[Roca(),20]]],[Piedra(23,50,self.isla),[[Tronco(),20],[Roca(),10]]],[Conejo(23,50,self.isla,50),[[Tronco(),20],[Roca(),10]]]]
+        listaObjetos = [[Casa(self.aldea, 23, 50, self.isla), [[Tronco(), 40], [Roca(), 20]]], [Pico(),[[Tronco(), 20],[Roca(), 10]]], [Persona("Juan",self.aldea, 23, 50, self.isla),[[Tronco(), 20],[Carne(), 10]]]]
 
         forVenta = 0
         for venta in listaObjetos:
