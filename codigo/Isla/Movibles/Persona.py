@@ -277,6 +277,9 @@ class Persona(Movible):
         else:
             self.trabajar()
 
+        if self.hambre > 80:
+            self.sumarVida(10)
+
     def getTarea(self):
         return self.busquedas[self.busqueda]
 
@@ -500,13 +503,14 @@ class Persona(Movible):
             self.hambre = 1
 
     def sumarVida(self, vida):
-        self.vida -= vida
-        if self.hambre > 90:
-            self.vida += vida
+        self.vida += vida
+        if self.vida > 100:
+            self.vida = 100
+        
 
     def cicloVida(self):
-        self.restarHambre(1)
-        self.sumarVida(1)
+        self.restarHambre(5)
+        
 
     def buscarArboles(self):
         for y in range(self.y - self.vision, self.y + self.vision):
