@@ -34,10 +34,14 @@ class UI:
         ui = []
         madera = pygame.surface.Surface((100, 30))
         madera.fill((128, 64, 0), None, 0)
-        ui.append(UIObject(madera,200,25))
+        ui.append(UIObject(madera,200, 25))
         font = Helper.FUENTE(10)
         textoMadera = font.render(f"{aldea.getMadera()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoMadera, 245, 35))
+        fondoObjeto = Helper.getImage(Helper.INVENTARIO, 30, 30)
+        ui.append(UIObject(fondoObjeto, 16, 25))
+        dibujoMadera = Helper.getImage(Helper.TRONCO, 20, 20)
+        ui.append(UIObject(dibujoMadera, 170, 30))
         # Rellena el UI de la madera de la aldea
 
         piedra = pygame.surface.Surface((100, 30))
@@ -46,6 +50,10 @@ class UI:
         font = Helper.FUENTE(10)
         textoPiedra = font.render(f"{aldea.getPiedra()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoPiedra, 445, 35))
+        fondoObjeto = Helper.getImage(Helper.INVENTARIO, 30, 30)
+        ui.append(UIObject(fondoObjeto, 365, 25))
+        dibujoPiedra = Helper.getImage(Helper.ROCA_OBJETO, 20, 20)
+        ui.append(UIObject(dibujoPiedra, 370, 30))
         # Rellena el UI de la piedra de la aldea
 
         carne = pygame.surface.Surface((100, 30))
@@ -54,6 +62,10 @@ class UI:
         font = Helper.FUENTE(10)
         textoCarne = font.render(f"{aldea.getCarne()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoCarne, 645, 35))
+        fondoObjeto = Helper.getImage(Helper.INVENTARIO, 30, 30)
+        ui.append(UIObject(fondoObjeto, 565, 25))
+        dibujoCarne = Helper.getImage(Helper.CARNE, 20, 20)
+        ui.append(UIObject(dibujoCarne, 570, 30))
          # Rellena el UI de la carne de la aldea
 
         fondoInteligencia = pygame.surface.Surface((800, 10))

@@ -39,7 +39,7 @@ class Helper:
     LEÑADOR = pygame.image.load('../img/leñador.png')
     FLECHA_ABAJO = pygame.image.load('../img/flecha_abajo.png')
     FLECHA_ARRIBA = pygame.image.load('../img/flecha_arriba.png')
-
+    FONDO_PIEDRA = pygame.image.load('../img/FondoPiedra.png')
     CEREBRO = pygame.image.load('../img//cerebro/cerebro.png')
     CEREBRO_MEDIANO = pygame.image.load('../img//cerebro/cerebro_mediano.png')
     CEREBRO_CHICO = pygame.image.load('../img//cerebro/cerebro_chico.png')
