@@ -54,8 +54,4 @@ class MesaTrabajo(Objeto):
 
             forVenta += 1
 
-        font = Helper.FUENTE(55)
-        textPrecio = font.render("PROXIMAMENTE", True, (255, 255, 255), None)
-        info.append(UIObject(textPrecio, 300, 250))
-
         return info

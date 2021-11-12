@@ -66,6 +66,21 @@ class UI:
         ui.append(UIObject(fondoObjeto, 565, 25))
         dibujoCarne = Helper.getImage(Helper.CARNE, 20, 20)
         ui.append(UIObject(dibujoCarne, 570, 30))
+         # Rellena el UI de la carne de la aldea}
+
+
+        fondoPersonas = Helper.getImage(Helper.FONDO_BORDO,150, 52)
+        ui.append(UIObject(fondoPersonas, 835, 13))
+
+        cabeza = Helper.getImage(Helper.CABEZA_PERSONA,100,100)
+        ui.append(UIObject(cabeza,820,-10))
+
+        cantidadPersonas = len(aldea.getPersonas())
+        cantidadMaxPersonas = len(aldea.getCasas()) * 3
+
+        fuente = Helper.FUENTE(30)
+        personas = fuente.render(f"{cantidadPersonas} / {cantidadMaxPersonas}", True, (255, 255, 255), None)
+        ui.append(UIObject(personas,900,19))
          # Rellena el UI de la carne de la aldea
 
         fondoInteligencia = pygame.surface.Surface((800, 10))

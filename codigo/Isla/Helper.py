@@ -49,8 +49,10 @@ class Helper:
 
     BARCO = pygame.image.load('../img/barco.png')
 
-
     NIEBLA = pygame.image.load('../img/niebla.png')
+
+    FONDO_BORDO = pygame.image.load('../img/fondo_bordo.png')
+    CABEZA_PERSONA = pygame.image.load('../img/cabeza_persona.png')
 
     
     def getImage(image,width,height):

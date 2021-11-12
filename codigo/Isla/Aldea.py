@@ -72,6 +72,9 @@ class Aldea:
     def getPersonas(self):
         return self.personas
 
+    def getCasas(self):
+        return self.casas
+
     def añadirObjeto(self, objeto):
         if objeto.getNombre() == "Tronco":
             self.troncos += 1
