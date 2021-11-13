@@ -1,0 +1,18 @@
+{
+    "ventas":[
+       {
+          "objeto":"casa",
+          "precio":[
+             {
+                "objeto":"roca",
+                "cantidad":20
+             },
+             {
+                "objeto":"tronco",
+                "cantidad":50
+             }
+          ],
+          "nivelNecesario":100
+       }
+    ]
+ }

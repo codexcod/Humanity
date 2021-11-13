@@ -96,4 +96,34 @@ class Aldea:
     def conseguirComida(self):
         self.carne -= 1
 
+    def getPersonasDisponibles(self):
+        return (len(self.casas) * 3) - len(self.personas) 
+
+    def hayEspacioPersonas(self):
+        return self.getPersonasDisponibles() > 0
+
+    def chequearVenta(self,venta):
+        for precio in venta.getListaPrecio():
+            if precio[0] == 'roca':
+                if precio[1] > self.piedras:
+                    return False
+            
+            elif precio[0] == 'tronco':
+                if precio[1] > self.troncos:
+                    return False
+
+        return True
+
+    def realizarVenta(self,venta):
+        for precio in venta.getListaPrecio():
+            if precio[0] == 'roca':
+                if precio[1] <= self.piedras:
+                    self.piedras -= precio[1]
+            
+            elif precio[0] == 'tronco':
+                if precio[1] <= self.troncos:
+                    self.troncos -= precio[1]
+
+        
+
     

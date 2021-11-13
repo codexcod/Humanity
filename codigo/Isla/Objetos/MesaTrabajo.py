@@ -9,6 +9,8 @@ from codigo.Camara.UI.FlechaUI import FlechaUI
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Objetos.Roca import Roca
 from codigo.Isla.Objetos.Tronco import Tronco
+from codigo.Datos.Venta import Venta
+import json
 
 
 class MesaTrabajo(Objeto):
@@ -41,14 +43,24 @@ class MesaTrabajo(Objeto):
         textPrecio = font.render("Mesa de trabajo", True, (255, 255, 255), None)
         info.append(UIObject(textPrecio, 400,75))
 
+        listaVentas = []
+        data = None
+        with open(f'Datos/Ventas.json', 'r') as file:
+            data = json.load(file)
 
+        datosVentas = data['ventas']
+        for venta in datosVentas:
+            item = Venta(venta['objeto'],venta['nivelNecesario'])
+            for precio in venta['precio']:
+                item.addListaPrecio([precio['objeto'],precio['cantidad']])
 
-        listaObjetos = [[Arbol(23,50,self.isla),[[Tronco(),40],[Roca(),20]]],[Piedra(23,50,self.isla),[[Tronco(),20],[Roca(),10]]],[Conejo(23,50,self.isla,50),[[Tronco(),20],[Roca(),10]]]]
+            listaVentas.append(item)
+        
 
         forVenta = 0
-        for venta in listaObjetos:
-            ventaObjeto = VentaObjeto(venta[0],venta[1],45)
-            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta ,150)
+        for venta in listaVentas:
+            ventaObjeto = VentaObjeto(venta)
+            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta ,150,lista,listaUI,ui,clickeables,self)
             for uiObeject in uiVenta:
                 info.append(uiObeject)
 
