@@ -39,7 +39,7 @@ class UI:
         textoMadera = font.render(f"{aldea.getMadera()}", True, (255, 255, 255), None)
         ui.append(UIObject(textoMadera, 245, 35))
         fondoObjeto = Helper.getImage(Helper.INVENTARIO, 30, 30)
-        ui.append(UIObject(fondoObjeto, 16, 25))
+        ui.append(UIObject(fondoObjeto, 165, 25))
         dibujoMadera = Helper.getImage(Helper.TRONCO, 20, 20)
         ui.append(UIObject(dibujoMadera, 170, 30))
         # Rellena el UI de la madera de la aldea

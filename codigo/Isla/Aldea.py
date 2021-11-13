@@ -1,4 +1,4 @@
-
+from codigo.Isla.Objetos.Casa import Casa
 
 class Aldea:
 
@@ -114,7 +114,7 @@ class Aldea:
 
         return True
 
-    def realizarVenta(self,venta):
+    def realizarVenta(self,venta,camara):
         for precio in venta.getListaPrecio():
             if precio[0] == 'roca':
                 if precio[1] <= self.piedras:
@@ -123,6 +123,13 @@ class Aldea:
             elif precio[0] == 'tronco':
                 if precio[1] <= self.troncos:
                     self.troncos -= precio[1]
+
+        if venta.getObjeto() == "casa":
+                casa = Casa(self,0,0,self.casas[0].getIsla())
+                camara.setObjetoMouse(casa)
+                self.agregarCasa(casa)
+
+        
 
         
 

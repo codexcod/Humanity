@@ -15,12 +15,14 @@ class BotonVenta(UIObject):
 
     def onClick(self):
         if self.aldea.chequearVenta(self.venta):
-            self.aldea.realizarVenta(self.venta)
+            self.aldea.realizarVenta(self.venta,self.ui.getControlador().getCamara())
+
             self.ui.getUIList().remove(self.lista)
 
         else:
             self.ui.generarInfoObjeto(self.objetoActualizar)
             self.ui.getUIList().remove(self.lista)
+            
 
         
 

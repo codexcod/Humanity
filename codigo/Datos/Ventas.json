@@ -5,11 +5,11 @@
           "precio":[
              {
                 "objeto":"roca",
-                "cantidad":20
+                "cantidad":40
              },
              {
                 "objeto":"tronco",
-                "cantidad":50
+                "cantidad":100
              }
           ],
           "nivelNecesario":100

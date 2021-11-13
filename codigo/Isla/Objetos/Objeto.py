@@ -104,4 +104,12 @@ class Objeto:
     def isCasa(self):
         return False
 
+    def setPosX(self,x):
+        self.x = x
+
+    def setPosY(self,y):
+        self.y = y
+
+
+
     

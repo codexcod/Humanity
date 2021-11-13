@@ -141,17 +141,21 @@ class Controlador:
 
             # En el caso que sea el izquierdo se fija si hay UI´s
             if not self.camara.getUI().hayUIActivos():
-                if not self.mouse.seleccionarMovible() is None:
 
+                if not self.camara.getObjetoMouse() is None:
+                    self.camara.colocarObjeto()
+
+                elif not self.mouse.seleccionarMovible() is None:
                     self.camara.getUI().generarInfoObjeto(self.mouse.seleccionarMovible())
 
                 elif not self.mouse.pedirInfoObjeto() is None:
                     self.camara.getUI().generarInfoObjeto(self.mouse.pedirInfoObjeto())
 
             else:
-                if self.click:
-                    self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
-                    self.click = False
+                if self.click:  
+                        self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
+
+                self.click = False
                     
 
         # En el caso que sea derecha checkea si esta seleccionado
@@ -223,3 +227,6 @@ class Controlador:
 
     def getIsla(self):
         return self.isla
+
+    def getCamara(self):
+        return self.camara

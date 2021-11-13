@@ -20,6 +20,7 @@ class Camara:
         self.mouse = None
         self.seleccionado = None
         self.controlador = None
+        self.objetoMouse = None
 
     def getSeleccionado(self):
         return self.seleccionado
@@ -87,11 +88,19 @@ class Camara:
                 if self.mouse.getObjectMousePosition()[0] == x  and self.mouse.getObjectMousePosition()[1] == y:
                     recuadro = pygame.transform.scale(Helper.RECUADRO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                     self.screen.blit(recuadro, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+                
+                if not self.objetoMouse is None:
+                    if self.mouse.getObjectMousePosition()[0] == x  and self.mouse.getObjectMousePosition()[1] == y:
+                        objeto = pygame.transform.scale(self.objetoMouse.getImage(),(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
+                        self.objetoMouse.setPosX(x)
+                        self.objetoMouse.setPosY(y)
+                        self.screen.blit(objeto, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))    
 
                 if not self.seleccionado is None:
                     if self.seleccionado.getX() == x and self.seleccionado.getY() == y:
                         select = pygame.transform.scale(Helper.SELECCIONADO,(self.zoom.getRangoZoom(), self.zoom.getRangoZoom()))
                         self.screen.blit(select, (forX * self.zoom.getRangoZoom(), forY * self.zoom.getRangoZoom()))
+
 
                 if self.mEstatico[y][x].getVisibilidad():
                     if not self.mObjetos[y][x] is None:
@@ -151,3 +160,19 @@ class Camara:
 
     def getIsla(self):
         return self.isla
+
+    def getObjetoMouse(self):
+        return self.objetoMouse
+
+    def setObjetoMouse(self,objeto):
+        self.objetoMouse = objeto
+
+    def colocarObjeto(self):
+        if not self.objetoMouse is None:
+            if self.mObjetos[self.objetoMouse.getY()][self.objetoMouse.getX()] is None and self.mMovibles[self.objetoMouse.getY()][self.objetoMouse.getX()] is None:
+                self.isla.agregarObjeto(self.objetoMouse.getX(),self.objetoMouse.getY(),self.objetoMouse)
+                self.objetoMouse = None
+
+            
+
+
