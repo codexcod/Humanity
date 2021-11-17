@@ -22,16 +22,14 @@ class MesaTrabajo(Objeto):
         self.image = Helper.MESA_DE_TRABAJO
         self.numeroDeObjetos = 2
 
-
     def toJson(self):
         return {
-            'objeto' : 'Mesa de trabajo',
-            'name' : self.nombre,
-            'x' : self.x,
-            'y' : self.y
+            'objeto': 'Mesa de trabajo',
+            'name': self.nombre,
+            'x': self.x,
+            'y': self.y
         }
 
-    
     def getUI(self, clickeables, lista, listaUI, ui):
         info = []
 
@@ -55,12 +53,11 @@ class MesaTrabajo(Objeto):
                 item.addListaPrecio([precio['objeto'], precio['cantidad']])
 
             listaVentas.append(item)
-        
 
         forVenta = 0
         for venta in listaVentas:
             ventaObjeto = VentaObjeto(venta)
-            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta , 150, lista, listaUI, ui, clickeables, self)
+            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta, 150, lista, listaUI, ui, clickeables, self)
             for uiObeject in uiVenta:
                 info.append(uiObeject)
 

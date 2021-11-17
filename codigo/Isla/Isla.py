@@ -18,6 +18,8 @@ from codigo.Isla.Objetos.MesaTrabajo import MesaTrabajo
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Movibles.conejo import Conejo
 from codigo.Isla.Movibles.Vaca import Vaca
+from codigo.Isla.Objetos.Muro import Muro
+
 import json
 
 from codigo.Isla.Objetos.Roca import Roca
@@ -217,6 +219,11 @@ class Isla:
                 barco.setNombre(objeto['name'])
                 self.mObjetos[objeto['y']][objeto['x']] = barco
 
+            elif objeto['objeto'] == 'Muro':
+                muro = Muro(objeto['x'], objeto['y'], self)
+                muro.setNombre(objeto['name'])
+                self.mObjetos[objeto['y']][objeto['x']] = muro
+
 
     def cargarMapaConArchivo(self,archivo):
         self.image = Helper.ARBOL
@@ -409,7 +416,7 @@ class Isla:
         with open(partida, 'w') as file:
             json.dump(jsonText, file, indent=4)
 
-    def toJson(self,partida):
+    def toJson(self, partida):
         jsonText = {}
         jsonText['nombre'] = self.nombre
 

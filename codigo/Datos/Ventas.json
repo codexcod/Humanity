@@ -1,28 +1,28 @@
 {
     "ventas":[
+        {
+         "objeto":"muro",
+         "precio":[
+            {
+               "objeto":"roca",
+               "cantidad":1
+            }
+         ],
+         "nivelNecesario":50
+        },
        {
           "objeto":"casa",
           "precio":[
              {
                 "objeto":"roca",
-                "cantidad":40
+                "cantidad":1
              },
              {
                 "objeto":"tronco",
-                "cantidad":100
+                "cantidad":1
              }
           ],
           "nivelNecesario":100
-       },
-       {
-         "objeto":"muro",
-         "precio":[
-            {
-               "objeto":"roca",
-               "cantidad":20
-            }
-         ],
-         "nivelNecesario":50
-      }
+       }
     ]
  }

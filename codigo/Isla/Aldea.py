@@ -126,7 +126,7 @@ class Aldea:
                     self.troncos -= precio[1]
 
         if venta.getObjeto() == "casa":
-            muro = Muro(self, 0, 0, self.casas[0].getIsla())
+            muro = Muro(0, 0, self.casas[0].getIsla())
             camara.setObjetoMouse(muro)
 
         if venta.getObjeto() == "muro":

@@ -14,19 +14,17 @@ class Arbol(Objeto):
         self.troncos = 0
         self.talado = False
         self.tiempoCrecimiento = 0
-        
 
     def toJson(self):
         return {
-            'objeto' : 'Arbol',
-            'name' : self.nombre,
-            'troncos' : self.troncos,
-            'talado' : self.talado,
-            'tiempoCrecimiento' : self.tiempoCrecimiento,
-            'x' : self.x,
-            'y' : self.y
+            'objeto': 'Arbol',
+            'name': self.nombre,
+            'troncos': self.troncos,
+            'talado': self.talado,
+            'tiempoCrecimiento': self.tiempoCrecimiento,
+            'x': self.x,
+            'y': self.y
         }
-
 
     def setTiempoCrecimiento(self, tiempoCrecimiento):
         self.tiempoCrecimiento = tiempoCrecimiento
@@ -48,9 +46,8 @@ class Arbol(Objeto):
     def setTalado(self, talado):
         self.talado = talado
 
-    def onClick(self,herramienta):
+    def onClick(self, herramienta):
         self.talarArbol()
-
 
     def talarArbol(self):
         # Cuando el arbol es talado
@@ -63,13 +60,12 @@ class Arbol(Objeto):
             self.troncos = 1
             self.isla.getArbolesTalados().append(self)
 
-            
+
         else:
             # Si talan el arbol pero ya estaba talado, que lo eliminen
             self.isla.getArbolesTalados().remove(self)
             self.isla.getMapaObjetos()[self.y][self.x] = None
 
-    
     def avanzarTiempo(self):
         # Avanza el tiempo interno del arbol
         if self.talado:
@@ -79,31 +75,29 @@ class Arbol(Objeto):
                 if self.tiempoCrecimiento == 25:
                     self.tiempoCrecimiento = 0
                     self.crecerArbol()
-                    self.isla.getArbolesTalados().remove(self)      
-
+                    self.isla.getArbolesTalados().remove(self)
 
     def crecerArbol(self):
         # Que crezca el arbol
         self.setNombre("Arbol")
         self.setTroncos(random.randrange(5, 20))
         if self.getTroncos() > 15:
-            self.setImage(Helper.ARBOL_GRANDE)      
+            self.setImage(Helper.ARBOL_GRANDE)
         else:
             self.setImage(Helper.ARBOL)
 
         self.setCaminable(False)
         self.velocidad = 1
         self.talado = False
-              
-            
+
     def getInfoStr(self):
         result = f"""Objeto : {self.nombre}
 Troncos : {self.troncos}"""
         return result
 
-    def getTrabajo(self,herramienta):
+    def getTrabajo(self, herramienta):
         if herramienta.getDañoArbol() > 0:
-            return (self.troncos * 10) // herramienta.getDañoArbol() 
+            return (self.troncos * 10) // herramienta.getDañoArbol()
 
         return (self.troncos * 10)
 
@@ -116,4 +110,3 @@ Troncos : {self.troncos}"""
 
     def isArbol(self):
         return True
-

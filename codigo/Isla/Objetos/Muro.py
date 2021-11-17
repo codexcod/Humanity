@@ -11,13 +11,12 @@ class Muro(Objeto):
         self.image = Helper.MURO
         self.vida = 50
 
-
     def toJson(self):
         return {
-            'objeto' : 'Muro',
-            'name' : self.nombre,
-            'x' : self.x,
-            'y' : self.y
+            'objeto': 'Muro',
+            'name': self.nombre,
+            'x': self.x,
+            'y': self.y
         }
 
     def getInfoStr(self):
@@ -25,6 +24,5 @@ class Muro(Objeto):
 Vida : {self.vida}
 """
         return result
-
 
 
