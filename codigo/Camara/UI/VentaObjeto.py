@@ -32,7 +32,7 @@ class VentaObjeto:
     def getListaPrecios(self):
         return self.precio
 
-    def getUI(self,posX,posY,lista,listaUI,ui,clickeables,objetoActualizar):
+    def getUI(self, posX, posY, lista, listaUI, ui, clickeables, objetoActualizar):
         card = []
 
         fondoObjeto = Helper.getSurface(200, 350)
@@ -43,13 +43,13 @@ class VentaObjeto:
         textoInteligencia = font.render(f"Inteligencia : {self.nivelNecesario}", True, (255, 255, 255), None)
         card.append(UIObject(textoInteligencia ,posX + 25,posY + 15))
 
-        imagenObjeto = Helper.getImage(self.getImageObjeto(),100,100)
-        card.append(UIObject(imagenObjeto,posX + 50,posY + 50))
+        imagenObjeto = Helper.getImage(self.getImageObjeto(), 100, 100)
+        card.append(UIObject(imagenObjeto,posX + 50, posY + 50))
 
         forPrecio = 0
         font = Helper.FUENTE(15)
         for precio in self.precio:
-            imagenPrecio = Helper.getImage(self.getImagePrecio(precio[0]),30,30)
+            imagenPrecio = Helper.getImage(self.getImagePrecio(precio[0]), 30, 30)
             card.append(UIObject(imagenPrecio, posX + 25 + 60 * forPrecio, posY + 190))
 
             textPrecio = font.render(f"{precio[1]}", True, (255, 255, 255), None)
@@ -57,7 +57,7 @@ class VentaObjeto:
 
             forPrecio += 1
 
-        botonVenta = BotonVenta(None, posX + 20, posY + 275,lista,ui,self.venta,objetoActualizar)
+        botonVenta = BotonVenta(None, posX + 20, posY + 275,lista,ui,self.venta, objetoActualizar)
         for uiObject in botonVenta.getUI(clickeables):
             card.append(uiObject)
 

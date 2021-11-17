@@ -1,6 +1,6 @@
 class Venta:
 
-    def __init__(self,objeto,nivelNecesario):
+    def __init__(self, objeto, nivelNecesario):
         self.objeto = objeto
         self.nivelNecesario = nivelNecesario
         self.listaPrecio = []

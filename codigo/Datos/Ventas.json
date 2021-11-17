@@ -14,5 +14,15 @@
           ],
           "nivelNecesario":100
        }
+       {
+         "objeto":"muro",
+         "precio":[
+            {
+               "objeto":"roca",
+               "cantidad":20
+            }
+         ],
+         "nivelNecesario":50
+      }
     ]
  }

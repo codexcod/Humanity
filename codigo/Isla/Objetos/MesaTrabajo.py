@@ -32,7 +32,7 @@ class MesaTrabajo(Objeto):
         }
 
     
-    def getUI(self,clickeables,lista,listaUI,ui):
+    def getUI(self, clickeables, lista, listaUI, ui):
         info = []
 
         fondo = Helper.getSurface(800, 500)
@@ -41,7 +41,7 @@ class MesaTrabajo(Objeto):
 
         font = Helper.FUENTE(30)
         textPrecio = font.render("Mesa de trabajo", True, (255, 255, 255), None)
-        info.append(UIObject(textPrecio, 400,75))
+        info.append(UIObject(textPrecio, 400, 75))
 
         listaVentas = []
         data = None
@@ -50,9 +50,9 @@ class MesaTrabajo(Objeto):
 
         datosVentas = data['ventas']
         for venta in datosVentas:
-            item = Venta(venta['objeto'],venta['nivelNecesario'])
+            item = Venta(venta['objeto'], venta['nivelNecesario'])
             for precio in venta['precio']:
-                item.addListaPrecio([precio['objeto'],precio['cantidad']])
+                item.addListaPrecio([precio['objeto'], precio['cantidad']])
 
             listaVentas.append(item)
         
@@ -60,7 +60,7 @@ class MesaTrabajo(Objeto):
         forVenta = 0
         for venta in listaVentas:
             ventaObjeto = VentaObjeto(venta)
-            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta ,150,lista,listaUI,ui,clickeables,self)
+            uiVenta = ventaObjeto.getUI(150 + 250 * forVenta , 150, lista, listaUI, ui, clickeables, self)
             for uiObeject in uiVenta:
                 info.append(uiObeject)
 

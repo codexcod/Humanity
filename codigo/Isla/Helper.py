@@ -44,6 +44,7 @@ class Helper:
     CEREBRO_MEDIANO = pygame.image.load('../img//cerebro/cerebro_mediano.png')
     CEREBRO_CHICO = pygame.image.load('../img//cerebro/cerebro_chico.png')
     CEREBRO_DIMINUTO = pygame.image.load('../img//cerebro/cerebro_diminuto.png')
+    MURO = pygame.image.load('../img/muro.jpg')
 
     MESA_DE_TRABAJO = pygame.image.load('../img/mesa_de_trabajo.png')
 

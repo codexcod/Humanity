@@ -102,7 +102,7 @@ class Aldea:
     def hayEspacioPersonas(self):
         return self.getPersonasDisponibles() > 0
 
-    def chequearVenta(self,venta):
+    def chequearVenta(self, venta):
         for precio in venta.getListaPrecio():
             if precio[0] == 'roca':
                 if precio[1] > self.piedras:
@@ -114,7 +114,7 @@ class Aldea:
 
         return True
 
-    def realizarVenta(self,venta,camara):
+    def realizarVenta(self, venta, camara):
         for precio in venta.getListaPrecio():
             if precio[0] == 'roca':
                 if precio[1] <= self.piedras:
@@ -125,9 +125,9 @@ class Aldea:
                     self.troncos -= precio[1]
 
         if venta.getObjeto() == "casa":
-                casa = Casa(self,0,0,self.casas[0].getIsla())
-                camara.setObjetoMouse(casa)
-                self.agregarCasa(casa)
+            casa = Casa(self,0,0,self.casas[0].getIsla())
+            camara.setObjetoMouse(casa)
+            self.agregarCasa(casa)
 
         
 

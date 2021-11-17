@@ -47,6 +47,4 @@ class Mouse:
         x = posX + math.floor(mousePosition[0] / self.camara.getZoom().getRangoZoom())
         y = posY + math.floor(mousePosition[1] / self.camara.getZoom().getRangoZoom())
 
-    
-        
         return x,y

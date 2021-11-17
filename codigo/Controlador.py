@@ -59,7 +59,7 @@ class Controlador:
                         self.keyEvent(event.key)
 
                     if event.type == screenUpdate:
-                        self.screenUpdate()
+                        self.moviblesUpdate()
 
                     if event.type == arbolesUpdate:
                         self.arbolesUpdate()
@@ -85,11 +85,10 @@ class Controlador:
         for arbol in self.isla.getArbolesTalados():
             arbol.avanzarTiempo()
 
-    def screenUpdate(self):
+    def moviblesUpdate(self):
         """ Cuando se actualiza la pantalla, se movera todas las personas y animales """
         self.click = True
         for persona in self.aldea.getPersonas():
-
             persona.makeMoves()
 
         for animal in self.camara.getIsla().getAnimales():
