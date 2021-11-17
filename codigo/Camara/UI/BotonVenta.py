@@ -26,7 +26,7 @@ class BotonVenta(UIObject):
 
         boton = Helper.getSurface(150, 50)
 
-        if self.venta.getNivelNecesario() <= self.aldea.getInteligencia() and self.aldea.chequearVenta(self.venta):
+        if self.aldea.chequearVenta(self.venta):
             boton.fill((0, 190, 57), None, 0)
 
         else:

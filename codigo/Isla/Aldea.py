@@ -113,6 +113,9 @@ class Aldea:
                 if precio[1] > self.troncos:
                     return False
 
+        if venta.getNivelNecesario() > self.getInteligencia():
+            return False
+
         return True
 
     def realizarVenta(self, venta, camara):
@@ -125,11 +128,11 @@ class Aldea:
                 if precio[1] <= self.troncos:
                     self.troncos -= precio[1]
 
-        if venta.getObjeto() == "casa":
+        if venta.getObjeto() == "muro":
             muro = Muro(0, 0, self.casas[0].getIsla())
             camara.setObjetoMouse(muro)
 
-        if venta.getObjeto() == "muro":
+        elif venta.getObjeto() == "casa":
             casa = Casa(self, 0, 0, self.casas[0].getIsla())
             camara.setObjetoMouse(casa)
             self.agregarCasa(casa)
