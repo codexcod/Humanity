@@ -1,4 +1,6 @@
 from codigo.Isla.Objetos.Casa import Casa
+from codigo.Isla.Objetos.Muro import Muro
+
 
 class Aldea:
 
@@ -14,14 +16,14 @@ class Aldea:
 
     def toJson(self):
         jsonText = {
-            'objeto' : 'Aldea',
-            'name' : self.nombre,
-            'piedras' : self.piedras,
+            'objeto': 'Aldea',
+            'name': self.nombre,
+            'piedras': self.piedras,
             'troncos': self.troncos,
             'oro': self.oro,
             'carne': self.carne,
-            'casas' : [],
-            'inteligencia' : self.inteligencia
+            'casas': [],
+            'inteligencia': self.inteligencia
         }
 
         for casa in self.casas:
@@ -29,14 +31,13 @@ class Aldea:
 
         return jsonText
 
-
     def getInteligencia(self):
         return self.inteligencia
 
-    def setInteligencia(self,inteligencia):
+    def setInteligencia(self, inteligencia):
         self.inteligencia = inteligencia
 
-    def sumarInteligencia(self,inteligencia):
+    def sumarInteligencia(self, inteligencia):
         self.inteligencia += inteligencia
 
     def getNombre(self):
@@ -97,7 +98,7 @@ class Aldea:
         self.carne -= 1
 
     def getPersonasDisponibles(self):
-        return (len(self.casas) * 3) - len(self.personas) 
+        return (len(self.casas) * 3) - len(self.personas)
 
     def hayEspacioPersonas(self):
         return self.getPersonasDisponibles() > 0
@@ -107,7 +108,7 @@ class Aldea:
             if precio[0] == 'roca':
                 if precio[1] > self.piedras:
                     return False
-            
+
             elif precio[0] == 'tronco':
                 if precio[1] > self.troncos:
                     return False
@@ -119,18 +120,17 @@ class Aldea:
             if precio[0] == 'roca':
                 if precio[1] <= self.piedras:
                     self.piedras -= precio[1]
-            
+
             elif precio[0] == 'tronco':
                 if precio[1] <= self.troncos:
                     self.troncos -= precio[1]
 
         if venta.getObjeto() == "casa":
-            casa = Casa(self,0,0,self.casas[0].getIsla())
+            muro = Muro(self, 0, 0, self.casas[0].getIsla())
+            camara.setObjetoMouse(muro)
+
+        if venta.getObjeto() == "muro":
+            casa = Casa(self, 0, 0, self.casas[0].getIsla())
             camara.setObjetoMouse(casa)
             self.agregarCasa(casa)
 
-        
-
-        
-
-    

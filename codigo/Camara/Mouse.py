@@ -20,13 +20,10 @@ class Mouse:
     def seleccionarMovible(self):
         x = self.getObjectMousePosition()[0]
         y = self.getObjectMousePosition()[1]
-        
+
         return self.camara.getMapaMovible()[y][x]
 
-
-
-
-    def clickearPorPoscicion(self,objetosClickeables):
+    def clickearPorPoscicion(self, objetosClickeables):
         # Clickea 
         mousePosition = pygame.mouse.get_pos()
         x = math.ceil(mousePosition[0])
@@ -37,7 +34,6 @@ class Mouse:
                     objetosClickeables.clear()
                     object.onClick()
 
-
     def getObjectMousePosition(self):
         # Averigua donde esta el mouse en el mapa
         posX = self.camara.getPosX() - math.floor(self.camara.getZoom().getLimiteXFloat())
@@ -47,4 +43,4 @@ class Mouse:
         x = posX + math.floor(mousePosition[0] / self.camara.getZoom().getRangoZoom())
         y = posY + math.floor(mousePosition[1] / self.camara.getZoom().getRangoZoom())
 
-        return x,y
+        return x, y

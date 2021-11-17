@@ -12,7 +12,7 @@ class Venta:
         return self.nivelNecesario
 
     def getListaPrecio(self):
-        return self.listaPrecio        
+        return self.listaPrecio
 
-    def addListaPrecio(self,precio):
+    def addListaPrecio(self, precio):
         self.listaPrecio.append(precio)

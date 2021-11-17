@@ -5,7 +5,7 @@ from codigo.Isla.Helper import Helper
 
 class VentaObjeto:
 
-    def __init__(self,venta):
+    def __init__(self, venta):
         self.venta = venta
         self.objeto = venta.getObjeto()
         self.precio = venta.getListaPrecio()
@@ -15,14 +15,17 @@ class VentaObjeto:
         if self.objeto == 'casa':
             return Helper.CASA
 
+        elif self.objeto == 'muro':
+            return Helper.MURO
+
         return Helper.ARBOL
 
-    def getImagePrecio(self,objeto):
+    def getImagePrecio(self, objeto):
         if objeto == 'roca':
             return Helper.ROCA_OBJETO
 
         elif objeto == 'tronco':
-            return Helper.TRONCO    
+            return Helper.TRONCO
 
         return Helper.SELECCIONADO
 
@@ -41,10 +44,10 @@ class VentaObjeto:
 
         font = Helper.FUENTE(20)
         textoInteligencia = font.render(f"Inteligencia : {self.nivelNecesario}", True, (255, 255, 255), None)
-        card.append(UIObject(textoInteligencia ,posX + 25,posY + 15))
+        card.append(UIObject(textoInteligencia, posX + 25, posY + 15))
 
         imagenObjeto = Helper.getImage(self.getImageObjeto(), 100, 100)
-        card.append(UIObject(imagenObjeto,posX + 50, posY + 50))
+        card.append(UIObject(imagenObjeto, posX + 50, posY + 50))
 
         forPrecio = 0
         font = Helper.FUENTE(15)
@@ -57,7 +60,7 @@ class VentaObjeto:
 
             forPrecio += 1
 
-        botonVenta = BotonVenta(None, posX + 20, posY + 275,lista,ui,self.venta, objetoActualizar)
+        botonVenta = BotonVenta(None, posX + 20, posY + 275, lista, ui, self.venta, objetoActualizar)
         for uiObject in botonVenta.getUI(clickeables):
             card.append(uiObject)
 

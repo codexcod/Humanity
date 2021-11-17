@@ -3,7 +3,7 @@ from codigo.Isla.Objetos.Objeto import Objeto
 from codigo.Isla.Objetos.Roca import Roca
 
 
-class Piedra(Objeto):
+class Muro(Objeto):
 
     def __init__(self, x, y, isla):
         Objeto.__init__(self, x, y, isla)
