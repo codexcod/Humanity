@@ -5,7 +5,7 @@ class Mano(Herramienta):
 
     def __init__(self):
         Herramienta.__init__(self)
-        self.dañoPiedra = 0
+        self.dañoPiedra = 10
         self.dañoArbol = 0
         self.dañoPersona = 1
         self.dañoAnimal = 1

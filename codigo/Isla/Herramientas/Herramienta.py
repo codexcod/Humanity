@@ -8,7 +8,6 @@ class Herramienta:
         self.dañoAnimal = 0
         self.dañoPlanta = 0
         self.dañoPersona = 0
-        self.dañoMuros = 0
         self.rota = False
         self.image = None
 

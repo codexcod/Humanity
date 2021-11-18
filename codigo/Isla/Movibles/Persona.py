@@ -111,12 +111,12 @@ class Persona(Movible):
         info.append(UIObject(rellenoHambre, 210, 455))
 
         hambre = Helper.getSurface(self.hambre * 1.8, 5)
-        hambre.fill((250,128,114), None, 0)
+        hambre.fill((250, 128, 114), None, 0)
         info.append(UIObject(hambre, 210, 455))
 
         fuente = Helper.FUENTE(14)
         textoHambre = fuente.render("Hambre :", True, (255, 255, 255), None)
-        info.append(UIObject(textoHambre,130,447))
+        info.append(UIObject(textoHambre, 130, 447))
 
         fondoVida = Helper.getSurface(200, 15)
         fondoVida.fill((102, 51, 0), None, 0)
@@ -506,11 +506,9 @@ class Persona(Movible):
         self.vida += vida
         if self.vida > 100:
             self.vida = 100
-        
 
     def cicloVida(self):
         self.restarHambre(5)
-        
 
     def buscarArboles(self):
         for y in range(self.y - self.vision, self.y + self.vision):

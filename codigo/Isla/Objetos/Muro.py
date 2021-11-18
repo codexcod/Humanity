@@ -11,6 +11,7 @@ class Muro(Objeto):
         self.image = Helper.MURO
         self.vida = 50
 
+
     def toJson(self):
         return {
             'objeto': 'Muro',
@@ -24,5 +25,16 @@ class Muro(Objeto):
 Vida : {self.vida}
 """
         return result
+
+    def getTrabajo(self, herramienta):
+        if herramienta.getDañoPiedra() > 0:
+            return (self.vida * 10) // herramienta.getDañoPiedra()
+
+    def destruirMuro(self):
+        self.isla.getMapaObjetos()[self.y][self.x] = None
+
+    def onClick(self, herramienta):
+        self.getTrabajo(herramienta)
+        self.destruirMuro()
 
 

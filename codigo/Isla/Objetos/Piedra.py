@@ -45,7 +45,7 @@ Piedras : {self.piedras}
 """
         return result
 
-    def getTrabajo(self,herramienta):
+    def getTrabajo(self, herramienta):
         if herramienta.getDañoPiedra() > 0:
             return (self.piedras * 10) // herramienta.getDañoPiedra()
 
@@ -62,7 +62,7 @@ Piedras : {self.piedras}
         self.isla.getMapaObjetos()[self.y][self.x] = None
 
 
-    def onClick(self,herramienta):
+    def onClick(self, herramienta):
         self.picarPiedra()
 
     def isPiedra(self):
