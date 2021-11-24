@@ -685,3 +685,26 @@ class Isla:
 
     def getNombre(self):
         return self.nombre
+
+    def getCasillaDispnible(self,x,y):
+        while (not self.getMapaObjetos()[y][x] is None) and (not self.getMapaMovible()[y][x] is None):
+            if self.estaDentroDelMapa(x,y + 1):
+                y += 1
+                pass
+
+            if self.estaDentroDelMapa(x, y - 1):
+                y -= 1
+                pass
+
+            if self.estaDentroDelMapa(x - 1, y):
+                x -= 1
+                pass
+
+            if self.estaDentroDelMapa(x + 1, y):
+                x += 1
+                pass
+
+        return x, y
+
+    def estaDentroDelMapa(self,x,y):
+        return not (x + 1 >= self.isla.getAncho() or x - 1 <= 0) and not (y + 1 >= self.isla.getAltura() or y - 1 <= 0)

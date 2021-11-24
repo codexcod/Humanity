@@ -166,6 +166,13 @@ class Persona(Movible):
         asterisco = Asterisco(self.isla)
         asterisco.empiezaElCodiguito(self.x, self.y, posX, posY)
         listaDeMovimientos = asterisco.getCaminito()
+        print(f"""x {self.x}
+                y {self.y}
+
+                posX {self.isla.getCasillaDispnible(posX,posY)[0]}
+
+                posY {self.isla.getCasillaDispnible(posX,posY)[1]}""")
+
         # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
         for nodo in listaDeMovimientos:
 
