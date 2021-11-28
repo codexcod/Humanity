@@ -74,7 +74,7 @@ Vida : {self.vida}"""
     def matar(self):
         self.muerto = True
         self.setImage(Helper.VACA(4))
-        self.setNombre("Jabali Muerta")
+        self.setNombre("Jabali Muerto")
 
     def buscarPersonas(self):
         for y in range(self.y - self.vision, self.y + self.vision):
