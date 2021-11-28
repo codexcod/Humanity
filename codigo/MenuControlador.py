@@ -13,14 +13,12 @@ from codigo.Camara.Camara import Camara
 from codigo.Camara.Mouse import Mouse
 
 
-
-class ControladorMenu():
+class ControladorMenu:
 
     def __init__(self):
         self.ancho = 640
         self.alto = 480
         self.screen = pygame.display.set_mode((self.ancho, self.alto))
-
 
     def crearObjetos(self):
         ancho = self.getAncho()
@@ -40,19 +38,16 @@ class ControladorMenu():
         self.botones = [self.botonEmpezar, self.botonMusicaOn, self.botonMusicaOff]
 
         # Boton de error
-        self.botonAceptar = Button((ancho / 2 + 45, alto / 2 + 45), 24, "Aceptar", self.getScreen(), "black", "black", "grey")
+        self.botonAceptar = Button((ancho / 2 + 45, alto / 2 + 45), 24, "Aceptar", self.getScreen(), "black", "black",
+                                   "grey")
 
         self.popUp = PopUp(ancho, alto)
         self.fondo = Fondo(ancho, alto)
 
-        
-
-
-
     def dibujarMenu(self):
-        
+
         """ Dibuja el menu """
-        
+
         screen = self.getScreen()
 
         screen.blit(self.fondo.getfirstImage(), (0, 0))
@@ -61,12 +56,8 @@ class ControladorMenu():
             box.dibujarCaja(screen)
         for boton in self.botones:
             boton.dibujarBoton(3)
-    
 
-
-
-
-    def dibujarError(self, botonAceptar, popUp): 
+    def dibujarError(self, botonAceptar, popUp):
 
         """ Dibuja un popUp de error """
         ancho = self.getAncho()
@@ -74,16 +65,14 @@ class ControladorMenu():
 
         popArriba = "Debe completar todos los campos "
         popAbajo = "Pulsa el boton aceptar para continuar"
-        popPosArriba = (ancho/ 2 - 128, alto/ 2 - 40)
-        popPosAbajo = (ancho/ 2 - 128, alto/ 2 - 20)
+        popPosArriba = (ancho / 2 - 128, alto / 2 - 40)
+        popPosAbajo = (ancho / 2 - 128, alto / 2 - 20)
         popUp.dibujarCuadro(popArriba, popAbajo, self.getScreen(), popPosArriba, popPosAbajo)
         botonAceptar.dibujarBoton(2)
 
-
-
     def getAlto(self):
         return self.alto
-    
+
     def getAncho(self):
         return self.ancho
 
@@ -105,15 +94,13 @@ class ControladorMenu():
             pygame.display.update()
             pygame.time.delay(5)
 
-
-    
     def run(self):
         self.crearObjetos()
         alto = self.getAlto
         ancho = self.getAncho()
         Helper.playMusic('menu', 0.5)
         fondo = self.fondo
-        menu = True 
+        menu = True
         clock = pygame.time.Clock()
         error = False
         timerFondo = 4
@@ -172,7 +159,7 @@ class ControladorMenu():
                     error = True
                     self.botonEmpezar.setRecuadro("black")
                 else:
-                    if error == False:
+                    if not error:
                         ancho = 400
                         alto = 400
                         Helper.fadeMusic(3000)
@@ -192,4 +179,3 @@ class ControladorMenu():
                         controlador.run()
 
                         menu = False
-                        

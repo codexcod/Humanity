@@ -5,7 +5,7 @@ import pygame
 
 class InputBox:
 
-    def __init__(self, x, y, w, h,header, show = ''):
+    def __init__(self, x, y, w, h, header, show=''):
         self.rect = pygame.Rect(x, y, w, h)
         self.header = header
         self.color = Helper.COLORINACTIVO
@@ -15,21 +15,19 @@ class InputBox:
         self.txt_surface = self.fuente.render(show, True, self.color)
         self.active = False
         self.width = 200
-    
-    
-        
+
     def dibujarTexto(self, screen):
-        header = self.fuente.render(self.header, True, (0,0,0))
+        header = self.fuente.render(self.header, True, (0, 0, 0))
         if self.active:
-                headerSelect = self.fuente.render(self.header, True, Helper.COLORACTIVO)
-                screen.blit(headerSelect,(self.rect.x , self.rect.y - 31))
-                screen.blit(headerSelect,(self.rect.x  , self.rect.y - 29))
-                screen.blit(headerSelect,(self.rect.x - 1, self.rect.y - 30))
-                screen.blit(headerSelect,(self.rect.x + 1, self.rect.y - 32))
+            headerSelect = self.fuente.render(self.header, True, Helper.COLORACTIVO)
+            screen.blit(headerSelect, (self.rect.x, self.rect.y - 31))
+            screen.blit(headerSelect, (self.rect.x, self.rect.y - 29))
+            screen.blit(headerSelect, (self.rect.x - 1, self.rect.y - 30))
+            screen.blit(headerSelect, (self.rect.x + 1, self.rect.y - 32))
         else:
             pass
-        screen.blit(header, (self.rect.x , self.rect.y - 30))
-    
+        screen.blit(header, (self.rect.x, self.rect.y - 30))
+
     def InputEventos(self, event, screen):
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Si el usuario clickea en el input box, Activarse.
@@ -40,37 +38,35 @@ class InputBox:
                 self.active = False
 
             # Marcar con color si esta activada o no
-            if self.active: 
-                self.color = Helper.COLORACTIVO 
+            if self.active:
+                self.color = Helper.COLORACTIVO
 
-            else: 
+            else:
                 self.color = Helper.COLORINACTIVO
 
-        #Borrar de a uno con backspace y borrar todo con enter
+        # Borrar de a uno con backspace y borrar todo con enter
         if event.type == pygame.KEYDOWN:
             if self.active:
                 if event.key == pygame.K_BACKSPACE:
                     self.show = self.show[:-1]
                     self.txt_surface = self.fuente.render(self.show, True, "White")
-                
-            #Escribir las caracteres
+
+                # Escribir las caracteres
                 else:
                     self.show += event.unicode
-                    #Dibujar cada letra
-                    self.txt_surface = self.fuente.render(self.show, True, "White")  
-                
-                
-        self.text = self.show
+                    # Dibujar cada letra
+                    self.txt_surface = self.fuente.render(self.show, True, "White")
 
+        self.text = self.show
 
     def update(self, ancho):
         # Expandir el input box si el texto es muy grande.        
-        self.width = max(200, self.txt_surface.get_width()+5)
-        
+        self.width = max(200, self.txt_surface.get_width() + 5)
+
         self.rect.w = self.width
 
     def dibujarCaja(self, screen):
-        #Dibujar fondo
+        # Dibujar fondo
         screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 3))
         pygame.draw.rect(screen, "black", self.rect)
 
@@ -80,6 +76,6 @@ class InputBox:
         # Dibujar el cuadro de texto
         screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 3))
         pygame.draw.rect(screen, self.color, self.rect, 2)
-    
+
     def getText(self):
         return self.text

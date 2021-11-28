@@ -365,7 +365,7 @@ class Persona(Movible):
                     if objetoTrabajado.isCasa():
                         # Si esta "trabajando" en la aldea, que guarde su inventario en la aldea
                         if self.tieneAlgoEnElInventario():
-                            if objetoTrabajado.getAldea().añadirObjeto(self.inventario[len(self.inventario) - 1]):
+                            if objetoTrabajado.getAldea().anadirObjeto(self.inventario[len(self.inventario) - 1]):
                                 self.inventario.pop(len(self.inventario) - 1)
 
                         elif self.hambre < 100 and objetoTrabajado.getAldea().tieneComida():

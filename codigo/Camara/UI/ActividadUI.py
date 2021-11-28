@@ -3,7 +3,7 @@ from codigo.Camara.UI.UIObject import UIObject
 
 class ActividadUI(UIObject):
 
-    def __init__(self, objeto, posX, posY, lista,persona,ui,objetoActualizar):
+    def __init__(self, objeto, posX, posY, lista, persona, ui, objetoActualizar):
         super().__init__(objeto, posX, posY)
         self.lista = lista
         self.ui = ui
@@ -14,4 +14,3 @@ class ActividadUI(UIObject):
         self.persona.sumarBusqueda()
         self.ui.generarInfoObjeto(self.objetoActualizar)
         self.ui.getUIList().remove(self.lista)
-        

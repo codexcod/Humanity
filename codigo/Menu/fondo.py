@@ -23,6 +23,4 @@ class Fondo:
         
     def getSecondImage(self):
         return self.secondImage
-    
 
-        

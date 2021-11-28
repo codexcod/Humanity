@@ -1,5 +1,6 @@
 from codigo.MovedorDePersonas.Nodo import nodo
 
+
 class Asterisco():
 
     def __init__(self, isla):
@@ -8,7 +9,7 @@ class Asterisco():
         self.cerrada = []
         self.caminito = []
 
-    def agregarACaminito(self,nodo):
+    def agregarACaminito(self, nodo):
         self.caminito.append(nodo)
 
     def getNodoAnterior(self):
@@ -21,21 +22,24 @@ class Asterisco():
         inicioNodo = nodo(inicioY, inicioX, None)
         self.caminito.append(inicioNodo)
 
-
         for y in range(abs(finalY - self.getNodoAnterior().getY())):
 
             if finalY - inicioY > 0:
-                self.agregarACaminito(nodo(self.getNodoAnterior().getY() + 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+                self.agregarACaminito(
+                    nodo(self.getNodoAnterior().getY() + 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
 
             elif finalY - inicioY < 0:
-                self.agregarACaminito(nodo(self.getNodoAnterior().getY() - 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
+                self.agregarACaminito(
+                    nodo(self.getNodoAnterior().getY() - 1, self.getNodoAnterior().getX(), self.getNodoAnterior()))
 
         for x in range(abs(finalX - self.getNodoAnterior().getX())):
             if finalX - inicioX > 0:
-                self.agregarACaminito(nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() + 1, self.getNodoAnterior()))
+                self.agregarACaminito(
+                    nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() + 1, self.getNodoAnterior()))
 
             elif finalX - inicioX < 0:
-                self.agregarACaminito(nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() - 1, self.getNodoAnterior()))
+                self.agregarACaminito(
+                    nodo(self.getNodoAnterior().getY(), self.getNodoAnterior().getX() - 1, self.getNodoAnterior()))
         '''
             inicioNodo = nodo(inicioY, inicioX, None)
             inicioNodo.costo = 0
@@ -71,6 +75,7 @@ class Asterisco():
 
         return caminito
     '''
-    # Generalmente se le da vuelta pero en nuestro codigo como lo tendriamos que dar 
+
+    # Generalmente se le da vuelta pero en nuestro codigo como lo tendriamos que dar
     def getCaminito(self):
         return self.caminito

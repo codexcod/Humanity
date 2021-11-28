@@ -24,7 +24,7 @@ class Controlador:
         # Controlar tiempo en el juego
 
         if not self.running:
-            self.running =True
+            self.running = True
 
             clock = pygame.time.Clock()
             screenUpdate = 1
@@ -101,9 +101,8 @@ class Controlador:
                 if persona.getIsla() == self.camara.getIsla():
                     self.camara.getIsla().enviarViajero(persona)
                     self.isla.agregarViajero(persona)
-            self.camara.getIsla().toJsonPath(f'Islas/'+self.camara.getIsla().getNombre()+'.json')
+            self.camara.getIsla().toJsonPath(f'Islas/' + self.camara.getIsla().getNombre() + '.json')
         self.isla.toJson(self.partida)
-
 
         self.running = False
 
@@ -134,7 +133,7 @@ class Controlador:
 
     def mousePressed(self, mouse):
         """ Detecta cuando el mouse es presionado """
-        
+
         left, middle, right = mouse
         if left:
 
@@ -151,11 +150,10 @@ class Controlador:
                     self.camara.getUI().generarInfoObjeto(self.mouse.pedirInfoObjeto())
 
             else:
-                if self.click:  
-                        self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
+                if self.click:
+                    self.mouse.clickearPorPoscicion(self.camara.getUI().getObjetosClickeables())
 
                 self.click = False
-                    
 
         # En el caso que sea derecha checkea si esta seleccionado
         if right:
@@ -166,7 +164,6 @@ class Controlador:
                 if not self.camara.getSeleccionado() == self.mouse.seleccionarMovible():
 
                     if self.mouse.seleccionarMovible() in self.aldea.getPersonas():
-
                         self.camara.setSeleccionado(self.mouse.seleccionarMovible())
 
                 else:
@@ -190,13 +187,13 @@ class Controlador:
                         if not self.mouse.seleccionarMovible() in self.aldea.getPersonas():
                             self.camara.getSeleccionado().accionarObjeto(self.mouse.seleccionarMovible())
 
-    def cargarIslaPrincipal(self,explorador):
+    def cargarIslaPrincipal(self, explorador):
         self.camara.getIsla().enviarViajero(explorador)
         self.camara.getIsla().toJsonPath(f'Islas/' + self.camara.getIsla().getNombre() + '.json')
         self.camara.setIsla(self.isla)
         self.isla.agregarViajero(explorador)
 
-    def cargarIslaSecundaria(self,isla,explorador):
+    def cargarIslaSecundaria(self, isla, explorador):
         islaSecundaria = None
         archivos = os.listdir("Islas")
         for archivo in archivos:
@@ -212,15 +209,13 @@ class Controlador:
                 islaSecundaria.agregarViajero(explorador)
                 return
 
-
         islaSecundaria = Isla()
         islaSecundaria.generarIslaDesconocida(400, 400)
         islaSecundaria.setNombre(isla)
 
-
         self.camara.getIsla().enviarViajero(explorador)
         if self.camara.getIsla().getNombre() != self.isla.getNombre():
-            self.camara.getIsla().toJsonPath(f'Islas/'+self.camara.getIsla().getNombre()+'.json')
+            self.camara.getIsla().toJsonPath(f'Islas/' + self.camara.getIsla().getNombre() + '.json')
         self.camara.setIsla(islaSecundaria)
         islaSecundaria.agregarViajero(explorador)
 

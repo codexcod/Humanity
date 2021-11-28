@@ -17,6 +17,7 @@ from codigo.Isla.Objetos.Fogata import Fogata
 from codigo.Isla.Objetos.MesaTrabajo import MesaTrabajo
 from codigo.Isla.Objetos.Piedra import Piedra
 from codigo.Isla.Movibles.conejo import Conejo
+from codigo.Isla.Movibles.Jabali import Jabali
 from codigo.Isla.Movibles.Vaca import Vaca
 from codigo.Isla.Objetos.Muro import Muro
 
@@ -540,11 +541,14 @@ class Isla:
             for x in range(self.ancho):
                 if self.getMapaObjetos()[y][x] is None:
                     if random.randrange(1, 1500) == 1:
-                        if random.choice([0, 1]) == 0:
+                        claseDeAnimal = random.choice([0, 2])
+                        if claseDeAnimal == 0:
                             self.crearGrupoDeAnimales(5, x, y, "conejo")
 
-                        else:
+                        elif claseDeAnimal == 1:
                             self.crearGrupoDeAnimales(5, x, y, "vaca")
+                        else:
+                            self.crearGrupoDeAnimales(5, x, y, "jabali")
 
     def getMapaEstatico(self):
         return self.mEstatico
@@ -658,6 +662,22 @@ class Isla:
                     vaca = Vaca(x + aleatorioX, y + aleatorioY, self, 15)
                     self.agregarMovible(vaca.getX(), vaca.getY(), vaca)
                     self.animales.append(vaca)
+
+        elif animal == "jabali":
+            for i in range(numero):
+                aleatorioX = random.randrange(-6, 6)
+                aleatorioY = random.randrange(-6, 6)
+                while x + aleatorioX >= self.ancho or x + aleatorioX <= 0:
+                    aleatorioX = random.randrange(-6, 6)
+
+                while y + aleatorioY >= self.altura or y + aleatorioY <= 0:
+                    aleatorioY = random.randrange(-6, 6)
+
+                if self.getMapaMovible()[y + aleatorioY][x + aleatorioX] is None and \
+                        self.getMapaObjetos()[y + aleatorioY][x + aleatorioX] is None:
+                    jabali = Jabali(x + aleatorioX, y + aleatorioY, self, 15)
+                    self.agregarMovible(jabali.getX(), jabali.getY(), jabali)
+                    self.animales.append(jabali)
 
 
     def getAldea(self):

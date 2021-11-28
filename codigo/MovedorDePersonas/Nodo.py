@@ -1,9 +1,9 @@
 from codigo.Isla.Objetos import Objeto
 
+
 class nodo:
 
-    def __init__(self, y, x, padreMia = None):
-
+    def __init__(self, y, x, padreMia=None):
         self.padreMia = padreMia
         self.x = x
         self.y = y
@@ -14,7 +14,7 @@ class nodo:
 
     def getPadreMia(self):
         return self.padreMia
-        
+
     def getX(self):
         return self.x
 

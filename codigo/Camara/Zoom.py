@@ -8,7 +8,7 @@ class Zoom:
     MED_ZOOM = 1
     MAX_ZOOM = 0
 
-    def __init__(self, zoom,maxX,maxY):
+    def __init__(self, zoom, maxX, maxY):
         self.zoom = zoom
         self.rangoZoom = [50, 40, 25, 20]
         self.maxX = maxX
