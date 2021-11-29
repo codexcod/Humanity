@@ -175,6 +175,15 @@ class Isla:
                 self.animales.append(conejo)
                 self.mMovible[animal['y']][animal['x']] = conejo
 
+            elif animal['objeto'] == 'Jabali':
+                jabali = Jabali(animal['x'],animal['y'],self,animal['vida'])
+                jabali.setMuerto(animal['muerto'])
+                if jabali.getMuerto():
+                    jabali.setImage(Helper.JABALI(5))
+
+                self.animales.append(jabali)
+                self.mMovible[animal['y']][animal['x']] = jabali
+
 
 
         for objeto in data['mObjetos']:
@@ -341,6 +350,14 @@ class Isla:
                 self.animales.append(conejo)
                 self.mMovible[animal['y']][animal['x']] = conejo
 
+            elif animal['objeto'] == 'Jabali':
+                jabali = Jabali(animal['x'],animal['y'],self,animal['vida'])
+                jabali.setMuerto(animal['muerto'])
+                if jabali.getMuerto():
+                    jabali.setImage(Helper.JABALI(5))
+
+                self.animales.append(jabali)
+                self.mMovible[animal['y']][animal['x']] = jabali
 
 
         for objeto in data['mObjetos']:
@@ -541,14 +558,15 @@ class Isla:
             for x in range(self.ancho):
                 if self.getMapaObjetos()[y][x] is None:
                     if random.randrange(1, 1500) == 1:
-                        claseDeAnimal = random.choice([0, 2])
+                        claseDeAnimal = random.choice([0, 1, 2])
                         if claseDeAnimal == 0:
                             self.crearGrupoDeAnimales(5, x, y, "conejo")
 
                         elif claseDeAnimal == 1:
                             self.crearGrupoDeAnimales(5, x, y, "vaca")
-                        else:
-                            self.crearGrupoDeAnimales(5, x, y, "jabali")
+
+                        elif claseDeAnimal == 2:
+                            self.crearGrupoDeAnimales(3, x, y, "jabali")
 
     def getMapaEstatico(self):
         return self.mEstatico
@@ -613,7 +631,7 @@ class Isla:
         mesaDeTrabajo = MesaTrabajo(aldea, posX, posY + 2, self)
         self.agregarObjeto(posX, posY + 2, mesaDeTrabajo)
         # Crea a Darwin
-        Darwin = Conejo(posX + 4, posY, self, 100000)
+        Darwin = Jabali(posX + 4, posY, self, 100000)
         self.agregarMovible(Darwin.getX(), Darwin.getY(), Darwin)
         Darwin.setNombre("Darwin")
         self.animales.append(Darwin)

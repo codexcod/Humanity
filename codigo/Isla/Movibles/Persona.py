@@ -19,7 +19,7 @@ class Persona(Movible):
         self.nombre = nombre
         self.image = Helper.PERSONA
         self.inventario = []
-        self.accionar = [False, 0, 0]
+        self.accionar = [False, None]
         self.trabajando = False
         self.tiempoTrabajando = 0
         self.herramienta = None
@@ -166,12 +166,6 @@ class Persona(Movible):
         asterisco = Asterisco(self.isla)
         asterisco.empiezaElCodiguito(self.x, self.y, posX, posY)
         listaDeMovimientos = asterisco.getCaminito()
-        print(f"""x {self.x}
-                y {self.y}
-
-                posX {self.isla.getCasillaDispnible(posX,posY)[0]}
-
-                posY {self.isla.getCasillaDispnible(posX,posY)[1]}""")
 
         # La lista te llegara con los nodos por los cuales tenes que pasar para poder llegar al objetivo
         for nodo in listaDeMovimientos:
@@ -238,6 +232,7 @@ class Persona(Movible):
 
     def makeMoves(self):
         if not self.isTrabajando():
+            self.setImage(Helper.PERSONA)
             if self.hasMoves():
                 if not self.isla.getMapaObjetos()[self.y][self.x] is None:
                     if self.tiempoMovimiento == self.isla.getMapaObjetos()[self.y][self.x].getVelocidad():
@@ -280,12 +275,9 @@ class Persona(Movible):
                         if self.tieneHambre() and self.getAldea().tieneComida():
                             self.guardarRecursos()
 
-
         else:
             self.trabajar()
 
-        if self.hambre > 80:
-            self.sumarVida(10)
 
     def getTarea(self):
         return self.busquedas[self.busqueda]
@@ -515,6 +507,9 @@ class Persona(Movible):
             self.vida = 100
 
     def cicloVida(self):
+        if self.hambre > 70:
+            self.sumarVida(10)
+
         self.restarHambre(5)
 
     def buscarArboles(self):
@@ -613,3 +608,11 @@ class Persona(Movible):
         self.hambre += hambre
         if self.hambre > 100:
             self.hambre = 100
+
+    def dañar(self,daño):
+        self.restarVida(daño)
+        self.setImage(Helper.PERSONA_DAÑADA)
+
+
+    def isPersona(self):
+        return True

@@ -39,13 +39,7 @@ class Vaca(Animal):
             self.setImage(Helper.VACA(self.animacion))
             if self.ticks == self.maxTick:
                 self.ticks = 0
-            
-                for i in range(4):
-                    if random.choice([0,1]) == 0:
-                        self.moves.append([0,random.choice([-1,1])])
-
-                    else:
-                        self.moves.append([random.choice([-1,1]),0])
+                self.agregarMovimientos(4)
 
             if len(self.moves) > 0:
                 self.move(self.moves[len(self.moves) - 1][0],self.moves[len(self.moves) - 1][1])

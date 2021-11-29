@@ -95,6 +95,9 @@ class Objeto:
     def isAnimal(self):
         return False
 
+    def isPersona(self):
+        return False
+
     def getVelocidad(self):
         return self.velocidad
 

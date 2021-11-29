@@ -19,6 +19,7 @@ class Helper:
     CASA = pygame.image.load('../img/casa.png')
     PERSONA = pygame.image.load('../img/persona.png')
     PERSONA_TRABAJANDO = pygame.image.load('../img/persona_trabajando.png')
+    PERSONA_DAÑADA = pygame.image.load('../img/persona_dañada.png')
     FOGATA = pygame.image.load('../img/fogata.gif')
     RECUADRO = pygame.image.load('../img/recuadro.png')
     SELECCIONADO = pygame.image.load('../img/seleccionado.png')
@@ -51,6 +52,8 @@ class Helper:
     BARCO = pygame.image.load('../img/barco.png')
 
     NIEBLA = pygame.image.load('../img/niebla.png')
+
+
 
     FONDO_BORDO = pygame.image.load('../img/fondo_bordo.png')
     CABEZA_PERSONA = pygame.image.load('../img/cabeza_persona.png')
@@ -99,6 +102,9 @@ class Helper:
 
     def VACA(animcacionVaca):
         return pygame.image.load(f'../img/Vaca/vaca{animcacionVaca}.png')
+
+    def JABALI(animcacionJabali):
+        return pygame.image.load(f'../img/Jabali/Jabali-{animcacionJabali}.png')
 
     def getActividad(actividad):
         if actividad == 1:
