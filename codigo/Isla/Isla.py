@@ -45,31 +45,26 @@ class Isla:
         self.image = None
         self.nombre = ""
 
-    def generarIsla(self,ancho, altura):
-        self.image = Helper.ARBOL
+    def generarIsla(self, ancho, altura):
         self.altura = altura
         self.ancho = ancho
         self.generarMapaObjetos()
         self.generarMapaEstaticoConocido()
         self.generarMapaMovible()
 
-    def generarIslaDesconocida(self,ancho, altura):
-        self.image = Helper.ARBOL
+    def generarIslaDesconocida(self, ancho, altura):
         self.altura = altura
         self.ancho = ancho
         self.generarMapaObjetos()
         self.generarMapaEstaticoDesconocido()
         self.generarMapaMovible()
 
-    def cargarMapa(self,partida):
-        self.image = Helper.ARBOL
+    def cargarMapa(self, partida):
         with open(f'Info/{partida}.json', 'r') as file:
             data = json.load(file)
 
         self.ancho = data['ancho']
         self.altura = data['altura']
-
-
 
         for y in range(self.altura):
             fila = []
@@ -94,20 +89,19 @@ class Isla:
 
         for objeto in data['visibilidad']:
             if objeto['objeto'] == 'Pasto':
-                pasto = Pasto(objeto['y'],objeto['x'])
+                pasto = Pasto(objeto['y'], objeto['x'])
                 pasto.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = pasto
 
             if objeto['objeto'] == 'Arena':
-                arena = Arena(objeto['y'],objeto['x'])
+                arena = Arena(objeto['y'], objeto['x'])
                 arena.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = arena
 
             if objeto['objeto'] == 'Agua':
-                agua = Agua(objeto['y'],objeto['x'])
+                agua = Agua(objeto['y'], objeto['x'])
                 agua.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = agua
-
 
         self.nombre = data['nombre']
         jsonAldea = data['aldea']
@@ -119,9 +113,9 @@ class Isla:
         aldea.setOro(jsonAldea['oro'])
         aldea.setInteligencia(jsonAldea['inteligencia'])
         for casa in jsonAldea['casas']:
-            nuevaCasa = Casa(aldea,casa['x'],casa['y'],self)
+            nuevaCasa = Casa(aldea, casa['x'], casa['y'], self)
             for persona in casa['personas']:
-                nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
+                nuevaPersona = Persona(persona['name'], nuevaCasa, persona['x'], persona['y'], self)
                 nuevaPersona.setEdad(persona['edad'])
                 nuevaPersona.setHambre(persona['hambre'])
 
@@ -144,8 +138,6 @@ class Isla:
 
                         nuevaPersona.agregarInventario(pico)
 
-
-
                 if not persona['herramienta'] is None:
                     nuevaPersona.setHerramienta(persona['herramienta'])
 
@@ -160,7 +152,7 @@ class Isla:
         jsonAnimales = data['animales']
         for animal in jsonAnimales:
             if animal['objeto'] == 'Vaca':
-                vaca = Vaca(animal['x'],animal['y'],self,animal['vida'])
+                vaca = Vaca(animal['x'], animal['y'], self, animal['vida'])
                 vaca.setMuerto(animal['muerto'])
                 if vaca.getMuerto():
                     vaca.setImage(Helper.VACA(4))
@@ -168,7 +160,7 @@ class Isla:
                 self.mMovible[animal['y']][animal['x']] = vaca
 
             elif animal['objeto'] == 'Conejo':
-                conejo = Conejo(animal['x'],animal['y'],self,animal['vida'])
+                conejo = Conejo(animal['x'], animal['y'], self, animal['vida'])
                 conejo.setMuerto(animal['muerto'])
                 if conejo.getMuerto():
                     conejo.setImage(Helper.CONEJO(14))
@@ -176,15 +168,13 @@ class Isla:
                 self.mMovible[animal['y']][animal['x']] = conejo
 
             elif animal['objeto'] == 'Jabali':
-                jabali = Jabali(animal['x'],animal['y'],self,animal['vida'])
+                jabali = Jabali(animal['x'], animal['y'], self, animal['vida'])
                 jabali.setMuerto(animal['muerto'])
                 if jabali.getMuerto():
                     jabali.setImage(Helper.JABALI(5))
 
                 self.animales.append(jabali)
                 self.mMovible[animal['y']][animal['x']] = jabali
-
-
 
         for objeto in data['mObjetos']:
             if objeto['objeto'] == 'Arbol':
@@ -234,16 +224,12 @@ class Isla:
                 muro.setNombre(objeto['name'])
                 self.mObjetos[objeto['y']][objeto['x']] = muro
 
-
-    def cargarMapaConArchivo(self,archivo):
-        self.image = Helper.ARBOL
+    def cargarMapaConArchivo(self, archivo):
 
         data = archivo
 
         self.ancho = data['ancho']
         self.altura = data['altura']
-
-
 
         for y in range(self.altura):
             fila = []
@@ -268,20 +254,19 @@ class Isla:
 
         for objeto in data['visibilidad']:
             if objeto['objeto'] == 'Pasto':
-                pasto = Pasto(objeto['y'],objeto['x'])
+                pasto = Pasto(objeto['y'], objeto['x'])
                 pasto.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = pasto
 
             if objeto['objeto'] == 'Arena':
-                arena = Arena(objeto['y'],objeto['x'])
+                arena = Arena(objeto['y'], objeto['x'])
                 arena.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = arena
 
             if objeto['objeto'] == 'Agua':
-                agua = Agua(objeto['y'],objeto['x'])
+                agua = Agua(objeto['y'], objeto['x'])
                 agua.setVisivilidad(objeto['visibilidad'])
                 self.mEstatico[objeto['y']][objeto['x']] = agua
-
 
         self.nombre = data['nombre']
         jsonAldea = data['aldea']
@@ -294,9 +279,9 @@ class Isla:
             aldea.setOro(jsonAldea['oro'])
             aldea.setInteligencia(jsonAldea['inteligencia'])
             for casa in jsonAldea['casas']:
-                nuevaCasa = Casa(aldea,casa['x'],casa['y'],self)
+                nuevaCasa = Casa(aldea, casa['x'], casa['y'], self)
                 for persona in casa['personas']:
-                    nuevaPersona = Persona(persona['name'],nuevaCasa,persona['x'],persona['y'],self)
+                    nuevaPersona = Persona(persona['name'], nuevaCasa, persona['x'], persona['y'], self)
                     nuevaPersona.setEdad(persona['edad'])
                     nuevaPersona.setHambre(persona['hambre'])
 
@@ -319,8 +304,6 @@ class Isla:
 
                             nuevaPersona.agregarInventario(pico)
 
-
-
                     if not persona['herramienta'] is None:
                         nuevaPersona.setHerramienta(persona['herramienta'])
 
@@ -335,7 +318,7 @@ class Isla:
         jsonAnimales = data['animales']
         for animal in jsonAnimales:
             if animal['objeto'] == 'Vaca':
-                vaca = Vaca(animal['x'],animal['y'],self,animal['vida'])
+                vaca = Vaca(animal['x'], animal['y'], self, animal['vida'])
                 vaca.setMuerto(animal['muerto'])
                 if vaca.getMuerto():
                     vaca.setImage(Helper.VACA(4))
@@ -343,7 +326,7 @@ class Isla:
                 self.mMovible[animal['y']][animal['x']] = vaca
 
             elif animal['objeto'] == 'Conejo':
-                conejo = Conejo(animal['x'],animal['y'],self,animal['vida'])
+                conejo = Conejo(animal['x'], animal['y'], self, animal['vida'])
                 conejo.setMuerto(animal['muerto'])
                 if conejo.getMuerto():
                     conejo.setImage(Helper.CONEJO(14))
@@ -351,14 +334,13 @@ class Isla:
                 self.mMovible[animal['y']][animal['x']] = conejo
 
             elif animal['objeto'] == 'Jabali':
-                jabali = Jabali(animal['x'],animal['y'],self,animal['vida'])
+                jabali = Jabali(animal['x'], animal['y'], self, animal['vida'])
                 jabali.setMuerto(animal['muerto'])
                 if jabali.getMuerto():
                     jabali.setImage(Helper.JABALI(5))
 
                 self.animales.append(jabali)
                 self.mMovible[animal['y']][animal['x']] = jabali
-
 
         for objeto in data['mObjetos']:
             if objeto['objeto'] == 'Arbol':
@@ -398,12 +380,7 @@ class Isla:
                 self.mObjetos[objeto['y']][objeto['x']] = mesaDeTrabajo
                 mesaDeTrabajo.setNombre(objeto['name'])
 
-
-
-
-
-
-    def toJsonPath(self,partida):
+    def toJsonPath(self, partida):
         jsonText = {}
         jsonText['nombre'] = self.nombre
 
@@ -418,14 +395,13 @@ class Isla:
         jsonText['visibilidad'] = []
         for y in range(self.altura):
             for x in range(self.ancho):
-                    jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
+                jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
 
         jsonText['mObjetos'] = []
         for y in range(self.altura):
             for x in range(self.ancho):
                 if not self.mObjetos[y][x] is None:
                     jsonText['mObjetos'].append(self.mObjetos[y][x].toJson())
-
 
         jsonText['animales'] = []
         for animal in self.animales:
@@ -440,20 +416,18 @@ class Isla:
 
         jsonText['aldea'] = self.aldea.toJson()
 
-
         jsonText['ancho'] = self.ancho
         jsonText['altura'] = self.altura
         jsonText['visibilidad'] = []
         for y in range(self.altura):
             for x in range(self.ancho):
-                    jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
+                jsonText['visibilidad'].append(self.mEstatico[y][x].toJson())
 
         jsonText['mObjetos'] = []
         for y in range(self.altura):
             for x in range(self.ancho):
                 if not self.mObjetos[y][x] is None:
                     jsonText['mObjetos'].append(self.mObjetos[y][x].toJson())
-
 
         jsonText['animales'] = []
         for animal in self.animales:
@@ -468,19 +442,19 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
-                    fila.append(Agua(x,y))
+                    fila.append(Agua(x, y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
                 elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
 
-                    fila.append(Arena(x,y))
+                    fila.append(Arena(x, y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
 
                 else:
-                    fila.append(Pasto(x,y))
+                    fila.append(Pasto(x, y))
 
                 fila[len(fila) - 1].setVisivilidad(True)
 
@@ -492,30 +466,29 @@ class Isla:
             fila = []
             for x in range(self.ancho):
                 if x == 1 or y == 1 or x == self.ancho - 1 or y == self.altura - 1:
-                    fila.append(Agua(x,y))
+                    fila.append(Agua(x, y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
                 elif x == 2 or x == 3 or y == 2 or y == 3 or x == self.ancho - 2 or y == self.altura - 2 or x == self.ancho - 3 or y == self.altura - 3:
 
-                    fila.append(Arena(x,y))
+                    fila.append(Arena(x, y))
                     if not self.mObjetos[y][x] is None:
                         self.mObjetos[y][x] = None
 
 
                 else:
-                    fila.append(Pasto(x,y))
+                    fila.append(Pasto(x, y))
 
             self.mEstatico.append(fila)
 
     def generarMapaObjetos(self):
         # Genera el mapa en el cual entran los arboles y piedras
-        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self),0.5)
+        arboles = NoiseGenerator(self.ancho, self.altura, None, Arbol(0, 0, self), 0.5)
         mArboles = arboles.getNoise()
 
-        arbustos = NoiseGenerator(self.ancho, self.altura, None, Arbusto(0, 0, self),0.05)
+        arbustos = NoiseGenerator(self.ancho, self.altura, None, Arbusto(0, 0, self), 0.05)
         mArbustos = arbustos.getNoise()
-
 
         for y in range(self.altura):
             fila = []
@@ -540,8 +513,6 @@ class Isla:
 
                 else:
                     fila.append(mArboles[y][x])
-
-                
 
             self.mObjetos.append(fila)
 
@@ -636,8 +607,8 @@ class Isla:
         Darwin.setNombre("Darwin")
         self.animales.append(Darwin)
 
-        barco = Barco(self.ancho // 2,self.altura - 1,self)
-        self.agregarObjeto(self.ancho // 2,self.altura - 1,barco)
+        barco = Barco(self.ancho // 2, self.altura - 1, self)
+        self.agregarObjeto(self.ancho // 2, self.altura - 1, barco)
 
     def getArbolesTalados(self):
         return self.arbolesTalados
@@ -697,52 +668,28 @@ class Isla:
                     self.agregarMovible(jabali.getX(), jabali.getY(), jabali)
                     self.animales.append(jabali)
 
-
     def getAldea(self):
         return self.aldea
 
-    def setImage(self,image):
+    def setImage(self, image):
         self.image = image
 
     def getImage(self):
         return self.image
 
-    def setNombre(self,nombre):
+    def setNombre(self, nombre):
         self.nombre = nombre
 
-    def enviarViajero(self,explorador):
+    def enviarViajero(self, explorador):
         self.mMovible[explorador.getY()].remove(explorador)
 
-    def agregarViajero(self,explorador):
+    def agregarViajero(self, explorador):
         explorador.setX(self.ancho // 2)
         explorador.setY(self.altura - 2)
         explorador.setIsla(self)
         self.mMovible[self.altura - 2][self.ancho // 2] = explorador
         explorador.descubrir()
-        self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2,self.altura - 1, self)
+        self.mObjetos[self.altura - 1][self.ancho // 2] = Barco(self.ancho // 2, self.altura - 1, self)
 
     def getNombre(self):
         return self.nombre
-
-    def getCasillaDispnible(self,x,y):
-        while (not self.getMapaObjetos()[y][x] is None) and (not self.getMapaMovible()[y][x] is None):
-            if self.estaDentroDelMapa(x,y + 1):
-                y += 1
-                pass
-
-            if self.estaDentroDelMapa(x, y - 1):
-                y -= 1
-                pass
-
-            if self.estaDentroDelMapa(x - 1, y):
-                x -= 1
-                pass
-
-            if self.estaDentroDelMapa(x + 1, y):
-                x += 1
-                pass
-
-        return x, y
-
-    def estaDentroDelMapa(self,x,y):
-        return not (x + 1 >= self.isla.getAncho() or x - 1 <= 0) and not (y + 1 >= self.isla.getAltura() or y - 1 <= 0)
