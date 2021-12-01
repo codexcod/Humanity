@@ -58,8 +58,6 @@ Bayas : {self.bayas}
         if herramienta.getDañoPlanta() > 0:
             return (self.bayas * 10) // herramienta.getDañoPlanta()
 
-        return self.bayas * 10
-
     def getValor(self):
         valor = []
         for i in range(self.bayas):

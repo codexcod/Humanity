@@ -48,9 +48,6 @@ Piedras : {self.piedras}
     def getTrabajo(self, herramienta):
         if herramienta.getDañoPiedra() > 0:
             return (self.piedras * 10) // herramienta.getDañoPiedra()
-
-        return (self.piedras * 10)
-
     def getValor(self):
         valor = []
         for i in range(self.piedras):
