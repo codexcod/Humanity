@@ -6,7 +6,7 @@ class Mano(Herramienta):
     def __init__(self):
         Herramienta.__init__(self)
         self.dañoPiedra = 10
-        self.dañoArbol = 0
+        self.dañoArbol = 1
         self.dañoPersona = 1
         self.dañoAnimal = 1
         
@@ -15,4 +15,3 @@ class Mano(Herramienta):
         self.usos -= 1
         if self.usos == 0:
             self.rota = True
-            

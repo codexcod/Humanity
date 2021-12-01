@@ -99,8 +99,6 @@ Troncos : {self.troncos}"""
         if herramienta.getDañoArbol() > 0:
             return (self.troncos * 10) // herramienta.getDañoArbol()
 
-        return (self.troncos * 10)
-
     def getValor(self):
         valor = []
         for i in range(self.troncos):
